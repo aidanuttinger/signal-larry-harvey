@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HFG Signal Strength Report — March 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#07080f;--navy:#0b0f1e;--dark:#141929;--card:#1a2236;
+  --gold:#c9a84c;--gold-dim:rgba(201,168,76,0.08);--gold-border:rgba(201,168,76,0.22);
+  --cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.06);--cyan-border:rgba(0,212,255,0.18);
+  --white:#f2f2f5;--grey:#7a84a0;--muted:#4a5270;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,sans-serif;
+}
+body{font-family:var(--sans);background:var(--navy);color:var(--white);min-height:100vh;line-height:1.7}
+.back-nav{position:sticky;top:0;z-index:9999;background:rgba(7,8,15,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.18);padding:0 32px;height:46px;display:flex;align-items:center;justify-content:space-between}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.back-nav span{font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.hero{background:var(--black);padding:72px 40px 56px;text-align:center;border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 50% 40%,rgba(201,168,76,.06) 0%,transparent 65%);pointer-events:none}
+.eyebrow{font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before,.eyebrow::after{content:'';width:22px;height:1px;background:rgba(201,168,76,.5)}
+.hero-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.1;margin-bottom:14px}
+.hero-title span{color:var(--gold);font-style:italic}
+.hero-body{font-size:.88rem;color:var(--grey);line-height:1.85;max-width:460px;margin:0 auto 28px}
+.hero-body strong{color:var(--white)}
+.overall-score{display:inline-flex;flex-direction:column;align-items:center;gap:8px;background:var(--gold-dim);border:2px solid var(--gold-border);border-radius:80px;padding:28px 48px}
+.overall-score-num{font-family:var(--serif);font-size:3.2rem;font-weight:700;color:var(--gold);line-height:1}
+.overall-score-label{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.main{max-width:900px;margin:0 auto;padding:56px 40px 80px}
+.score-card{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:32px;margin-bottom:20px}
+.score-card.strong{border-color:rgba(201,168,76,.25)}
+.score-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:16px}
+.score-domain{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--white);flex:1}
+.score-badge{display:flex;align-items:center;gap:8px}
+.score-num{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--gold);line-height:1}
+.score-denom{font-size:.7rem;color:var(--muted);line-height:1;margin-top:4px}
+.score-bar-track{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-bottom:20px}
+.score-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.score-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.score-col{}
+.score-col-label{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.score-col.working .score-col-label{color:var(--gold)}
+.score-col.leaking .score-col-label{color:rgba(255,100,80,.7)}
+.score-col.amplify .score-col-label{color:var(--cyan)}
+.score-col-items{display:flex;flex-direction:column;gap:6px}
+.score-col-item{font-size:.75rem;color:var(--grey);line-height:1.5;padding-left:10px;position:relative}
+.score-col-item::before{content:'';width:4px;height:4px;border-radius:50%;position:absolute;left:0;top:7px}
+.score-col.working .score-col-item::before{background:var(--gold)}
+.score-col.leaking .score-col-item::before{background:rgba(255,100,80,.7)}
+.score-col.amplify .score-col-item::before{background:var(--cyan)}
+.score-col-item strong{color:var(--white)}
+.section-title{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.section-sub{font-size:.88rem;color:var(--grey);line-height:1.8;max-width:640px;margin-bottom:28px}
+.section-sub strong{color:var(--white)}
+.opportunity-box{background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:6px;padding:36px;text-align:center;margin-bottom:24px}
+.opp-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px}
+.opp-score{font-family:var(--serif);font-size:2.8rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.opp-score span{color:var(--gold)}
+.opp-body{font-size:.85rem;color:var(--grey);line-height:1.8;max-width:460px;margin:0 auto}
+.opp-body strong{color:var(--white)}
+.what-90-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.w90-card{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:22px}
+.w90-num{font-family:var(--serif);font-size:.85rem;font-weight:700;color:var(--gold);margin-bottom:6px}
+.w90-title{font-size:.88rem;font-weight:600;color:var(--white);margin-bottom:6px}
+.w90-body{font-size:.78rem;color:var(--grey);line-height:1.65}
+.map-note{background:var(--dark);border-left:3px solid var(--gold);padding:20px 24px;border-radius:0 4px 4px 0;margin-top:24px}
+.map-note-text{font-family:var(--serif);font-size:1rem;font-style:italic;color:var(--white);line-height:1.6}
+.map-note-text span{color:var(--gold)}
+.divider{height:1px;background:rgba(255,255,255,.06);margin:40px 0}
+footer{text-align:center;padding:24px;font-size:.62rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.04)}
+@media(max-width:720px){.score-cols{grid-template-columns:1fr}.what-90-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="back-nav">
+  <a href="signal-larry.html"><span style="font-size:.9rem">←</span> Back to your journey</a>
+  <span>HFG Signal Strength Report · March 2026</span>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">HFG Wealth Management · Signal Assessment</div>
+  <h1 class="hero-title">Your Signal<br><span>Strength Report</span></h1>
+  <p class="hero-body">This is not a grade. This is a map. <strong>Here is where HFG's signal is strong, where it's leaking, and exactly what to amplify.</strong></p>
+  <div class="overall-score">
+    <div class="overall-score-num">67<span style="font-size:1.8rem;color:var(--muted)">/100</span></div>
+    <div class="overall-score-label">Overall Signal Strength</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <p style="font-size:.88rem;color:var(--grey);line-height:1.9;max-width:640px;margin:0 auto 40px;text-align:center">A score of 67 is not a failing grade. It means HFG has a strong signal that hasn't yet been fully amplified. The gap between 67 and 90 represents the opportunity — and it's entirely closeable.</p>
+
+  <!-- Domain 1 -->
+  <div class="score-card strong">
+    <div class="score-header">
+      <div class="score-domain">Brand Signal</div>
+      <div class="score-badge"><div class="score-num">72</div><div class="score-denom">/100</div></div>
+    </div>
+    <div class="score-bar-track"><div class="score-bar-fill" style="width:72%;background:linear-gradient(90deg,rgba(201,168,76,.5),var(--gold))"></div></div>
+    <div class="score-cols">
+      <div class="score-col working">
+        <div class="score-col-label">What's Working</div>
+        <div class="score-col-items">
+          <div class="score-col-item"><strong>"Rooted in Faith, Focused on You™"</strong> — excellent tagline, distinctive and values-driven</div>
+          <div class="score-col-item">35-year track record of <strong>Five Star Wealth Manager</strong> recognition</div>
+          <div class="score-col-item">Charitable Giving as a <strong>core pillar</strong> — rare and powerful</div>
+        </div>
+      </div>
+      <div class="score-col leaking">
+        <div class="score-col-label">What's Leaking</div>
+        <div class="score-col-items">
+          <div class="score-col-item">"Wealth Management" category language buries HFG's differentiation</div>
+          <div class="score-col-item">No ownable category beyond the tagline</div>
+          <div class="score-col-item">Visual identity doesn't yet match the premium of the service</div>
+        </div>
+      </div>
+      <div class="score-col amplify">
+        <div class="score-col-label">What to Amplify</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Introduce <strong>"Legacy Architecture"</strong> as HFG's category — immediately</div>
+          <div class="score-col-item">Lead every conversation with the Charitable Giving pillar for faith-aligned prospects</div>
+          <div class="score-col-item">Update website design to match the depth of the relationship HFG provides</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Domain 2 -->
+  <div class="score-card">
+    <div class="score-header">
+      <div class="score-domain">Content Signal</div>
+      <div class="score-badge"><div class="score-num">55</div><div class="score-denom">/100</div></div>
+    </div>
+    <div class="score-bar-track"><div class="score-bar-fill" style="width:55%;background:linear-gradient(90deg,rgba(201,168,76,.3),rgba(201,168,76,.7))"></div></div>
+    <div class="score-cols">
+      <div class="score-col working">
+        <div class="score-col-label">What's Working</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Blog exists with <strong>relevant financial content</strong></div>
+          <div class="score-col-item">"Where Faith & Finance Intersect" articles show HFG's unique perspective</div>
+          <div class="score-col-item">Content has the <strong>right themes</strong> — legacy, purpose, values</div>
+        </div>
+      </div>
+      <div class="score-col leaking">
+        <div class="score-col-label">What's Leaking</div>
+        <div class="score-col-items">
+          <div class="score-col-item">No consistent publishing cadence — sporadic content loses search authority</div>
+          <div class="score-col-item">No owned content franchise with a distinct name and angle</div>
+          <div class="score-col-item">Faith + finance angle <strong>underused</strong> — the most defensible content vertical HFG has</div>
+        </div>
+      </div>
+      <div class="score-col amplify">
+        <div class="score-col-label">What to Amplify</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Launch <strong>"Where Faith & Finance Intersect"</strong> as a formal, named monthly series</div>
+          <div class="score-col-item">Monthly long-form piece + 4 shorter LinkedIn posts per month</div>
+          <div class="score-col-item">Larry's voice on The Legacy Conversation Podcast — low cost, high trust</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Domain 3 -->
+  <div class="score-card strong">
+    <div class="score-header">
+      <div class="score-domain">Community Signal</div>
+      <div class="score-badge"><div class="score-num">78</div><div class="score-denom">/100</div></div>
+    </div>
+    <div class="score-bar-track"><div class="score-bar-fill" style="width:78%;background:linear-gradient(90deg,rgba(201,168,76,.6),var(--gold))"></div></div>
+    <div class="score-cols">
+      <div class="score-col working">
+        <div class="score-col-label">What's Working</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Strong local presence across <strong>3 Texas markets</strong></div>
+          <div class="score-col-item">WoodsEdge Church community — deeply trusted network of faith-aligned families</div>
+          <div class="score-col-item">Larry's board memberships give <strong>visibility in business leadership circles</strong></div>
+        </div>
+      </div>
+      <div class="score-col leaking">
+        <div class="score-col-label">What's Leaking</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Church community not systematically engaged as a referral or education channel</div>
+          <div class="score-col-item">No structured events or workshops to bring the right families into HFG's orbit</div>
+          <div class="score-col-item">Community presence largely passive — not generating <strong>inbound conversations</strong></div>
+        </div>
+      </div>
+      <div class="score-col amplify">
+        <div class="score-col-label">What to Amplify</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Run 3 <strong>Faith & Finance workshops</strong> annually at WoodsEdge — "What Is Your Wealth For?"</div>
+          <div class="score-col-item">Partner with The Woodlands' Christian business leaders network as a resource</div>
+          <div class="score-col-item">Host annual <strong>Legacy Architecture dinner</strong> for top 20 clients + their invited guests</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Domain 4 -->
+  <div class="score-card">
+    <div class="score-header">
+      <div class="score-domain">Digital Signal</div>
+      <div class="score-badge"><div class="score-num">61</div><div class="score-denom">/100</div></div>
+    </div>
+    <div class="score-bar-track"><div class="score-bar-fill" style="width:61%;background:linear-gradient(90deg,rgba(201,168,76,.35),rgba(201,168,76,.75))"></div></div>
+    <div class="score-cols">
+      <div class="score-col working">
+        <div class="score-col-label">What's Working</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Website is <strong>comprehensive and compliant</strong> — all required information present</div>
+          <div class="score-col-item">Three-location clarity — geographic footprint is clear</div>
+          <div class="score-col-item">Team bios establish <strong>credibility and experience</strong></div>
+        </div>
+      </div>
+      <div class="score-col leaking">
+        <div class="score-col-label">What's Leaking</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Homepage doesn't make you <strong>feel</strong> anything — functional but not resonant</div>
+          <div class="score-col-item">The faith + legacy differentiation is present but not leading — buried below the fold</div>
+          <div class="score-col-item">No digital lead generation beyond "Talk to an Advisor" — no middle-of-funnel asset</div>
+        </div>
+      </div>
+      <div class="score-col amplify">
+        <div class="score-col-label">What to Amplify</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Rewrite homepage with <strong>Legacy Architecture positioning</strong> leading — hero, then evidence</div>
+          <div class="score-col-item">Embed the Legacy Impact Calculator as a lead generation asset on the homepage</div>
+          <div class="score-col-item">Design refresh: make the digital experience feel as premium as the in-person one</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Domain 5 -->
+  <div class="score-card strong">
+    <div class="score-header">
+      <div class="score-domain">Referral Signal</div>
+      <div class="score-badge"><div class="score-num">70</div><div class="score-denom">/100</div></div>
+    </div>
+    <div class="score-bar-track"><div class="score-bar-fill" style="width:70%;background:linear-gradient(90deg,rgba(201,168,76,.5),var(--gold))"></div></div>
+    <div class="score-cols">
+      <div class="score-col working">
+        <div class="score-col-label">What's Working</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Deep client relationships built over <strong>decades</strong> — these clients love HFG</div>
+          <div class="score-col-item">Natural referrals happening organically — the trust is there</div>
+          <div class="score-col-item">Professional network (CPAs, attorneys) provides <strong>warm introductions</strong></div>
+        </div>
+      </div>
+      <div class="score-col leaking">
+        <div class="score-col-label">What's Leaking</div>
+        <div class="score-col-items">
+          <div class="score-col-item">No systematic referral program — referrals happen by chance, not by design</div>
+          <div class="score-col-item">Clients who love HFG most have no easy, natural way to <strong>share the story</strong></div>
+          <div class="score-col-item">Professional network is warm but not formally structured or incentivized</div>
+        </div>
+      </div>
+      <div class="score-col amplify">
+        <div class="score-col-label">What to Amplify</div>
+        <div class="score-col-items">
+          <div class="score-col-item">Build the <strong>Client Advocate Program</strong> — identify the top 20%, give them a natural referral framework</div>
+          <div class="score-col-item">Create the <strong>"Legacy Conversation" referral script</strong> — how to introduce HFG at the right moment</div>
+          <div class="score-col-item">Formalize the CPA/attorney referral program with structured mutual referral expectations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-title">What 90/100 Looks Like for HFG</div>
+  <div class="section-sub">This is not a distant aspiration. It's an 18–24 month execution roadmap. <strong>Every point of improvement has a specific action behind it.</strong></div>
+
+  <div class="opportunity-box">
+    <div class="opp-label">The Opportunity Gap</div>
+    <div class="opp-score">67 → <span>90</span></div>
+    <div class="opp-body">23 points of signal improvement. Each point represents a client who found you, a referral that converted, a family who chose HFG because the signal reached them. <strong>At $2M average AUM per client, each point of signal improvement is worth millions in managed assets.</strong></div>
+  </div>
+
+  <div class="what-90-grid">
+    <div class="w90-card"><div class="w90-num">Brand → 88</div><div class="w90-title">Legacy Architecture is the category</div><div class="w90-body">Every mention of HFG — website, social, proposal, conversation — leads with "Legacy Architecture firm." The market begins to associate HFG with a category it owns.</div></div>
+    <div class="w90-card"><div class="w90-num">Content → 82</div><div class="w90-title">"Where Faith & Finance Intersect" is the franchise</div><div class="w90-body">Monthly series running for 12+ months. Larry's podcast at 1,000+ listeners. LinkedIn following in the faith + finance space. Inbound prospect inquiries every month.</div></div>
+    <div class="w90-card"><div class="w90-num">Community → 92</div><div class="w90-title">HFG is the name faith communities trust</div><div class="w90-body">3 workshops annually, full at capacity. Legacy Architecture dinner as the most anticipated event of the year for The Woodlands' faith-aligned business community.</div></div>
+    <div class="w90-card"><div class="w90-num">Digital → 84</div><div class="w90-title">Website makes you feel something</div><div class="w90-body">Redesigned homepage with Legacy Architecture leading. Legacy Calculator generating 20+ qualified leads per month. First impression matches the quality of the first meeting.</div></div>
+    <div class="w90-card"><div class="w90-num">Referral → 94</div><div class="w90-title">Referral machine running on its own</div><div class="w90-body">Client Advocate Program active with 25 clients. Formal professional referral partnerships with 12 CPAs and attorneys. Monthly new client inquiries from referral sources.</div></div>
+    <div class="w90-card"><div class="w90-num">Overall → 90</div><div class="w90-title">Category leader in Legacy Architecture</div><div class="w90-body">HFG is the firm that faith-aligned, legacy-minded Texas families find first — and trust immediately. The signal is loud enough to reach everyone it needs to reach.</div></div>
+  </div>
+
+  <div class="map-note">
+    <div class="map-note-text">"This is not a grade. It is a map.<br><span>And every point between here and 90 is a family you haven't met yet.</span>"</div>
+  </div>
+
+</div>
+
+<footer>The Signal &nbsp;·&nbsp; HFG Signal Strength Report &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Confidential</footer>
+
+<script>
+// Animate bars on load
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    document.querySelectorAll('.score-bar-fill').forEach(function(b){
+      var w=b.style.width;b.style.width='0%';
+      setTimeout(function(){b.style.width=w;},100);
+    });
+  },300);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legacy Architect — PRD</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #0b0f1e 0%, #1a1f2e 100%);
+            color: #c9a84c;
+            padding: 80px 60px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .header .meta {
+            font-size: 0.95em;
+            opacity: 0.7;
+            margin-top: 20px;
+        }
+        .content {
+            padding: 60px 60px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .section {
+            margin-bottom: 50px;
+        }
+        h2 {
+            color: #0b0f1e;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #c9a84c;
+            padding-bottom: 12px;
+        }
+        h3 {
+            color: #1a1f2e;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+        h4 {
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05em;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+        .highlight {
+            background: linear-gradient(90deg, #fffbf0 0%, #fef9f3 100%);
+            border-left: 4px solid #c9a84c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .highlight strong {
+            color: #0b0f1e;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        .card {
+            background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .card h4 {
+            color: #c9a84c;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+        .card p {
+            margin-bottom: 0;
+            font-size: 1em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95em;
+        }
+        th {
+            background: linear-gradient(135deg, #0b0f1e 0%, #1a1f2e 100%);
+            color: #c9a84c;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+        .persona {
+            background: #f0f4f8;
+            border-left: 4px solid #0b0f1e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .persona-name {
+            font-weight: 700;
+            color: #0b0f1e;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .persona-detail {
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+        strong {
+            color: #0b0f1e;
+        }
+        em {
+            color: #c9a84c;
+        }
+        .toc {
+            background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+            padding: 30px;
+            border-left: 4px solid #c9a84c;
+            margin: 30px 0;
+            border-radius: 6px;
+        }
+        .toc h3 {
+            color: #0b0f1e;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .toc ol {
+            columns: 2;
+            column-gap: 30px;
+        }
+        .toc li {
+            margin-bottom: 10px;
+            break-inside: avoid;
+        }
+        .feature-list {
+            list-style: none;
+            margin-left: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #c9a84c;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .stat-box {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8ecf1 100%);
+            padding: 20px;
+            text-align: center;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        .stat-value {
+            font-size: 2em;
+            color: #c9a84c;
+            font-weight: 700;
+        }
+        .stat-label {
+            color: #0b0f1e;
+            font-size: 0.95em;
+            margin-top: 5px;
+        }
+        .footer {
+            background: #f5f5f5;
+            padding: 30px 60px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.95em;
+            color: #666;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Legacy Architect</h1>
+            <div class="subtitle">Where Love Defeats Time</div>
+            <div class="meta">Product Requirements Document | March 16, 2026</div>
+        </div>
+
+        <div class="content">
+            <!-- Vision -->
+            <div class="section">
+                <h2>Product Vision</h2>
+                <div class="highlight">
+                    <p><strong>Legacy Architect is the platform where love defeats time.</strong> It gives people the ability to speak to the people they love most — not just now, but at the exact moment those people need to hear it most.</p>
+                    <p>When they graduate. When they marry. When they hold their first child. When they stand at an inheritance threshold wondering what their family truly valued.</p>
+                </div>
+                <p>In an era where technology has accelerated human disconnection and the average person dies without having said the most important things, Legacy Architect becomes the infrastructure for emotional continuity across generations.</p>
+                <p>For wealth managers, it is the relationship bridge that turns a transactional inheritance event into a moment of profound family alignment.</p>
+                <p>For families, it is the archive of everything that should never be lost.</p>
+            </div>
+
+            <!-- The Problem -->
+            <div class="section">
+                <h2>The Problem</h2>
+                
+                <h3>B2C: The Absence Problem</h3>
+                <p>Most people die having never said the things that mattered most. Not because they didn't feel them — but because they didn't know how, didn't think they had time, or assumed there would be a better moment later.</p>
+                <ul>
+                    <li>Children grow up without access to a grandparent's voice.</li>
+                    <li>Parents miss the chance to speak to a child at their wedding.</li>
+                    <li>Wisdom accumulated over a lifetime dissolves within a generation.</li>
+                </ul>
+                <p>Existing solutions are inadequate:</p>
+                <ul>
+                    <li><strong>Writing a letter</strong> is analog and fragile</li>
+                    <li><strong>Video recordings</strong> sit unwatched on hard drives</li>
+                    <li><strong>Legal wills</strong> are transactional, cold, and contested</li>
+                </ul>
+                <p>There is no platform purpose-built for the emotional, time-specific delivery of a person's most important words.</p>
+
+                <h3>B2B: The Wealth Transfer Crisis</h3>
+                <div class="stat-box">
+                    <div class="stat-value">90%</div>
+                    <div class="stat-label">of inherited wealth changes advisors within 2 years of transfer</div>
+                </div>
+                <p>Wealth managers face a structural crisis. The relationship is with the parent — not the heir. When the parent dies, the heir takes the money elsewhere.</p>
+                <p>There is no good tool for advisors to bridge that generational relationship proactively. Generic CRM outreach is cold. Estate planning documents are clinical.</p>
+                <p><strong>Legacy Architect gives wealth managers a high-intimacy, differentiated service offering:</strong> a family legacy vault that anchors the heir emotionally to the family's values and, by extension, to the advisor who helped build it.</p>
+            </div>
+
+            <!-- Target Users -->
+            <div class="section">
+                <h2>Target Users & Personas</h2>
+                
+                <h3>The Parent (B2C Core User)</h3>
+                <div class="persona">
+                    <div class="persona-name">Michael Chen, 42</div>
+                    <div class="persona-detail"><strong>Situation:</strong> Married with two kids, ages 8 and 11. His father died suddenly two years ago without leaving anything meaningful behind.</div>
+                    <div class="persona-detail"><strong>Goal:</strong> Wants his kids to know who he really was — not just "Dad." Wants to speak to them at their graduations, their weddings, their hardest days.</div>
+                    <div class="persona-detail"><strong>Legacy Architect gives him:</strong> A structured, guided process that makes recording feel natural and life-affirming. A vault that he builds over years, knowing it will be there. The AI coach helps him find the words. The Time Collapse feature lets him speak to his daughter at age 42, as a peer.</div>
+                </div>
+
+                <h3>The Grandparent</h3>
+                <div class="persona">
+                    <div class="persona-name">Dorothy Harmon, 71</div>
+                    <div class="persona-detail"><strong>Situation:</strong> Retired. Three adult children, six grandchildren. Deeply aware of her own mortality. Has stories, recipes, hard-won wisdom.</div>
+                    <div class="persona-detail"><strong>Goal:</strong> Leave something real for her grandchildren — not just belongings. Wants them to know her voice, her face, her values.</div>
+                    <div class="persona-detail"><strong>Legacy Architect gives her:</strong> A dead-simple mobile interface. Guided prompts that feel like a conversation. Arweave-backed permanence. A Legacy Gift option so her granddaughter receives both a locket and a personal video message on her 18th birthday.</div>
+                </div>
+
+                <h3>The Wealth Manager (B2B Buyer) ⭐</h3>
+                <div class="persona">
+                    <div class="persona-name">Larry Harvey, 58 — HFG Wealth Management</div>
+                    <div class="persona-detail"><strong>Situation:</strong> Principal at HFG Wealth Management. Manages 80+ high-net-worth families, assets in the $2M–$50M range. Has watched generational wealth transfers destroy relationships and lose his firm assets.</div>
+                    <div class="persona-detail"><strong>Goal:</strong> Retain assets across generational transitions. Differentiate his practice with a premium, emotionally resonant service offering. Give clients a reason to bring their adult children into the conversation early.</div>
+                    <div class="persona-detail"><strong>Legacy Architect gives him:</strong> A white-glove dashboard to create and manage client legacy vaults. Talking points for bringing this up with clients. A soft introduction to heirs that creates a warm relationship before the transfer event. A powerful differentiator for client acquisition.</div>
+                </div>
+            </div>
+
+            <!-- Core Features -->
+            <div class="section">
+                <h2>Core Features</h2>
+
+                <h3>1. Message Recording</h3>
+                <p>Record in four formats: video (up to 10 min), voice, written letter (rich text), and photo/document uploads. All media is encrypted and stored — with mirrors to Arweave for permanent archival.</p>
+
+                <h3>2. Unlock Triggers (The Delivery Engine)</h3>
+                <p>Each message is assigned one or more triggers that determine when it becomes available to the recipient:</p>
+                <ul>
+                    <li><strong>Date trigger:</strong> "December 25, 2040"</li>
+                    <li><strong>Age trigger:</strong> "when Maya turns 18"</li>
+                    <li><strong>Life event trigger:</strong> graduation, wedding, birth of first child, 18th birthday, inheritance event, death of creator</li>
+                    <li><strong>Custom event:</strong> (P2) user-defined text triggers</li>
+                </ul>
+
+                <h3>3. Time Collapse ⭐ (The Unique Differentiator)</h3>
+                <p>Record a message explicitly framed as: <em>"I am [age] today. This message is for you when you are [same age]."</em></p>
+                <p>A 42-year-old father records a message to his daughter to be opened when she turns 42 — so she can hear from him as a peer, not as a parent, at the exact same chapter of life.</p>
+                <p>This is what no competitor has. This is what makes Legacy Architect unique.</p>
+
+                <h3>4. Family Vault (Multi-Generational Archive)</h3>
+                <p>A shared vault where grandparents, parents, aunts, uncles, and siblings can all contribute. The vault becomes the family's institutional memory — passed down indefinitely across generations.</p>
+
+                <h3>5. Guardian / Succession System (Trust Architecture)</h3>
+                <p>Every creator designates 1–3 trusted guardians who:</p>
+                <ul>
+                    <li>Confirm life events ("My son got married")</li>
+                    <li>Vote on emergency releases (2-of-3 required)</li>
+                    <li>Receive annual check-in pings from the system</li>
+                </ul>
+
+                <h3>6. Emergency Release System (30-Day Challenge Window)</h3>
+                <p>If a creator is deceased or incapacitated:</p>
+                <ol>
+                    <li>Guardians vote to initiate emergency release</li>
+                    <li>System notifies creator via email (30-day challenge window)</li>
+                    <li>If no response: emergency messages release to recipients</li>
+                    <li>All events logged to blockchain for auditability</li>
+                </ol>
+
+                <h3>7. AI Message Coach (P2)</h3>
+                <p>Users often freeze when faced with a blank recording screen. The AI Coach asks guided questions to help them structure their thoughts before hitting record — without writing the message for them.</p>
+                <p>"What's a moment with [Name] you'll never forget?" → "What do you wish you could be there to see?" → "What's the most important thing you've learned?"</p>
+
+                <h3>8. Legacy Gifts (P3) — Physical + Digital</h3>
+                <p>Attach a curated physical gift (jewelry, keepsakes, books, custom items) to a message. When the trigger fires, the recipient receives both the video/letter AND the physical gift — shipped to their current address.</p>
+                <p>Example: A grandmother sends both a gold locket AND a personal video message on her granddaughter's 18th birthday.</p>
+                <p>15-20% commission on gift GMV.</p>
+
+                <h3>9. Wealth Manager Dashboard (B2B MVP)</h3>
+                <p>A dedicated portal where advisors can:</p>
+                <ul>
+                    <li>View all their clients' vault statuses in one place</li>
+                    <li>Initiate vault creation on behalf of clients</li>
+                    <li>Get notified of upcoming inheritance events (60 days out)</li>
+                    <li>See vault health metrics (message count, sealed status)</li>
+                </ul>
+                <p><strong>Key constraint:</strong> Advisors can see vault metadata but NEVER message content. Content is private to creator. This is a hard privacy rule.</p>
+            </div>
+
+            <!-- Technical Architecture -->
+            <div class="section">
+                <h2>Technical Architecture</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>Frontend</h4>
+                        <p>Next.js 14+ web + React Native mobile (iOS + Android)</p>
+                    </div>
+                    <div class="card">
+                        <h4>Backend</h4>
+                        <p>Node.js / NestJS REST + WebSocket API</p>
+                    </div>
+                    <div class="card">
+                        <h4>Storage</h4>
+                        <p>PostgreSQL (metadata), AWS S3 / Cloudflare R2 (media), Arweave (permanent archive)</p>
+                    </div>
+                    <div class="card">
+                        <h4>Blockchain</h4>
+                        <p>Polygon (delivery instructions, guardian votes, unlock conditions, audit trail)</p>
+                    </div>
+                </div>
+                <h3>Security</h3>
+                <ul class="feature-list">
+                    <li>E2E Encryption: AES-256 at rest, TLS 1.3 in transit</li>
+                    <li>Identity Verification: Email OTP + optional MFA</li>
+                    <li>Minor Protection: Creator designates minors; requires guardian confirmation before unlock</li>
+                    <li>Audit Logging: All privileged actions logged immutably</li>
+                </ul>
+            </div>
+
+            <!-- Monetization -->
+            <div class="section">
+                <h2>Monetization Model</h2>
+
+                <h3>B2C Subscription Tiers</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Price</th>
+                            <th>Key Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Seed (Free)</strong></td>
+                            <td>$0/month</td>
+                            <td>1 message, 1 recipient, 500MB storage. Permanent. Freemium entry point.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Legacy</strong></td>
+                            <td>$9/month or $79/year</td>
+                            <td>25 messages, 5 recipients, 10GB storage, all trigger types, guardian system, Arweave archive</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Heritage</strong></td>
+                            <td>$19/month or $159/year</td>
+                            <td>100 messages, 15 recipients, 50GB storage, Family Vault (10 members), Time Collapse featured, Legacy Gifts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynasty</strong></td>
+                            <td>$39/month or $349/year</td>
+                            <td>Unlimited messages, unlimited recipients, 250GB, Family Vault (50 members), dedicated vault manager, API access</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>B2B Licensing (Wealth Managers)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Package</th>
+                            <th>Price</th>
+                            <th>Vault Limit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Advisor Starter</strong></td>
+                            <td>$299/month</td>
+                            <td>Up to 20 client vaults</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Advisor Pro</strong></td>
+                            <td>$599/month</td>
+                            <td>Up to 100 client vaults</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Firm License</strong></td>
+                            <td>$1,499/month</td>
+                            <td>Unlimited for up to 10 advisors</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Legacy Gifts Commission</h3>
+                <div class="highlight">
+                    <p><strong>17.5% blended commission</strong> on all Legacy Gift orders (GMV).</p>
+                    <p>Target AOV: $85. At 17.5% = $14.88 per gift.<br>
+                    Target: 500 active gifts/month by Phase 3 = ~$7,400/month in gift revenue.</p>
+                </div>
+            </div>
+
+            <!-- Competitive Landscape -->
+            <div class="section">
+                <h2>Competitive Analysis</h2>
+                <p>The closest competitors (SafeBeyond, StoryWorth, Capsule.me) each capture a piece, but none have the full platform.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Capability</th>
+                            <th>SafeBeyond</th>
+                            <th>StoryWorth</th>
+                            <th>Capsule.me</th>
+                            <th><strong>Legacy Architect</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Video/Voice/Letter</td>
+                            <td>Partial</td>
+                            <td>Letter only</td>
+                            <td>Video only</td>
+                            <td><strong>✓ All</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Life Event Triggers</td>
+                            <td>Partial</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><strong>✓</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Time Collapse</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><strong>✓ UNIQUE</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Family Vault</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><strong>✓</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Wealth Manager B2B</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><strong>✓</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Physical Gifts</td>
+                            <td>❌</td>
+                            <td>Book only</td>
+                            <td>❌</td>
+                            <td><strong>✓</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Blockchain Permanence</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><strong>✓</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Legacy Architect owns the white space</strong> at the intersection of: emotional delivery + institutional B2B distribution + authentic AI assistance + blockchain longevity + multi-generational family architecture + physical world gift delivery.</p>
+            </div>
+
+            <!-- Roadmap -->
+            <div class="section">
+                <h2>Roadmap</h2>
+
+                <h3>Phase 0: B2B Pilot with HFG (Now – Month 3)</h3>
+                <ul class="feature-list">
+                    <li>Advisor dashboard (manual setup for pilot)</li>
+                    <li>Core vault + message recording (video, letter)</li>
+                    <li>Guardian system (basic)</li>
+                    <li>Recipient email delivery & unlock</li>
+                    <li>HFG onboarding (5–10 clients)</li>
+                    <li>Arweave mirroring</li>
+                </ul>
+
+                <h3>Phase 1: MVP Public Launch (Month 0–6)</h3>
+                <ul class="feature-list">
+                    <li>All message types (video, voice, letter, photo/doc)</li>
+                    <li>All trigger types (date, age, life event, inheritance)</li>
+                    <li>Time Collapse feature ⭐</li>
+                    <li>Emergency release system (30-day window)</li>
+                    <li>B2C subscription billing</li>
+                    <li>Wealth Manager dashboard (automated)</li>
+                    <li>Advisor Starter + Pro tiers</li>
+                    <li>Polygon audit trail</li>
+                </ul>
+
+                <h3>Phase 2: AI Coach, Family Vault, Mobile (Month 6–12)</h3>
+                <ul class="feature-list">
+                    <li>AI Message Coach</li>
+                    <li>Family Vault (up to 10 members)</li>
+                    <li>React Native mobile app (iOS + Android)</li>
+                    <li>Dynasty B2C tier</li>
+                    <li>Push notifications</li>
+                </ul>
+
+                <h3>Phase 3: Legacy Gifts, B2B Scale (Month 12–18)</h3>
+                <ul class="feature-list">
+                    <li>Legacy Gifts catalog + fulfillment</li>
+                    <li>Family Vault (up to 50 members)</li>
+                    <li>Firm License tier</li>
+                    <li>White-label advisor branding</li>
+                </ul>
+
+                <h3>Phase 4: Multi-Region, API, Open Platform (Month 18–24)</h3>
+                <ul class="feature-list">
+                    <li>EU data residency</li>
+                    <li>Open API for integrations</li>
+                    <li>Full white-label option</li>
+                    <li>Estate attorney referral channel</li>
+                </ul>
+            </div>
+
+            <!-- Financial Model -->
+            <div class="section">
+                <h2>Year 1 Financial Model (HFG Pilot + 200 B2C Users)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Revenue Stream</th>
+                            <th>Monthly</th>
+                            <th>Annual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HFG pilot fee</td>
+                            <td>$1,500</td>
+                            <td>$18,000</td>
+                        </tr>
+                        <tr>
+                            <td>200 B2C users (avg $15/mo)</td>
+                            <td>$3,000</td>
+                            <td>$36,000</td>
+                        </tr>
+                        <tr>
+                            <td>Legacy Gift commissions</td>
+                            <td>$500</td>
+                            <td>$6,000</td>
+                        </tr>
+                        <tr style="background: #f5f5f5; font-weight: 600;">
+                            <td><strong>Total Revenue</strong></td>
+                            <td><strong>$5,000</strong></td>
+                            <td><strong>$60,000</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Infrastructure Economics</h3>
+                <div class="stat-box">
+                    <div class="stat-value">94%</div>
+                    <div class="stat-label">Gross Margin (after infrastructure costs)</div>
+                </div>
+                <p>This is among the highest-margin SaaS product categories. Marginal cost per new user is near zero after fixed infrastructure is established.</p>
+            </div>
+
+            <!-- Why This Matters for Larry -->
+            <div class="section" style="border-top: 2px solid #c9a84c; padding-top: 40px;">
+                <h2>Why This Matters for HFG (Larry's Use Case)</h2>
+                <div class="highlight">
+                    <h3 style="margin-top: 0; color: #0b0f1e;">The Wealth Manager Problem Legacy Architect Solves</h3>
+                    <p><strong>Current state:</strong> You manage the parent. The relationship is transactional — investment management, tax planning, estate documents.</p>
+                    <p><strong>Inheritance event happens:</strong> Parent dies. Heir inherits $2–10M. Your firm loses the relationship within 18–24 months. The heir goes to a different advisor.</p>
+                    <p><strong>Why?</strong> No emotional continuity. The heir never knew you. They don't know the family values. Inheritance feels clinical.</p>
+                </div>
+
+                <h3>Legacy Architect as Differentiation</h3>
+                <p>You proactively onboard your client families into Legacy Architect as part of the estate planning process. The parents record messages for their heirs — personal wisdom, family values, the "why" behind the wealth.</p>
+                <p>When the inheritance event happens:</p>
+                <ul>
+                    <li>The heir receives not just money, but the parent's voice, face, and guidance</li>
+                    <li>The heir knows they were loved and thought about</li>
+                    <li>The family values embedded in the Legacy Architect vault create continuity</li>
+                    <li>You (the advisor) become the executor of that emotional legacy</li>
+                    <li><strong>The heir stays with you.</strong></li>
+                </ul>
+
+                <h3>B2B Economics for HFG</h3>
+                <p>You pay $299–1,499/month for the advisor platform. You provision your clients at no extra cost to them — it's a white-glove service you provide as part of your estate planning offering.</p>
+                <p>You get:</p>
+                <ul class="feature-list">
+                    <li>A client relationship deepening tool with emotional weight</li>
+                    <li>A reason to bring adult children into the planning conversation early</li>
+                    <li>A differentiator that competitors don't have</li>
+                    <li>A soft relationship anchor for heirs before the transfer event</li>
+                    <li>Measurable vault health metrics for your book of business</li>
+                </ul>
+
+                <h3>HFG Pilot Goals</h3>
+                <p>Validate that:</p>
+                <ol>
+                    <li>Your clients will adopt this when you introduce it</li>
+                    <li>Vault adoption increases family alignment and reduces post-transfer churn</li>
+                    <li>The workflow fits naturally into your estate planning process</li>
+                    <li>We can turn this into a case study for B2B sales</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Legacy Architect | Product Requirements Document</strong></p>
+            <p>Prepared by The Signal Product Studio | March 16, 2026</p>
+            <p style="margin-top: 15px; color: #999;">This document is confidential and intended for authorized review only.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revenue Architecture Plan — HFG Wealth Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#07080f;--navy:#0b0f1e;--dark:#141929;--card:#1a2236;
+  --gold:#c9a84c;--gold-dim:rgba(201,168,76,0.08);--gold-border:rgba(201,168,76,0.22);
+  --cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.06);--cyan-border:rgba(0,212,255,0.18);
+  --white:#f2f2f5;--grey:#7a84a0;--muted:#4a5270;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,sans-serif;
+}
+body{font-family:var(--sans);background:var(--navy);color:var(--white);min-height:100vh;line-height:1.7}
+.back-nav{position:sticky;top:0;z-index:9999;background:rgba(7,8,15,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.18);padding:0 32px;height:46px;display:flex;align-items:center;justify-content:space-between}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.back-nav span{font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.hero{background:var(--black);padding:80px 40px 72px;text-align:center;border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 50% 40%,rgba(201,168,76,.06) 0%,transparent 65%);pointer-events:none}
+.eyebrow{font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before,.eyebrow::after{content:'';width:22px;height:1px;background:rgba(201,168,76,.5)}
+.hero-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:14px;position:relative;max-width:700px;margin-left:auto;margin-right:auto}
+.hero-title span{color:var(--gold);font-style:italic}
+.hero-body{font-size:.88rem;color:var(--grey);line-height:1.85;max-width:520px;margin:0 auto;position:relative}
+.hero-body strong{color:var(--white)}
+.main{max-width:900px;margin:0 auto;padding:64px 40px 80px}
+.section{margin-bottom:64px}
+.section-eyebrow{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:'';width:14px;height:1px;background:var(--gold)}
+.section-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.2}
+.section-sub{font-size:.88rem;color:var(--grey);line-height:1.8;max-width:640px;margin-bottom:32px}
+.section-sub strong{color:var(--white)}
+.current-state{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-bottom:24px}
+.cs-side{padding:28px 30px}
+.cs-side.problem{background:rgba(255,255,255,.02)}
+.cs-side.opportunity{background:var(--gold-dim)}
+.cs-label{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:16px}
+.cs-side.problem .cs-label{color:var(--muted)}
+.cs-side.opportunity .cs-label{color:var(--gold)}
+.cs-item{font-size:.82rem;color:var(--grey);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.5}
+.cs-item:last-child{border-bottom:none}
+.cs-side.opportunity .cs-item{color:var(--white)}
+.lever-cards{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px}
+.lever{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:32px;position:relative;overflow:hidden}
+.lever.primary{border-color:var(--gold-border);background:var(--gold-dim)}
+.lever-num{font-family:var(--serif);font-size:3rem;font-weight:700;color:rgba(201,168,76,.12);position:absolute;top:12px;right:20px;line-height:1}
+.lever-label{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:10px}
+.lever-title{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.3}
+.lever-body{font-size:.83rem;color:var(--grey);line-height:1.8;margin-bottom:20px}
+.lever-body strong{color:var(--white)}
+.lever-steps{display:flex;flex-direction:column;gap:8px}
+.lever-step{display:flex;gap:10px;align-items:flex-start;font-size:.78rem;color:var(--grey);line-height:1.6}
+.lever-step-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px}
+.lever-step strong{color:var(--white)}
+.icp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.icp-card{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:22px}
+.icp-card.gold{border-color:var(--gold-border);background:var(--gold-dim)}
+.icp-label{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-bottom:10px}
+.icp-card.gold .icp-label{color:var(--gold)}
+.icp-card:not(.gold) .icp-label{color:var(--muted)}
+.icp-title{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--white);margin-bottom:8px;line-height:1.3}
+.icp-body{font-size:.78rem;color:var(--grey);line-height:1.7}
+.icp-body strong{color:var(--white)}
+.sequence-flow{display:flex;align-items:stretch;gap:0;margin:32px 0;overflow:hidden;border-radius:4px}
+.seq-step{flex:1;background:var(--dark);border:1px solid rgba(255,255,255,.07);padding:20px 16px;text-align:center;position:relative}
+.seq-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:.9rem;z-index:1}
+.seq-step.highlight{background:var(--gold-dim);border-color:var(--gold-border)}
+.seq-step-label{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.seq-step.highlight .seq-step-label{color:var(--gold)}
+.seq-step:not(.highlight) .seq-step-label{color:var(--muted)}
+.seq-step-name{font-size:.82rem;font-weight:600;color:var(--white);line-height:1.3}
+.tech-stack{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.tech-item{background:var(--dark);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:20px}
+.tech-priority{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.tech-priority.p1{color:var(--gold)}
+.tech-priority.p2{color:var(--cyan)}
+.tech-priority.p3{color:var(--muted)}
+.tech-name{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:6px}
+.tech-desc{font-size:.75rem;color:var(--grey);line-height:1.6}
+.projection-table{width:100%;border-collapse:collapse;margin-bottom:24px}
+.projection-table th{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:10px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08)}
+.projection-table td{font-size:.83rem;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--grey);vertical-align:top}
+.projection-table td:first-child{color:var(--white);font-weight:500}
+.projection-table td.gold{color:var(--gold);font-weight:600}
+.projection-table tr:last-child td{border-bottom:none}
+.partnership-box{background:var(--black);border:1px solid var(--gold-border);border-radius:6px;padding:40px;text-align:center}
+.partnership-title{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:12px}
+.partnership-title span{color:var(--gold);font-style:italic}
+.partnership-body{font-size:.85rem;color:var(--grey);line-height:1.9;max-width:520px;margin:0 auto 20px}
+.partnership-body strong{color:var(--white)}
+.divider{height:1px;background:rgba(255,255,255,.06);margin:48px 0}
+footer{text-align:center;padding:24px;font-size:.62rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.04)}
+@media(max-width:720px){.current-state,.icp-grid,.tech-stack,.sequence-flow{grid-template-columns:1fr;flex-direction:column}.seq-step:not(:last-child)::after{display:none}}
+</style>
+</head>
+<body>
+
+<div class="back-nav">
+  <a href="signal-larry.html"><span style="font-size:.9rem">←</span> Back to your journey</a>
+  <span>Revenue Architecture Plan · HFG Wealth Management</span>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">The Signal · For HFG</div>
+  <h1 class="hero-title">The Growth <span>Architecture</span></h1>
+  <p class="hero-body">How The Signal will amplify HFG Wealth Management's reach, systematize its referral engine, and make sure the right families in Texas — and beyond — discover the Legacy Architect they've been looking for. <strong>The signal is already strong. We're building the broadcast tower.</strong></p>
+</div>
+
+<div class="main">
+
+  <div class="section">
+    <div class="section-eyebrow">Current State</div>
+    <h2 class="section-title">The Opportunity Map</h2>
+    <p class="section-sub">HFG has what most firms spend years trying to manufacture: a genuine, defensible differentiator. The broadcast infrastructure hasn't yet caught up with the quality of the signal.</p>
+    <div class="current-state">
+      <div class="cs-side problem">
+        <div class="cs-label">Current Constraints</div>
+        <div class="cs-item">Category language: "Wealth Management" (commodity)</div>
+        <div class="cs-item">Digital first impression: functional but not resonant</div>
+        <div class="cs-item">Content: blog exists, not yet a signal franchise</div>
+        <div class="cs-item">Referrals: relationship-driven, no systematic architecture</div>
+        <div class="cs-item">Faith + finance angle: underutilized in market presence</div>
+        <div class="cs-item">Charitable Giving pillar: not leading the conversation</div>
+      </div>
+      <div class="cs-side opportunity">
+        <div class="cs-label">Signal Opportunities</div>
+        <div class="cs-item">New category: "Legacy Architecture" — own it before anyone else</div>
+        <div class="cs-item">Digital redesign: make the site feel what HFG actually is</div>
+        <div class="cs-item">"Where Faith & Finance Intersect" — content franchise to build</div>
+        <div class="cs-item">Referral machine: systematize what's already working</div>
+        <div class="cs-item">$84T wealth transfer: HFG is perfectly positioned for this moment</div>
+        <div class="cs-item">WoodsEdge + faith community: underutilized trust network</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">The 3 Levers</div>
+    <h2 class="section-title">How We Amplify HFG's Signal</h2>
+    <p class="section-sub">Three complementary growth engines — each building on HFG's existing strengths, each compounding over time.</p>
+    <div class="lever-cards">
+      <div class="lever primary">
+        <div class="lever-num">1</div>
+        <div class="lever-label">Primary Lever</div>
+        <div class="lever-title">The Referral Signal Machine</div>
+        <div class="lever-body">HFG's best clients are its best marketing asset — and right now, there's no system to activate them. A referral machine doesn't replace the relationship; it <strong>amplifies it.</strong> We build the infrastructure that makes your best clients into signal amplifiers without it ever feeling transactional.</div>
+        <div class="lever-steps">
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Client Advocate Program:</strong> identify the 20% who love you most, give them a framework for sharing your story</div></div>
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>The Covenant Conversation:</strong> a scripted, natural way for clients to introduce HFG to peers at the right moment</div></div>
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Legacy Moments:</strong> identify milestones (inheritances, business sales, family events) where warm introductions are natural and welcome</div></div>
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Professional Network Activation:</strong> attorneys, CPAs, estate planners — build structured co-referral relationships with the advisors your clients already trust</div></div>
+        </div>
+      </div>
+      <div class="lever">
+        <div class="lever-num">2</div>
+        <div class="lever-label">Second Lever</div>
+        <div class="lever-title">Faith Community Amplification</div>
+        <div class="lever-body">Larry's church community and faith network represent a deeply trusted audience that already shares HFG's values. This isn't about using the church for business — it's about <strong>showing up as a resource for people who are already asking the questions HFG answers.</strong></div>
+        <div class="lever-steps">
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>WoodsEdge Partnership:</strong> financial stewardship workshops, estate planning seminars — present as a resource, not a salesperson</div></div>
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Faith & Finance Workshop Series:</strong> "What Your Wealth Is For" — a 90-minute event that introduces the Legacy Architecture conversation to 30-50 of exactly the right people</div></div>
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Christian Business Leaders Network:</strong> The Woodlands has a concentration of faith-aligned business owners — HFG should be the name they all know</div></div>
+        </div>
+      </div>
+      <div class="lever">
+        <div class="lever-num">3</div>
+        <div class="lever-label">Third Lever</div>
+        <div class="lever-title">The Content Signal Engine</div>
+        <div class="lever-body">HFG already produces content. What's missing is a <strong>consistent, owned thematic franchise</strong> that makes HFG findable by the exact clients who will resonate with the Legacy Architecture positioning.</div>
+        <div class="lever-steps">
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>"Where Faith & Finance Intersect" series:</strong> monthly long-form content that owns the intersection no other firm is speaking to</div></div>
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>The Legacy Conversation Podcast:</strong> Larry's 35-year perspective on wealth, family, faith, and legacy — the conversations he has in the conference room, now on the internet</div></div>
+          <div class="lever-step"><div class="lever-step-dot"></div><div><strong>LinkedIn authority building:</strong> short, provocative posts that make the right people say "who is this, and why haven't I heard of them?"</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">The Ideal Client Profile</div>
+    <h2 class="section-title">The Family HFG Was Built For</h2>
+    <p class="section-sub">Not every affluent family is the right HFG client. The right client is the one who makes everything HFG does feel effortless, purposeful, and worth doing.</p>
+    <div class="icp-grid">
+      <div class="icp-card gold">
+        <div class="icp-label">Who they are</div>
+        <div class="icp-title">Faith-aligned. Legacy-minded. Values-driven.</div>
+        <div class="icp-body">They attend church. They give generously. They worry more about what they're leaving behind than what they've accumulated. <strong>They want an advisor who speaks their language — not just their financial language, but their values language.</strong></div>
+      </div>
+      <div class="icp-card">
+        <div class="icp-label">Their wealth profile</div>
+        <div class="icp-title">$2M–$20M+ in investable assets</div>
+        <div class="icp-body">Often successful business owners, professionals, or executives. Approaching or at retirement. Beginning to think seriously about wealth transfer and charitable giving. Complex enough to need family-office-quality service.</div>
+      </div>
+      <div class="icp-card">
+        <div class="icp-label">What they're searching for</div>
+        <div class="icp-title">An advisor who gets the whole picture</div>
+        <div class="icp-body">They've had advisors who were great at one thing — investments, or tax, or estate planning — but never all of it. And never with the depth of a relationship that feels like a trusted family advisor, not a service provider.</div>
+      </div>
+      <div class="icp-card gold">
+        <div class="icp-label">The disqualifier</div>
+        <div class="icp-title">Pure performance seekers</div>
+        <div class="icp-body">Clients who only care about beating the benchmark every quarter are not the right HFG clients. <strong>HFG's value isn't in outperforming the S&P. It's in building wealth that outlasts its owner.</strong> The right clients understand the difference.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">The Acquisition Sequence</div>
+    <h2 class="section-title">How the Right Family Becomes an HFG Client</h2>
+    <p class="section-sub">Five stages. Each one intentionally designed to deepen trust and build toward the Covenant.</p>
+    <div class="sequence-flow">
+      <div class="seq-step"><div class="seq-step-label">Stage 1</div><div class="seq-step-name">Awareness</div></div>
+      <div class="seq-step"><div class="seq-step-label">Stage 2</div><div class="seq-step-name">Trust</div></div>
+      <div class="seq-step highlight"><div class="seq-step-label">Stage 3</div><div class="seq-step-name">Conversation</div></div>
+      <div class="seq-step"><div class="seq-step-label">Stage 4</div><div class="seq-step-name">Covenant</div></div>
+      <div class="seq-step"><div class="seq-step-label">Stage 5</div><div class="seq-step-name">Advocacy</div></div>
+    </div>
+    <div class="lever-steps" style="margin-top:20px">
+      <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Awareness:</strong> They find HFG through a referral, a piece of content, a workshop, or a church community connection. First impression: "This is different."</div></div>
+      <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Trust:</strong> They read the manifesto, use the Legacy Impact Calculator, attend a workshop, or consume content. They're not looking for returns — they're looking for resonance.</div></div>
+      <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Conversation:</strong> The Discovery Call — Larry or a team member listening deeply, asking the right questions, introducing the Legacy Architecture frame. This is where HFG's signal does the work.</div></div>
+      <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Covenant:</strong> The Covenant Meeting — the formal engagement, built around the question "what do you want your wealth to accomplish?" Not an asset allocation discussion. A legacy conversation.</div></div>
+      <div class="lever-step"><div class="lever-step-dot"></div><div><strong>Advocacy:</strong> The client who loves HFG refers 2–3 people who are just like them. The referral machine starts. The signal amplifies itself.</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">Technology Stack</div>
+    <h2 class="section-title">What Needs to Be Built</h2>
+    <div class="tech-stack">
+      <div class="tech-item"><div class="tech-priority p1">Priority 1</div><div class="tech-name">CRM + Pipeline</div><div class="tech-desc">Systematize the referral flow, track prospect journey stages, automate follow-up without losing the personal touch.</div></div>
+      <div class="tech-item"><div class="tech-priority p1">Priority 1</div><div class="tech-name">Content Platform</div><div class="tech-desc">"Where Faith & Finance Intersect" as a dedicated content hub. SEO-optimized for the exact searches your ideal clients are making.</div></div>
+      <div class="tech-item"><div class="tech-priority p2">Priority 2</div><div class="tech-name">Workshop Funnel</div><div class="tech-desc">Registration, follow-up sequences, and conversion pathway from workshop attendee to Discovery Call request.</div></div>
+      <div class="tech-item"><div class="tech-priority p2">Priority 2</div><div class="tech-name">Legacy Calculator</div><div class="tech-desc">The interactive Legacy Impact Calculator (built and delivered in this session) — embedded on the website as a lead magnet.</div></div>
+      <div class="tech-item"><div class="tech-priority p3">Priority 3</div><div class="tech-name">Podcast Infrastructure</div><div class="tech-desc">The Legacy Conversation Podcast — Larry's voice reaching the exact audience who will become clients. Low-cost, high-trust brand building.</div></div>
+      <div class="tech-item"><div class="tech-priority p3">Priority 3</div><div class="tech-name">LinkedIn Automation</div><div class="tech-desc">Managed LinkedIn presence — regular posts, strategic engagement, connections with ideal client profiles in The Woodlands market.</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">Revenue Projections</div>
+    <h2 class="section-title">The Conservative Case — 24 Months</h2>
+    <p class="section-sub">Based on HFG's current conversion metrics and reasonable assumptions about amplification.</p>
+    <table class="projection-table">
+      <thead><tr><th>Milestone</th><th>Timeline</th><th>New AUM Target</th><th>Revenue Impact</th></tr></thead>
+      <tbody>
+        <tr><td>Category launch + referral machine activation</td><td>Months 1–3</td><td>+$5M–10M</td><td class="gold">+$50K–100K/yr fees</td></tr>
+        <tr><td>Faith community workshop series (3 events)</td><td>Months 3–6</td><td>+$10M–15M</td><td class="gold">+$100K–150K/yr fees</td></tr>
+        <tr><td>Content engine and LinkedIn authority building</td><td>Months 6–12</td><td>+$15M–25M</td><td class="gold">+$150K–250K/yr fees</td></tr>
+        <tr><td>Referral flywheel self-sustaining</td><td>Months 12–24</td><td>+$30M–50M</td><td class="gold">+$300K–500K/yr fees</td></tr>
+        <tr><td><strong>24-Month Conservative Total</strong></td><td></td><td><strong>+$60M–100M AUM</strong></td><td class="gold"><strong>+$600K–1M/yr in fees</strong></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.75rem;color:var(--muted);line-height:1.6;margin-top:8px">Conservative assumptions: 1% average fee on new AUM, 40% of workshop attendees request Discovery Call, 25% of referrals convert to clients. The upside case is significantly higher.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="partnership-box">
+    <h3 class="partnership-title">The Signal <span>Partnership</span></h3>
+    <p class="partnership-body">The Signal builds and operates HFG's broadcast infrastructure. <strong>We take care of the signal so Larry and the team can take care of their clients.</strong> Pay only for results. No retainer until the machine is producing. This is the model we believe in — and it's the model HFG deserves.</p>
+    <p style="font-size:.75rem;color:var(--muted);margin-top:8px">Talk to Aidan about what partnership looks like. This document is the beginning of that conversation.</p>
+  </div>
+
+</div>
+
+<footer>The Signal &nbsp;·&nbsp; Revenue Architecture Plan &nbsp;·&nbsp; HFG Wealth Management &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Confidential</footer>
+</body>
+</html>

@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>From Legacy Architecture to Legacy Technology — HFG Wealth Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #07080f;
+      --navy:   #0b0f1e;
+      --gold:   #c9a84c;
+      --gold-light: #dfc07a;
+      --gold-dim: rgba(201, 168, 76, 0.15);
+      --gold-border: rgba(201, 168, 76, 0.35);
+      --white:  #f2f2f5;
+      --muted:  #8892a4;
+      --surface: #0f1425;
+      --surface-2: #131929;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background-color: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 600; }
+    h2 { font-size: clamp(1.7rem, 3.5vw, 2.6rem); font-weight: 500; }
+    h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 500; }
+    h4 { font-size: 1.1rem; font-weight: 500; }
+
+    p { margin-bottom: 1.1rem; color: var(--white); opacity: 0.88; }
+    p:last-child { margin-bottom: 0; }
+
+    strong { color: var(--white); font-weight: 600; opacity: 1; }
+
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { color: var(--gold-light); }
+
+    /* ─── FIXED NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(7, 8, 15, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--gold-border);
+      height: 58px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      list-style: none;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-links li a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links li a:hover {
+      color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 100px 2rem 80px;
+      position: relative;
+    }
+
+    section::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+      margin: 0 auto;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    section:last-of-type::after { display: none; }
+
+    .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 2rem 80px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,168,76,0.06) 0%, transparent 70%),
+        var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 50%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 60px,
+          rgba(201,168,76,0.025) 60px,
+          rgba(201,168,76,0.025) 61px
+        );
+      pointer-events: none;
+    }
+
+    #hero::after { display: none; }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--gold-border);
+      border-radius: 3px;
+    }
+
+    .hero-date {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-prepared {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-prepared em {
+      font-style: normal;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .hero-headline {
+      margin-bottom: 1.6rem;
+      color: var(--white);
+    }
+
+    .hero-headline .accent { color: var(--gold); }
+
+    .hero-subheadline {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 680px;
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 0;
+      opacity: 1;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin: 2.5rem 0;
+    }
+
+    /* ─── SECTION 1: WHERE YOU ARE ─── */
+    #where-you-are {
+      background: var(--black);
+    }
+
+    .three-pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5px;
+      margin-top: 3rem;
+    }
+
+    .pillar {
+      background: var(--surface);
+      padding: 2rem 1.8rem;
+      border-top: 2px solid var(--gold-border);
+      transition: border-color 0.3s;
+    }
+
+    .pillar:hover { border-top-color: var(--gold); }
+
+    .pillar-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--gold);
+      opacity: 0.35;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .pillar h4 {
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+
+    .pillar p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 0;
+      opacity: 1;
+    }
+
+    /* ─── SECTION 2: THE PROBLEM ─── */
+    #the-problem {
+      background: var(--navy);
+    }
+
+    .problem-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5px;
+      margin: 3rem 0;
+    }
+
+    .stat-card {
+      background: var(--surface-2);
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .problem-list {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .problem-list li {
+      padding: 0.9rem 0 0.9rem 1.8rem;
+      position: relative;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      font-size: 0.95rem;
+      color: var(--white);
+      opacity: 0.88;
+    }
+
+    .problem-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .problem-list li:last-child { border-bottom: none; }
+
+    .resolution-line {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+      font-style: italic;
+      color: var(--gold-light);
+      border-left: 3px solid var(--gold);
+      padding-left: 1.5rem;
+      margin-top: 2.5rem;
+      line-height: 1.55;
+    }
+
+    /* ─── SECTION 3: THE APP ─── */
+    #the-app {
+      background: var(--black);
+    }
+
+    .app-opening {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      font-style: italic;
+      color: var(--white);
+      border-left: 3px solid var(--gold);
+      padding: 1.4rem 1.8rem;
+      background: var(--gold-dim);
+      margin: 2.5rem 0 3rem;
+      line-height: 1.65;
+      opacity: 1;
+    }
+
+    /* Phone mockup area */
+    .app-mockup-area {
+      display: flex;
+      align-items: flex-start;
+      gap: 3rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+
+    .phone-mockup {
+      flex-shrink: 0;
+      width: 200px;
+      height: 400px;
+      background: var(--surface);
+      border-radius: 30px;
+      border: 2px solid var(--gold-border);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.1);
+      margin: 0 auto;
+    }
+
+    .phone-notch {
+      width: 80px;
+      height: 22px;
+      background: var(--black);
+      border-radius: 0 0 14px 14px;
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .phone-screen {
+      padding: 36px 14px 14px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .phone-app-bar {
+      text-align: center;
+      padding: 6px 0 10px;
+    }
+
+    .phone-app-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .phone-app-sub {
+      font-size: 0.55rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .phone-message-card {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid var(--gold-border);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .phone-msg-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .phone-msg-event {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.65rem;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .phone-msg-lock {
+      font-size: 0.5rem;
+      color: var(--muted);
+    }
+
+    .phone-vault-row {
+      background: var(--surface-2);
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .phone-vault-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .phone-vault-text { flex: 1; }
+
+    .phone-vault-name {
+      font-size: 0.55rem;
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .phone-vault-type {
+      font-size: 0.48rem;
+      color: var(--muted);
+    }
+
+    .phone-status-bar {
+      margin-top: auto;
+      text-align: center;
+      padding-top: 8px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .phone-status-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-right: 5px;
+    }
+
+    .phone-status-text {
+      font-size: 0.48rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .app-mockup-copy { flex: 1; min-width: 260px; }
+
+    /* Features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5px;
+      margin-top: 3rem;
+    }
+
+    .feature-item {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 0;
+      background: var(--surface);
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+
+    .feature-item:hover { background: var(--surface-2); }
+
+    .feature-number-col {
+      background: var(--gold-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      padding: 1.8rem 0;
+      border-right: 1px solid var(--gold-border);
+    }
+
+    .feature-content {
+      padding: 1.6rem 1.8rem;
+    }
+
+    .feature-content h4 {
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .feature-content p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0;
+      opacity: 1;
+    }
+
+    /* ─── SECTION 4: WHY HFG ─── */
+    #why-hfg {
+      background: var(--navy);
+    }
+
+    .problem-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5px;
+      margin-top: 3rem;
+    }
+
+    .problem-card {
+      background: var(--surface-2);
+      padding: 0;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 6px 1fr;
+    }
+
+    .problem-card-accent {
+      background: var(--gold);
+    }
+
+    .problem-card-body {
+      padding: 2rem 2.2rem;
+    }
+
+    .problem-card-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .problem-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+
+    .problem-card-list {
+      list-style: none;
+    }
+
+    .problem-card-list li {
+      padding: 0.55rem 0 0.55rem 1.5rem;
+      position: relative;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.55;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .problem-card-list li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 0.45rem;
+      top: 0.85rem;
+    }
+
+    .problem-card-list li:last-child { border-bottom: none; }
+
+    /* ─── SECTION 5: ENGAGEMENT ─── */
+    #the-engagement {
+      background: var(--black);
+    }
+
+    .phases-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5px;
+      margin-top: 3rem;
+    }
+
+    .phase {
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.8rem 2rem;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      background: var(--surface-2);
+    }
+
+    .phase-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .phase-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .phase-header-text h3 {
+      font-size: 1.15rem;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .phase-timeline {
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .phase-deliverables {
+      padding: 1.6rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.6rem;
+      list-style: none;
+    }
+
+    .phase-deliverables li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.55;
+    }
+
+    .phase-deliverables li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 0.8rem;
+    }
+
+    /* ─── SECTION 6: OPPORTUNITY ─── */
+    #the-opportunity {
+      background: var(--navy);
+    }
+
+    .opportunity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5px;
+      margin: 3rem 0;
+    }
+
+    .opportunity-item {
+      background: var(--surface-2);
+      padding: 2rem 1.6rem;
+      text-align: center;
+      border-top: 2px solid var(--gold-border);
+      transition: border-color 0.3s;
+    }
+
+    .opportunity-item:hover { border-top-color: var(--gold); }
+
+    .opportunity-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .opportunity-item h4 {
+      font-size: 0.92rem;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+
+    .opportunity-item p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.55;
+      opacity: 1;
+    }
+
+    .opportunity-closer {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      color: var(--white);
+      text-align: center;
+      margin-top: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .opportunity-closer span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ─── SECTION 7: INVESTMENT ─── */
+    #investment {
+      background: var(--black);
+    }
+
+    .investment-phases {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5px;
+      margin-top: 3rem;
+    }
+
+    .investment-phase {
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 1.5rem;
+      padding: 2rem 2.2rem;
+      border-left: 3px solid var(--gold-border);
+      transition: border-color 0.3s;
+    }
+
+    .investment-phase:hover { border-left-color: var(--gold); }
+
+    .investment-phase-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .investment-phase h3 {
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .investment-phase p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0;
+      opacity: 1;
+    }
+
+    .investment-amount {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .investment-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .investment-timeline {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .investment-total {
+      background: var(--gold-dim);
+      border: 1.5px solid var(--gold-border);
+      padding: 1.8rem 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5px;
+    }
+
+    .investment-total-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .investment-total-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .investment-total-price {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .callout-box {
+      border: 1.5px solid var(--gold);
+      padding: 2rem 2.2rem;
+      margin-top: 2.5rem;
+      position: relative;
+    }
+
+    .callout-box::before {
+      content: '❝';
+      position: absolute;
+      top: -0.75rem;
+      left: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      background: var(--black);
+      padding: 0 0.4rem;
+      line-height: 1;
+    }
+
+    .callout-box p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.65;
+      opacity: 1;
+      margin: 0;
+    }
+
+    .revenue-note {
+      background: var(--surface);
+      padding: 2rem 2.2rem;
+      margin-top: 2rem;
+    }
+
+    .revenue-note-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .revenue-scenarios {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .revenue-scenario {
+      text-align: center;
+      padding: 1.2rem;
+      background: var(--surface-2);
+      border-radius: 2px;
+    }
+
+    .revenue-scenario-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .revenue-scenario-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ─── SECTION 8: NEXT STEPS ─── */
+    #next-steps {
+      background: var(--navy);
+    }
+
+    .steps-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5px;
+      margin: 3rem 0;
+    }
+
+    .step-card {
+      background: var(--surface-2);
+      padding: 2.2rem 1.8rem;
+      border-top: 2px solid var(--gold-border);
+      transition: border-color 0.3s;
+    }
+
+    .step-card:hover { border-top-color: var(--gold); }
+
+    .step-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step-card h4 {
+      color: var(--white);
+      margin-bottom: 0.6rem;
+      font-size: 1rem;
+    }
+
+    .step-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+      opacity: 1;
+    }
+
+    .cta-box {
+      background: var(--gold);
+      padding: 3rem 2.5rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .cta-box p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+      color: var(--black);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+      line-height: 1.5;
+    }
+
+    .cta-box .cta-name {
+      font-size: 0.82rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(7,8,15,0.65);
+      margin-bottom: 1.8rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: var(--black);
+      color: var(--gold) !important;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      border: 1.5px solid var(--black);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .cta-button:hover {
+      background: transparent;
+      color: var(--black) !important;
+      border-color: var(--black);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--gold-border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .footer-prepared {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-confidential {
+      font-size: 0.72rem;
+      color: var(--muted);
+      opacity: 0.55;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ─── UTILITIES ─── */
+    .gold { color: var(--gold); }
+    .muted { color: var(--muted); font-size: 0.9rem; }
+    .spacer { height: 2rem; }
+
+    .intro-body {
+      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+      line-height: 1.8;
+    }
+
+    .intro-body p {
+      margin-bottom: 1.2rem;
+    }
+
+    /* ─── ROI SECTION ─── */
+    #roi {
+      background: var(--navy);
+    }
+
+    .roi-scenarios {
+      margin-top: 3rem;
+    }
+
+    .roi-scenario-block {
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .roi-scenario-block:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .roi-scenario-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .roi-table-wrap {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      background: var(--surface);
+    }
+
+    .roi-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .roi-table th {
+      text-align: left;
+      padding: 0.8rem 1.2rem;
+      background: var(--surface-2);
+      color: var(--gold);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--gold-border);
+    }
+
+    .roi-table td {
+      padding: 0.9rem 1.2rem;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .roi-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .roi-table tr:hover td {
+      background: rgba(201,168,76,0.04);
+      color: var(--white);
+    }
+
+    .roi-table td.highlight {
+      color: var(--gold);
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+    }
+
+    .roi-callout {
+      border: 1.5px solid var(--gold);
+      padding: 1.6rem 2rem;
+      margin: 1.5rem 0;
+      background: rgba(201,168,76,0.04);
+      position: relative;
+    }
+
+    .roi-callout p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.65;
+      margin: 0;
+      opacity: 1;
+    }
+
+    .roi-projection-list {
+      list-style: none;
+      margin: 1rem 0;
+      background: var(--surface);
+      padding: 0;
+    }
+
+    .roi-projection-list li {
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .roi-projection-list li:last-child {
+      border-bottom: none;
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 1rem;
+      background: rgba(201,168,76,0.08);
+    }
+
+    .roi-projection-list li span {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .roi-sub-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin: 1.8rem 0 0.8rem;
+      display: block;
+    }
+
+    /* ─── INVESTMENT SECTION (new) ─── */
+    .package-box {
+      background: var(--surface);
+      border: 1.5px solid var(--gold);
+      padding: 2.5rem 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .package-price {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+
+    .package-total {
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .package-total strong {
+      color: var(--gold);
+    }
+
+    .checklist {
+      list-style: none;
+      margin: 1.5rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 0;
+    }
+
+    .checklist li {
+      padding: 0.75rem 0.5rem 0.75rem 2.2rem;
+      position: relative;
+      font-size: 0.92rem;
+      color: var(--white);
+      opacity: 0.9;
+      line-height: 1.5;
+      border-bottom: 1px solid rgba(201,168,76,0.07);
+    }
+
+    .checklist li::before {
+      content: '✓';
+      position: absolute;
+      left: 0.4rem;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .after-month-box {
+      background: var(--surface-2);
+      padding: 1.8rem 2.2rem;
+      margin: 2rem 0;
+      border-left: 3px solid var(--gold-border);
+    }
+
+    .after-month-box h4 {
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .after-month-box ul {
+      list-style: none;
+    }
+
+    .after-month-box ul li {
+      padding: 0.45rem 0 0.45rem 1.5rem;
+      position: relative;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .after-month-box ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    .benefit-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5px;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .benefit-card {
+      background: var(--surface);
+      padding: 1.8rem;
+      border-top: 2px solid var(--gold-border);
+      transition: border-color 0.3s;
+    }
+
+    .benefit-card:hover {
+      border-top-color: var(--gold);
+    }
+
+    .benefit-card h4 {
+      color: var(--gold-light);
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .benefit-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+      opacity: 1;
+    }
+
+    /* ─── PRINT ─── */
+    @media print {
+      nav { display: none; }
+      section { padding: 50px 2rem 40px; break-inside: avoid; }
+      body { background: white; color: #07080f; }
+      :root {
+        --black: #ffffff;
+        --navy: #f5f5f7;
+        --surface: #eeeff2;
+        --surface-2: #e8e9ed;
+        --white: #07080f;
+        --muted: #444;
+        --gold: #8b6914;
+        --gold-dim: rgba(139,105,20,0.08);
+        --gold-border: rgba(139,105,20,0.3);
+        --gold-light: #7a5c0f;
+      }
+      .hero-headline .accent { color: #8b6914; }
+      .cta-box { background: #8b6914; }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      section { padding: 80px 1.2rem 60px; }
+      #hero { padding: 90px 1.2rem 60px; }
+      .investment-phase { grid-template-columns: 1fr; }
+      .investment-amount { text-align: left; }
+      .investment-total { flex-direction: column; }
+      .app-mockup-area { flex-direction: column; align-items: center; }
+    }
+
+    @media (max-width: 480px) {
+      .problem-stats { grid-template-columns: 1fr 1fr; }
+      .three-pillars { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAV
+  ════════════════════════════════════════════ -->
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-logo">The Signal</span>
+      <ul class="nav-links">
+        <li><a href="#where-you-are">Where You Are</a></li>
+        <li><a href="#the-problem">The Problem</a></li>
+        <li><a href="#the-app">The App</a></li>
+        <li><a href="#why-hfg">Why HFG</a></li>
+        <li><a href="#roi">The ROI</a></li>
+        <li><a href="#the-engagement">The Engagement</a></li>
+        <li><a href="#the-opportunity">The Opportunity</a></li>
+        <li><a href="#investment">Investment</a></li>
+        <li><a href="#next-steps">Next Steps</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-meta">
+        <span class="hero-tag">HFG Wealth Management</span>
+        <span class="hero-date">March 2026</span>
+      </div>
+
+      <p class="hero-prepared">Prepared exclusively for <em>Larry Harvey</em> &amp; HFG Wealth Management</p>
+
+      <h1 class="hero-headline">
+        From Legacy Architecture<br />
+        to <span class="accent">Legacy Technology</span>
+      </h1>
+
+      <div class="hero-divider"></div>
+
+      <p class="hero-subheadline">
+        The next chapter of your positioning — a proprietary app that makes you the only wealth manager in the world who can offer this.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 1: WHERE YOU ARE NOW
+  ════════════════════════════════════════════ -->
+  <section id="where-you-are">
+    <div class="section-inner">
+      <span class="section-label">Section 01 — Where You Are Now</span>
+      <h2>You've claimed the category.<br />Now let's own it.</h2>
+
+      <div class="spacer"></div>
+
+      <div class="intro-body">
+        <p>Your Signal Session gave HFG a new identity — <strong>Legacy Architect</strong>. The positioning is powerful. The language is right. The vision is clear.</p>
+        <p>But positioning without proof is just a promise.</p>
+        <p>The next move is to make Legacy Architecture real, tangible, and impossible for competitors to copy. Three things need to happen:</p>
+      </div>
+
+      <div class="three-pillars">
+        <div class="pillar">
+          <div class="pillar-number">01</div>
+          <h4>A Brand That Matches the Vision</h4>
+          <p>New website, new visual identity, new language across every touchpoint. Every interaction should feel like the legacy practice you are.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">02</div>
+          <h4>A Social Presence That Tells the Story</h4>
+          <p>LinkedIn, thought leadership, the 35-year story of HFG articulated publicly. Your history is your greatest asset — let's put it to work.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">03</div>
+          <h4>A Proprietary Technology No Other Advisor Has</h4>
+          <p>An app built exclusively for HFG clients that proves Legacy Architecture isn't just a tagline. It's a living, breathing platform for your clients' most important moments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 2: THE PROBLEM
+  ════════════════════════════════════════════ -->
+  <section id="the-problem">
+    <div class="section-inner">
+      <span class="section-label">Section 02 — The Problem You Solve</span>
+      <h2>The moment every wealth manager dreads</h2>
+
+      <div class="spacer"></div>
+
+      <div class="intro-body">
+        <p>When a client passes away and wealth transfers to the next generation, three things happen almost immediately:</p>
+      </div>
+
+      <ul class="problem-list">
+        <li>The heirs don't know the advisor</li>
+        <li>The emotional connection to the wealth's origin is lost</li>
+        <li>The family's financial legacy is at risk</li>
+      </ul>
+
+      <div class="problem-stats">
+        <div class="stat-card">
+          <span class="stat-number">70%</span>
+          <span class="stat-label">of heirs change financial advisors after inheriting wealth</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">$84T</span>
+          <span class="stat-label">in wealth will transfer to the next generation by 2045</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">90%</span>
+          <span class="stat-label">of inherited assets lost by the average advisor within 2 years of a client's death</span>
+        </div>
+      </div>
+
+      <div class="resolution-line">
+        Legacy Architect changes all of this. Not by asking heirs to stay — but by making their parents' wishes unmistakably clear.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 3: THE APP
+  ════════════════════════════════════════════ -->
+  <section id="the-app">
+    <div class="section-inner">
+      <span class="section-label">Section 03 — Product Reveal</span>
+      <h2>Your proprietary platform.<br />Your competitive moat.</h2>
+
+      <blockquote class="app-opening">
+        "Legacy Architect is a private, secure platform exclusively for HFG Wealth Management clients. There is no other wealth manager in the world who can offer this."
+      </blockquote>
+
+      <div class="app-mockup-area">
+        <!-- Phone Mockup -->
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-app-bar">
+              <div class="phone-app-title">Legacy Architect</div>
+              <div class="phone-app-sub">HFG Wealth Management</div>
+            </div>
+
+            <div class="phone-message-card">
+              <div class="phone-msg-label">🔒 Time-Locked Message</div>
+              <div class="phone-msg-event">For Emma — Her Wedding Day</div>
+              <div class="phone-msg-lock">Recorded by Robert · Unlocks: upon marriage</div>
+            </div>
+
+            <div class="phone-vault-row">
+              <div class="phone-vault-icon">▶</div>
+              <div class="phone-vault-text">
+                <div class="phone-vault-name">A message from Dad</div>
+                <div class="phone-vault-type">Video · 4m 12s · Inheritance</div>
+              </div>
+            </div>
+
+            <div class="phone-vault-row">
+              <div class="phone-vault-icon">✉</div>
+              <div class="phone-vault-text">
+                <div class="phone-vault-name">To my grandchildren</div>
+                <div class="phone-vault-type">Letter · Family Vault</div>
+              </div>
+            </div>
+
+            <div class="phone-vault-row">
+              <div class="phone-vault-icon">🎁</div>
+              <div class="phone-vault-text">
+                <div class="phone-vault-name">Legacy Gift — 18th Birthday</div>
+                <div class="phone-vault-type">Gift + Voice Note · Scheduled</div>
+              </div>
+            </div>
+
+            <div class="phone-status-bar">
+              <span class="phone-status-dot"></span>
+              <span class="phone-status-text">Secured by HFG</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Copy beside mockup -->
+        <div class="app-mockup-copy">
+          <p>HFG clients record <strong>video messages, voice notes, and letters</strong> for their heirs inside a private, encrypted vault.</p>
+          <p>Messages are locked until specific life events trigger their release — inheritance, an 18th birthday, a wedding day, the birth of a first grandchild.</p>
+          <p>Every message is delivered with <strong>HFG advisor context</strong> woven in — so heirs receive their parent's wishes alongside guidance from the trusted advisor who helped build the legacy.</p>
+          <p>The <strong>Family Vault</strong> stores messages across generations, building a permanent legacy library that grows with each passing year.</p>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <h3 style="margin-top:3.5rem; margin-bottom:0.5rem;">Five features. One unassailable advantage.</h3>
+      <p style="color:var(--muted); margin-bottom:0;">The platform is built around the moments that matter most.</p>
+
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-number-col">1</div>
+          <div class="feature-content">
+            <h4>Time-Locked Messages</h4>
+            <p>Delivered at exactly the right moment. A message from a father to his daughter, recorded today, delivered on her wedding day. No other advisory practice in the world can offer this.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">2</div>
+          <div class="feature-content">
+            <h4>Inheritance Triggers</h4>
+            <p>When wealth transfers, heirs receive a message from their parents explaining the intention behind the inheritance — and their relationship with HFG. The transition begins with trust, not uncertainty.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">3</div>
+          <div class="feature-content">
+            <h4>The Family Vault</h4>
+            <p>Multi-generational archive. Not just a message, but a legacy library built across decades. Every recording, every letter, every moment of guidance — preserved and passed forward.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">4</div>
+          <div class="feature-content">
+            <h4>Legacy Gifts</h4>
+            <p>Physical gifts and messages delivered simultaneously. A bottle of champagne. A piece of jewellery. A first edition book. Delivered alongside a message from someone who loved them.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">5</div>
+          <div class="feature-content">
+            <h4>Advisor Integration</h4>
+            <p>HFG is woven into the legacy narrative, not bolted on. Advisors appear as trusted guides within the family's legacy story — building the heir relationship long before the inheritance arrives.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 3B: PRODUCT ARCHITECTURE & STRATEGY
+  ════════════════════════════════════════════ -->
+  <section style="background:var(--black);">
+    <div class="section-inner">
+      <span class="section-label">Section 3B — Product Deep Dive</span>
+      <h2>Nine core features.<br />Built to last forever.</h2>
+
+      <div class="spacer"></div>
+
+      <p class="intro-body">Every feature in Legacy Architect is designed around one principle: <strong>messages that survive the company, survive the platform, and survive time itself.</strong></p>
+
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-number-col">1</div>
+          <div class="feature-content">
+            <h4>Message Recording</h4>
+            <p>Record in four formats: video (up to 10 min), voice, written letter (rich text editor), photo/document uploads. All encrypted at rest. All mirrored to Arweave for permanent archival.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">2</div>
+          <div class="feature-content">
+            <h4>Smart Unlock Triggers</h4>
+            <p>Date-based ("December 25, 2040") • Age-based ("when they turn 18") • Life event ("wedding," "graduation," "birth of first child," "inheritance event") • Custom events • Multiple triggers per message (unlock on whichever comes first)</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">3</div>
+          <div class="feature-content">
+            <h4>Time Collapse™ (Unique)</h4>
+            <p>Record yourself at age 42 for your child to receive when they turn 42. Hear from your parent as a peer, at the same chapter of life. No competitor has this. This is what makes Legacy Architect different.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">4</div>
+          <div class="feature-content">
+            <h4>Family Vault</h4>
+            <p>Multi-generational shared archive. Grandparents, parents, siblings contribute. Vault grows across decades. Messages pass to heirs. Becomes the family's institutional memory.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">5</div>
+          <div class="feature-content">
+            <h4>Guardian / Succession System</h4>
+            <p>Creator appoints 1–3 trusted guardians. Guardians confirm life events, vote on emergency releases (2-of-3 required), receive annual check-ins. Guardian role is social, not legal.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">6</div>
+          <div class="feature-content">
+            <h4>Emergency Release System</h4>
+            <p>If creator is deceased or incapacitated: guardians vote → system notifies creator (30-day challenge window) → if no response, messages release to recipients. All logged to blockchain.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">7</div>
+          <div class="feature-content">
+            <h4>AI Message Coach (Phase 2)</h4>
+            <p>Many users freeze with a blank screen. Coach asks guided questions ("What moment do you never forget?" "What do you wish you could see?") → structures thoughts → user records in their own words.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">8</div>
+          <div class="feature-content">
+            <h4>Legacy Gifts (Phase 3)</h4>
+            <p>Curated marketplace of gifts (jewelry, keepsakes, books, custom items). Attach to a message. When trigger fires, gift + message arrive together. 15–20% commission on GMV.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-number-col">9</div>
+          <div class="feature-content">
+            <h4>Wealth Manager Dashboard (B2B)</h4>
+            <p>Advisor provisioning, client vault management, event alerts (60 days before inheritance events), vault health reporting. Advisors see metadata — never message content.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      <h3 style="margin-top:3.5rem; margin-bottom:1rem; color:var(--white);">Technology Foundation</h3>
+      <p style="color:var(--muted); margin-bottom:2rem;">Built for permanence and security.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <h4>Frontend</h4>
+          <p>Next.js 14+ web + React Native mobile (iOS + Android)</p>
+        </div>
+        <div class="card">
+          <h4>Backend</h4>
+          <p>Node.js / NestJS REST + WebSocket API</p>
+        </div>
+        <div class="card">
+          <h4>Storage</h4>
+          <p>PostgreSQL (metadata), AWS S3 / Cloudflare R2 (media), Arweave (permanent)</p>
+        </div>
+        <div class="card">
+          <h4>Blockchain</h4>
+          <p>Polygon (delivery instructions, votes, audit trail, permanence proof)</p>
+        </div>
+      </div>
+
+      <div class="highlight" style="margin-top:2rem;">
+        <strong>Security & Privacy:</strong> E2E encryption (AES-256) • Identity verification (email OTP + MFA) • Minor protection (guardian confirmation required) • Immutable audit logging • Advisor access controls (metadata only, never content)
+      </div>
+
+      <!-- Competitive Positioning -->
+      <h3 style="margin-top:3rem; margin-bottom:1rem; color:var(--white);">Why No One Else Can Touch This</h3>
+      <p style="color:var(--muted); margin-bottom:2rem;">The competitive landscape.</p>
+
+      <div class="problem-cards">
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">SafeBeyond (Closest Competitor)</div>
+            <div class="problem-card-title">The Weak Version</div>
+            <ul class="problem-card-list">
+              <li>Limited triggers (date + some life events)</li>
+              <li>No B2B model</li>
+              <li>No physical gift delivery</li>
+              <li>No family vault</li>
+              <li>No permanence guarantee</li>
+              <li>Declining growth signals</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">StoryWorth + Capsule.me (Niche Players)</div>
+            <div class="problem-card-title">Backward-Looking Tools</div>
+            <ul class="problem-card-list">
+              <li>StoryWorth: Captures family history, prints as a book. One-year project, not ongoing vault.</li>
+              <li>Capsule.me: Time capsule novelty. Date-only triggers. No family context. No distribution model.</li>
+              <li>Neither has wealth manager adoption or B2B positioning</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">HereAfter AI (The Ethical Problem)</div>
+            <div class="problem-card-title">Impersonation is the Opposite of Legacy</div>
+            <ul class="problem-card-list">
+              <li>Trains AI on user's voice/text to simulate them post-mortem</li>
+              <li>Not YOUR words — simulation of your words</li>
+              <li>Grieving families talking to AI ghost — psychologically problematic</li>
+              <li>No control over what the AI says</li>
+              <li>Deep ethical and legal exposure</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-box" style="margin-top:2rem;">
+        <p><strong>Legacy Architect's White Space:</strong> The intersection of emotional delivery + institutional B2B distribution + authentic (not AI-generated) messaging + blockchain permanence + multi-generational family architecture + physical world gift delivery. No competitor owns this combination. No competitor can build this fast.</p>
+      </div>
+
+      <!-- Monetization -->
+      <h3 style="margin-top:3rem; margin-bottom:1rem; color:var(--white);">Three Revenue Streams</h3>
+
+      <div class="problem-cards">
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">Stream 01 — B2C Subscriptions</div>
+            <div class="problem-card-title">Personal Vaults</div>
+            <ul class="problem-card-list">
+              <li><strong>Seed (Free):</strong> 1 message, 1 recipient, 500MB storage. Permanent.</li>
+              <li><strong>Legacy ($9/mo or $79/yr):</strong> 25 messages, 5 recipients, 10GB, all trigger types, guardian system</li>
+              <li><strong>Heritage ($19/mo or $159/yr):</strong> 100 messages, 15 recipients, 50GB, family vault (10 members), Time Collapse, legacy gifts</li>
+              <li><strong>Dynasty ($39/mo or $349/yr):</strong> Unlimited, family vault (50 members), API access</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">Stream 02 — B2B Licensing</div>
+            <div class="problem-card-title">Wealth Manager Tier System</div>
+            <ul class="problem-card-list">
+              <li><strong>Advisor Starter ($299/mo):</strong> Up to 20 client vaults</li>
+              <li><strong>Advisor Pro ($599/mo):</strong> Up to 100 client vaults, priority support</li>
+              <li><strong>Firm License ($1,499/mo):</strong> Unlimited for 10 advisors, white-label option</li>
+              <li>Founding partner rate (HFG): Locked for life. Never increases.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">Stream 03 — Legacy Gift Commission</div>
+            <div class="problem-card-title">Physical + Digital</div>
+            <ul class="problem-card-list">
+              <li><strong>17.5% commission</strong> on all legacy gift GMV</li>
+              <li>Target AOV: $85 → $14.88 per gift</li>
+              <li>Target: 500 active gifts/month by end of Phase 3</li>
+              <li>Scales to 5,000/month by Phase 4 → $74K/month passive</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roadmap -->
+      <h3 style="margin-top:3rem; margin-bottom:1rem; color:var(--white);">Development Roadmap</h3>
+
+      <div class="phases-container">
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-badge"><span class="phase-badge-num">0</span></div>
+            <div class="phase-header-text">
+              <h3>B2B Pilot: HFG (Now – Month 3)</h3>
+              <span class="phase-timeline">Validation phase with real clients</span>
+            </div>
+          </div>
+          <ul class="phase-deliverables">
+            <li>Advisor dashboard (manual setup)</li>
+            <li>Core vault + message recording (video, letter)</li>
+            <li>Guardian system (basic)</li>
+            <li>Recipient email delivery & unlock</li>
+            <li>HFG onboarding (5–10 clients)</li>
+            <li>Arweave mirroring</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-badge"><span class="phase-badge-num">1</span></div>
+            <div class="phase-header-text">
+              <h3>MVP Public Launch (Month 0–6)</h3>
+              <span class="phase-timeline">Full core feature set</span>
+            </div>
+          </div>
+          <ul class="phase-deliverables">
+            <li>All message types (video, voice, letter, photo/doc)</li>
+            <li>All trigger types (date, age, life event, inheritance)</li>
+            <li>Time Collapse feature ⭐ (the differentiator)</li>
+            <li>Emergency release system (30-day window)</li>
+            <li>B2C subscription billing (Stripe)</li>
+            <li>Wealth Manager dashboard (automated)</li>
+            <li>Polygon audit trail</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-badge"><span class="phase-badge-num">2</span></div>
+            <div class="phase-header-text">
+              <h3>AI Coach, Family Vault, Mobile (Month 6–12)</h3>
+              <span class="phase-timeline">Engagement deepening</span>
+            </div>
+          </div>
+          <ul class="phase-deliverables">
+            <li>AI Message Coach (guided prompts, no AI generation)</li>
+            <li>Family Vault (up to 10 members)</li>
+            <li>React Native mobile app (iOS + Android)</li>
+            <li>Dynasty B2C tier</li>
+            <li>Push notifications</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-badge"><span class="phase-badge-num">3</span></div>
+            <div class="phase-header-text">
+              <h3>Legacy Gifts & B2B Scale (Month 12–18)</h3>
+              <span class="phase-timeline">Revenue multiplication</span>
+            </div>
+          </div>
+          <ul class="phase-deliverables">
+            <li>Legacy Gifts catalog + fulfillment</li>
+            <li>Family Vault (up to 50 members)</li>
+            <li>Firm License tier ($1,499/mo)</li>
+            <li>White-label advisor branding</li>
+            <li>Estate attorney referral channel</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-badge"><span class="phase-badge-num">4</span></div>
+            <div class="phase-header-text">
+              <h3>Open API & Platform Play (Month 18+)</h3>
+              <span class="phase-timeline">Infrastructure layer</span>
+            </div>
+          </div>
+          <ul class="phase-deliverables">
+            <li>Open API for 3rd-party integrations</li>
+            <li>White-label for enterprise clients</li>
+            <li>International localization (6+ languages)</li>
+            <li>Insurance channel partnership</li>
+            <li>Family office product tier</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Year 1 Projections -->
+      <h3 style="margin-top:3rem; margin-bottom:1rem; color:var(--white);">Year 1 Financial Model</h3>
+      <p style="color:var(--muted); margin-bottom:1rem;">Conservative case: HFG pilot + 200 B2C users</p>
+
+      <div class="investment-total" style="margin:1.5rem 0; padding:1.8rem 2.2rem;">
+        <div>
+          <div class="investment-total-label">Gross Margin</div>
+          <div class="investment-total-sub">After infrastructure costs</div>
+        </div>
+        <div class="investment-total-price">94%</div>
+      </div>
+
+      <div class="revenue-note">
+        <div class="revenue-note-label">Revenue Projections</div>
+        <ul class="roi-projection-list">
+          <li><span>HFG pilot fee</span> $18,000/year</li>
+          <li><span>200 B2C users (avg $15/mo)</span> $36,000/year</li>
+          <li><span>Legacy Gift commissions</span> $6,000/year</li>
+          <li><span style="font-size:1rem;">TOTAL YEAR 1 ARR</span> $60,000</li>
+        </ul>
+      </div>
+
+      <p style="color:var(--muted); margin-top:1.2rem; font-size:.9rem;">This is among the highest-margin SaaS categories. Marginal cost per new user: near zero after fixed infrastructure is established.</p>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 4: WHY HFG
+  ════════════════════════════════════════════ -->
+  <section id="why-hfg">
+    <div class="section-inner">
+      <span class="section-label">Section 04 — Why This Works for HFG</span>
+      <h2>Three problems.<br />One solution.</h2>
+
+      <div class="spacer"></div>
+
+      <div class="problem-cards">
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">Problem 01 — Heir Retention</div>
+            <div class="problem-card-title">"The $84 trillion problem"</div>
+            <ul class="problem-card-list">
+              <li>When clients pass, heirs typically change advisors within 18 months — your relationship walks out the door with the estate settlement</li>
+              <li>Legacy Architect changes the dynamic: heirs receive their parents' blessing — alongside their parents' trust in HFG</li>
+              <li>The message doesn't just preserve relationships. It <strong>creates them</strong> before the advisor ever meets the heir</li>
+              <li>HFG is no longer a stranger to the family. It is part of the story their parents told</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">Problem 02 — Differentiation</div>
+            <div class="problem-card-title">"There is no competitor"</div>
+            <ul class="problem-card-list">
+              <li>No wealth manager in Larry's market has this — the category does not yet exist</li>
+              <li>It cannot be replicated quickly: it requires technology build, design, integration, and brand alignment</li>
+              <li>HFG's early adoption creates a 3–5 year head start on any competitor who attempts to follow</li>
+              <li>It becomes a primary client acquisition tool: "We're the only advisory practice that offers Legacy Architect"</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-card-accent"></div>
+          <div class="problem-card-body">
+            <div class="problem-card-tag">Problem 03 — Deepening Existing Relationships</div>
+            <div class="problem-card-title">"Clients stay longer"</div>
+            <ul class="problem-card-list">
+              <li>Legacy Architect gives existing clients a reason to re-engage deeply with HFG — not for performance reviews, but for meaning</li>
+              <li>Recording messages means revisiting their values, their intentions, their legacy — with you in the room</li>
+              <li>Every session deepens the advisor-client relationship in ways no investment review ever can</li>
+              <li>Legacy conversations build loyalty that market volatility cannot shake</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 5: THE ENGAGEMENT
+  ════════════════════════════════════════════ -->
+  <section id="the-engagement">
+    <div class="section-inner">
+      <span class="section-label">Section 05 — The Full Engagement</span>
+      <h2>What The Signal builds for HFG</h2>
+
+      <div class="spacer"></div>
+
+      <p class="intro-body">Three phases. Each one building on the last. By Month 4, HFG is operating as the world's first wealth management practice with a fully proprietary legacy technology platform — brand, website, social, and app all delivered within the same engagement.</p>
+
+      <div class="phases-container">
+        <!-- Phase 1 -->
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-badge">
+              <span class="phase-badge-num">1</span>
+            </div>
+            <div class="phase-header-text">
+              <h3>Brand &amp; Foundation</h3>
+              <span class="phase-timeline">Months 1–2 &nbsp;·&nbsp; 6–8 weeks</span>
+            </div>
+          </div>
+          <ul class="phase-deliverables">
+            <li>New HFG visual identity under Legacy Architect positioning</li>
+            <li>New website (hfgwm.com) — full redesign and rebuild</li>
+            <li>LinkedIn presence overhaul — Larry's personal brand as Legacy Architect</li>
+            <li>Content strategy: the 35-year story of HFG, told publicly</li>
+            <li>Launch of "Legacy Architect" as HFG's signature service offering</li>
+          </ul>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-badge">
+              <span class="phase-badge-num">2</span>
+            </div>
+            <div class="phase-header-text">
+              <h3>App Build</h3>
+              <span class="phase-timeline">Months 2–4 &nbsp;·&nbsp; 12–16 weeks from brief sign-off</span>
+            </div>
+          </div>
+          <ul class="phase-deliverables">
+            <li>Full Legacy Architect app, built exclusively for HFG</li>
+            <li>Client onboarding flow</li>
+            <li>Message vault (video, voice, letter, documents)</li>
+            <li>Life event unlock triggers</li>
+            <li>Inheritance message integration</li>
+            <li>Advisor visibility layer — HFG woven into legacy narratives</li>
+            <li>Guardian / succession system</li>
+            <li>Mobile app — iOS + Android</li>
+            <li style="color:var(--gold); font-weight:500;">Timeline: Delivered within the 4-month engagement</li>
+          </ul>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-badge">
+              <span class="phase-badge-num">3</span>
+            </div>
+            <div class="phase-header-text">
+              <h3>Launch &amp; Scale</h3>
+              <span class="phase-timeline">Month 5+ &nbsp;·&nbsp; Ongoing growth</span>
+            </div>
+          </div>
+          <ul class="phase-deliverables">
+            <li>Client rollout — onboarding HFG's existing client base</li>
+            <li>Legacy Gifts integration (physical gifts + messages)</li>
+            <li>Family Vault — multi-generational archive</li>
+            <li>AI message coach — guided prompts for recording sessions</li>
+            <li>Case study: first inheritance event handled through Legacy Architect</li>
+            <li>Option: license the platform to other advisory firms (revenue share with HFG)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 6: THE OPPORTUNITY
+  ════════════════════════════════════════════ -->
+  <section id="the-opportunity">
+    <div class="section-inner">
+      <span class="section-label">Section 06 — The Opportunity Beyond HFG</span>
+      <h2>You don't just use this platform.<br />You helped build it.</h2>
+
+      <div class="spacer"></div>
+
+      <p class="intro-body">Larry Harvey is not just a client — he is a <strong>founding partner</strong> in the Legacy Architect platform. As the first wealth management firm to deploy it, HFG has the opportunity to shape everything that comes after.</p>
+
+      <div class="opportunity-grid">
+        <div class="opportunity-item">
+          <span class="opportunity-icon">🏛</span>
+          <h4>Co-Brand the Platform</h4>
+          <p>HFG Legacy Architect — your name on the technology that defines the category.</p>
+        </div>
+        <div class="opportunity-item">
+          <span class="opportunity-icon">💎</span>
+          <h4>Licensing Revenue</h4>
+          <p>As the platform scales to other advisors, HFG participates in future licensing revenue as a founding partner.</p>
+        </div>
+        <div class="opportunity-item">
+          <span class="opportunity-icon">🗺</span>
+          <h4>Shape the Roadmap</h4>
+          <p>HFG's real client needs drive the product roadmap. You are not a customer. You are a co-author.</p>
+        </div>
+        <div class="opportunity-item">
+          <span class="opportunity-icon">📜</span>
+          <h4>The Origin Story</h4>
+          <p>Named as a founding partner in the platform's history. When the industry catches up, HFG was first.</p>
+        </div>
+      </div>
+
+      <p class="opportunity-closer">
+        This is not a software subscription.<br />
+        This is a <span>category-defining move</span> — and HFG is first.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION ROI: THE RETURN ON INVESTMENT
+  ════════════════════════════════════════════ -->
+  <section id="roi">
+    <div class="section-inner">
+      <span class="section-label">The ROI</span>
+      <h2>The Return on Investment</h2>
+      <p style="font-family:'Playfair Display',serif; font-style:italic; color:var(--muted); font-size:1.1rem; margin-top:0.5rem; margin-bottom:0;">Three ways this pays for itself</p>
+
+      <div class="spacer"></div>
+
+      <p class="intro-body">A $40,000 investment that pays for itself through client retention, competitive differentiation, and passive licensing income. Here is the conservative case.</p>
+
+      <div class="roi-scenarios">
+
+        <!-- Scenario 1 — Conservative -->
+        <div class="roi-scenario-block">
+          <span class="section-label" style="margin-bottom:0.6rem;">Scenario 01 — Conservative: HFG Internal Use Only</span>
+          <h3 class="roi-scenario-title">Client Retention Alone Justifies the Investment</h3>
+
+          <div class="problem-stats">
+            <div class="stat-card">
+              <span class="stat-number">70%</span>
+              <span class="stat-label">of heirs change advisors after inheriting</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">$84T</span>
+              <span class="stat-label">in wealth transfers by 2045</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">18mo</span>
+              <span class="stat-label">average time before inherited assets leave the advisor</span>
+            </div>
+          </div>
+
+          <span class="roi-sub-label">The Math</span>
+          <div class="roi-table-wrap">
+            <table class="roi-table">
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Detail</th>
+                  <th>Annual Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Retain 1 heir ($1M AUM @ 1% fee)</td>
+                  <td>One relationship preserved</td>
+                  <td class="highlight">$10,000/yr</td>
+                </tr>
+                <tr>
+                  <td>Retain 1 heir ($2M AUM @ 1% fee)</td>
+                  <td>One significant relationship</td>
+                  <td class="highlight">$20,000/yr</td>
+                </tr>
+                <tr>
+                  <td>Retain 3 heirs (avg $1.5M AUM)</td>
+                  <td>Conservative annual retention</td>
+                  <td class="highlight">$45,000/yr</td>
+                </tr>
+                <tr>
+                  <td>Retain 5 heirs (avg $2M AUM)</td>
+                  <td>Realistic for an active practice</td>
+                  <td class="highlight">$100,000/yr</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="roi-callout">
+            <p>Retaining just ONE significant client relationship at $2M AUM generates $20,000/year in advisory fees — every year, indefinitely. That's a 50% return on the full $40,000 investment in year one alone — from a single retained heir.</p>
+          </div>
+
+          <span class="roi-sub-label">New Client Acquisition (Additional)</span>
+          <p>Legacy Architect becomes a differentiation tool in every new client conversation. "We're the only advisory practice that offers this" wins clients who are evaluating multiple advisors. Two new clients at $10,000/year advisory fees = $20,000/year. That alone covers the ongoing retainer permanently.</p>
+
+          <span class="roi-sub-label">5-Year Conservative Projection</span>
+          <div class="roi-table-wrap">
+            <table class="roi-table">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Retained heir value</th>
+                  <th>New client value</th>
+                  <th>Total cumulative</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Year 1</td>
+                  <td>$45,000</td>
+                  <td>$20,000</td>
+                  <td class="highlight">$65,000</td>
+                </tr>
+                <tr>
+                  <td>Year 2</td>
+                  <td>$45,000</td>
+                  <td>$40,000</td>
+                  <td class="highlight">$150,000</td>
+                </tr>
+                <tr>
+                  <td>Year 3</td>
+                  <td>$45,000</td>
+                  <td>$60,000</td>
+                  <td class="highlight">$255,000</td>
+                </tr>
+                <tr>
+                  <td>Year 4</td>
+                  <td>$45,000</td>
+                  <td>$60,000</td>
+                  <td class="highlight">$360,000</td>
+                </tr>
+                <tr>
+                  <td>Year 5</td>
+                  <td>$45,000</td>
+                  <td>$60,000</td>
+                  <td class="highlight">$465,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p style="font-family:'Playfair Display',serif; font-style:italic; color:var(--gold); font-size:1rem; margin-top:1rem;">Conservative 5-year return: $465,000 on a $40,000 investment. Before a single licensing dollar.</p>
+        </div>
+
+        <!-- Scenario 2 — Upside -->
+        <div class="roi-scenario-block">
+          <span class="section-label" style="margin-bottom:0.6rem;">Scenario 02 — Upside: Licensing Revenue</span>
+          <h3 class="roi-scenario-title">When Other Firms Join — You Get Paid</h3>
+
+          <p>As the founding partner, you receive 25% of all licensing fees paid by other advisory firms — forever. Here is what that looks like as the platform scales.</p>
+
+          <div class="roi-table-wrap">
+            <table class="roi-table">
+              <thead>
+                <tr>
+                  <th>Firms licensed</th>
+                  <th>Monthly license avg</th>
+                  <th>Larry's 25% monthly</th>
+                  <th>Larry's annual passive income</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>5 firms (Year 1)</td>
+                  <td>$1,500</td>
+                  <td>$1,875</td>
+                  <td class="highlight">$22,500</td>
+                </tr>
+                <tr>
+                  <td>10 firms (Year 2)</td>
+                  <td>$1,500</td>
+                  <td>$3,750</td>
+                  <td class="highlight">$45,000</td>
+                </tr>
+                <tr>
+                  <td>25 firms (Year 3)</td>
+                  <td>$1,500</td>
+                  <td>$9,375</td>
+                  <td class="highlight">$112,500</td>
+                </tr>
+                <tr>
+                  <td>50 firms</td>
+                  <td>$1,500</td>
+                  <td>$18,750</td>
+                  <td class="highlight">$225,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="roi-callout">
+            <p>At 25 licensed firms — a realistic 3-year milestone — Larry's passive income from founding partner revenue share exceeds his total initial investment every single year. At 50 firms, it exceeds his investment every 2.5 months.</p>
+          </div>
+
+          <span class="roi-sub-label">3-Year Cumulative Licensing Projection</span>
+          <ul class="roi-projection-list">
+            <li><span>Year 1</span> $22,500</li>
+            <li><span>Year 2</span> $45,000</li>
+            <li><span>Year 3</span> $112,500</li>
+            <li><span>3-year total</span> $180,000 in passive licensing income</li>
+          </ul>
+        </div>
+
+        <!-- Scenario 3 — Brand Premium -->
+        <div class="roi-scenario-block">
+          <span class="section-label" style="margin-bottom:0.6rem;">Scenario 03 — The Brand Premium</span>
+          <h3 class="roi-scenario-title">What a Category Creates</h3>
+
+          <p>There is a version of this that is harder to put in a spreadsheet but may be the most valuable of all. When HFG becomes the firm that invented Legacy Architecture — with a proprietary platform, 35 years of legacy, and a body of client stories that no competitor can replicate — the brand premium compounds indefinitely.</p>
+
+          <p>Advisors who own their category don't compete on fees. They set them.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 7: INVESTMENT
+  ════════════════════════════════════════════ -->
+  <section id="investment">
+    <div class="section-inner">
+      <span class="section-label">Section 07 — Investment</span>
+      <h2>What this looks like commercially</h2>
+
+      <div class="spacer"></div>
+
+      <p class="intro-body">The engagement is structured as a single monthly investment covering everything — brand, website, social, app build, and ongoing strategy. No hidden costs, no separate line items, no surprise invoices.</p>
+
+      <!-- The Package -->
+      <div class="package-box">
+        <div class="package-price">$10,000 / month for 4 months</div>
+        <div class="package-total">Total investment: <strong>$40,000</strong></div>
+      </div>
+
+      <span class="roi-sub-label" style="margin-top:2rem;">What's included</span>
+      <ul class="checklist">
+        <li>Full HFG rebrand under the Legacy Architect positioning</li>
+        <li>New website (hfgwm.com) — complete redesign and build</li>
+        <li>LinkedIn overhaul — Larry's personal brand as Legacy Architect</li>
+        <li>Social media presence — content strategy and management</li>
+        <li>Legacy Architect app — built exclusively for HFG clients</li>
+        <li>Client onboarding flow — your clients set up their first message vault</li>
+        <li>Ongoing strategy — monthly advisory as you scale</li>
+        <li>Founding Partner status — locked in at this engagement level</li>
+      </ul>
+
+      <!-- After Month 4 -->
+      <div class="after-month-box">
+        <h4>After Month 4 (Ongoing)</h4>
+        <ul>
+          <li>Ongoing social media management, website maintenance &amp; marketing strategy: <strong style="color:var(--white);">$5,000/month</strong></li>
+          <li>This covers everything — content, updates, campaigns, and ongoing strategic advisory. Includes up to <strong style="color:var(--gold);">100 active client vaults</strong>. Additional clients added at <strong style="color:var(--gold);">$20/client/month</strong> as your platform grows.</li>
+          <li>Larry's Founding Partner rate — never increases</li>
+        </ul>
+      </div>
+
+      <!-- Founding Partner Benefits -->
+      <span class="roi-sub-label">Founding Partner Benefits</span>
+      <div class="benefit-cards">
+        <div class="benefit-card">
+          <h4>25% Revenue Share</h4>
+          <p>On all licensing fees from other advisory firms that join the platform, in perpetuity. This is passive income that grows every time a new firm joins.</p>
+        </div>
+        <div class="benefit-card">
+          <h4>HFG Co-Branding</h4>
+          <p>The platform is branded "HFG Legacy Architect" for all your clients. Not a white-label — your name in the product name.</p>
+        </div>
+        <div class="benefit-card">
+          <h4>3-Year Market Exclusivity</h4>
+          <p>No other advisor in your market gets access for 3 years.</p>
+        </div>
+        <div class="benefit-card">
+          <h4>Advisory Board Seat</h4>
+          <p>Your clients' needs shape the product roadmap.</p>
+        </div>
+        <div class="benefit-card">
+          <h4>Founding Partner Credit</h4>
+          <p>"Built in partnership with HFG Wealth Management" — permanent.</p>
+        </div>
+        <div class="benefit-card">
+          <h4>Founding Rate Locked</h4>
+          <p>As the platform scales and prices rise for new entrants, you never pay more.</p>
+        </div>
+      </div>
+
+      <div class="callout-box">
+        <p>This is not a marketing spend. It is a client retention infrastructure investment — and a stake in a recurring revenue platform. The founding partner rate will not be available once Phase 1 is complete.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 8: NEXT STEPS
+  ════════════════════════════════════════════ -->
+  <section id="next-steps">
+    <div class="section-inner">
+      <span class="section-label">Section 08 — Next Steps</span>
+      <h2>Your legacy starts with one conversation</h2>
+
+      <div class="spacer"></div>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h4>Say Yes to the Vision</h4>
+          <p>A 60-minute call to walk through the full scope, confirm priorities, and align on Phase 1 timing. No obligation — just clarity.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h4>Phase 1 Kicks Off</h4>
+          <p>Brand brief, website discovery, client interviews. HFG's 35-year story gets the articulation it has always deserved.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h4>Legacy Architect Goes Live</h4>
+          <p>HFG becomes the first legacy architecture practice in the world with a proprietary platform to prove it. The category is yours.</p>
+        </div>
+      </div>
+
+      <div class="cta-box">
+        <p>Ready to build your legacy technology?</p>
+        <p class="cta-name">Contact Aidan Uttinger — The Signal</p>
+        <a href="mailto:aidan@thesignal.agency" class="cta-button">Schedule a Call →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">The Signal</span>
+      <p class="footer-prepared">Prepared by The Signal for Larry Harvey &amp; HFG Wealth Management — March 2026</p>
+      <p class="footer-confidential">Confidential — Not for Distribution</p>
+    </div>
+  </footer>
+
+</body>
+</html>

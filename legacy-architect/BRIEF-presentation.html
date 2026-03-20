@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legacy Architect — Project Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0b0f1e;--gold:#c9a84c;--white:#f2f2f5;--grey:#7a84a0;--muted:#4a5270;--bg:#fafaf8;--dark:#1a1e2e}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark);line-height:1.7}
+.container{max-width:1000px;margin:0 auto;padding:60px 40px}
+.header{background:var(--navy);color:var(--white);padding:80px 40px;text-align:center;border-bottom:3px solid var(--gold);margin-bottom:60px}
+.header h1{font-family:'Playfair Display',serif;font-size:3rem;margin-bottom:12px}
+.header .subtitle{font-size:1.1rem;color:#bcc7dc;margin-bottom:8px}
+.header .tag{display:inline-block;background:rgba(201,168,76,.2);color:var(--gold);padding:8px 16px;border-radius:3px;font-size:.85rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+section{margin-bottom:60px}
+h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--navy);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid rgba(201,168,76,.2)}
+.section-intro{font-size:1rem;color:var(--grey);margin-bottom:24px;line-height:1.8}
+.callout{background:rgba(201,168,76,.08);border-left:4px solid var(--gold);padding:20px 24px;margin:24px 0;border-radius:4px}
+.callout-title{font-weight:700;color:var(--navy);margin-bottom:6px}
+.callout-text{color:var(--dark);line-height:1.7}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.grid-item{background:white;border:1px solid #e0dbd4;border-radius:6px;padding:24px;border-left:3px solid var(--gold)}
+.grid-item h4{color:var(--navy);margin-bottom:10px;font-size:.95rem}
+.grid-item ul{padding-left:20px;color:var(--grey)}
+.grid-item li{margin-bottom:8px}
+.highlight{background:rgba(201,168,76,.12);color:var(--navy);padding:2px 6px;border-radius:2px;font-weight:600}
+.timeline{margin:24px 0}
+.timeline-item{padding:16px;margin-bottom:12px;background:white;border-left:3px solid var(--gold);border-radius:4px}
+.timeline-item .label{font-size:.8rem;color:var(--gold);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.timeline-item .content{color:var(--dark)}
+.cta-box{background:var(--navy);color:var(--white);padding:40px;border-radius:8px;text-align:center;margin:40px 0}
+.cta-box h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:12px}
+.cta-box p{color:#bcc7dc;margin-bottom:20px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0}
+.stat{background:white;border:1px solid #e0dbd4;border-radius:6px;padding:20px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);font-weight:700;margin-bottom:4px}
+.stat-label{font-size:.8rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.header h1{font-size:2rem}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Legacy Architect</h1>
+  <p class="subtitle">The Time-Collapse Messaging Platform for Generational Legacy</p>
+  <span class="tag">B2C + B2B App</span>
+</div>
+
+<div class="container">
+
+<!-- THE CONCEPT -->
+<section>
+  <h2>The Core Concept</h2>
+  <p class="section-intro">
+    <strong>Legacy Architect</strong> lets people record video, voice, and letter messages for loved ones that unlock at meaningful life events — graduation, wedding, inheritance, turning 18, milestone birthdays.
+  </p>
+  <div class="callout">
+    <div class="callout-title">The Core Insight</div>
+    <div class="callout-text">
+      High-net-worth founders and families want to leave more than money. They want to leave guidance, love, and values that persist for generations. But they don't have a system to do it. We built one.
+    </div>
+  </div>
+  <p class="section-intro">
+    Messages are stored on <strong>Arweave blockchain</strong> (100-year guarantee). Not dependent on a company staying alive. Not dependent on anyone's cloud account. <strong>Truly permanent.</strong>
+  </p>
+</section>
+
+<!-- THE THREE MARKETS -->
+<section>
+  <h2>Three Revenue Streams</h2>
+  
+  <div style="margin:24px 0">
+    <h3 style="color:var(--navy);font-size:1.2rem;margin-bottom:16px">1. B2C: Personal Legacy Accounts</h3>
+    <div class="grid" style="grid-template-columns:1fr">
+      <div class="grid-item">
+        <h4>Direct-to-Consumer</h4>
+        <p style="color:var(--grey);margin-bottom:12px">Anyone can create a legacy vault for themselves and family.</p>
+        <ul>
+          <li><strong>Free tier:</strong> 3 messages, basic triggers</li>
+          <li><strong>Premium ($99/year):</strong> Unlimited messages, custom triggers, physical gift delivery, AI message coaching</li>
+          <li><strong>Premium+ ($299/year):</strong> Multi-generational vault, family consensus system, guardian management</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin:24px 0">
+    <h3 style="color:var(--navy);font-size:1.2rem;margin-bottom:16px">2. B2B: Wealth Manager Licensing</h3>
+    <div class="grid" style="grid-template-columns:1fr">
+      <div class="grid-item">
+        <h4>Wealth Managers + Family Offices</h4>
+        <p style="color:var(--grey);margin-bottom:12px">Advisors offer Legacy Architect to their high-net-worth clients as a premium service.</p>
+        <ul>
+          <li><strong>The Problem They Solve:</strong> Heirs get the money but lose the connection to the person who left it. Advisors become irrelevant after the transfer.</li>
+          <li><strong>The Solution:</strong> Heirs keep receiving messages from the advisor's original client → stays connected to the advisor → doesn't switch firms.</li>
+          <li><strong>Licensing Model:</strong> $500–$2K/month per advisor (based on AUM). White-label or co-branded.</li>
+          <li><strong>Commission:</strong> 15–20% of premium upgrades (when clients pay directly)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin:24px 0">
+    <h3 style="color:var(--navy);font-size:1.2rem;margin-bottom:16px">3. Legacy Gifts: Physical Delivery</h3>
+    <div class="grid" style="grid-template-columns:1fr">
+      <div class="grid-item">
+        <h4>Premium Add-On Service</h4>
+        <p style="color:var(--grey);margin-bottom:12px">When a message triggers, we can print and ship it with physical gifts.</p>
+        <ul>
+          <li>Handwritten letter printed on custom stationery + shipped on trigger date</li>
+          <li>Paired with gift products (custom book, jewelry, keepsake)</li>
+          <li>Premium service: $50–$200 per delivery</li>
+          <li>High margin, high touch experience</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE DIFFERENTIATION -->
+<section>
+  <h2>What Makes This Different</h2>
+  <div class="grid">
+    <div class="grid-item">
+      <h4>⏱️ Time Collapse</h4>
+      <p>Messages unlock at specific life events (graduation, wedding, inheritance), not arbitrary dates. Incredibly powerful moment of connection.</p>
+    </div>
+    <div class="grid-item">
+      <h4>🔒 Blockchain Permanence</h4>
+      <p>Stored on Arweave. 100-year guarantee. Not dependent on any single company's survival. True digital immortality.</p>
+    </div>
+    <div class="grid-item">
+      <h4>🤖 AI Message Coaching</h4>
+      <p>Record raw video → AI transcribes, edits, coaches for maximum emotional impact. The message gets better, not artificial.</p>
+    </div>
+    <div class="grid-item">
+      <h4>👥 Guardian Consensus</h4>
+      <p>Multi-person approval system for sensitive messages. Heirs' guardians can manage what gets shared and when.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE LARRY ANGLE -->
+<section>
+  <h2>Why This Is Perfect for Larry (HFG Wealth Management)</h2>
+  <div class="callout">
+    <div class="callout-title">The B2B Play</div>
+    <div class="callout-text">
+      Larry's wealth clients are doing estate planning. They care about legacy. Right now, estate lawyers get the legal will, but nobody gets the <strong>emotional will</strong>. 
+      <br><br>
+      Legacy Architect lets Larry say: <em>"We don't just manage your money. We preserve your voice for your heirs. Every year they're with us, they hear from you."</em>
+      <br><br>
+      This creates a moat. Heirs receiving messages from their deceased parent every year = they will never switch wealth managers.
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val">$40K</div>
+      <div class="stat-label">4-Month Build</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">Q3 2026</div>
+      <div class="stat-label">Launch Target</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">$500–$2K</div>
+      <div class="stat-label">Per Advisor Monthly</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">100</div>
+      <div class="stat-label">Year Permanence</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEGAL POSITIONING -->
+<section>
+  <h2>Legal Positioning: Digital Ethical Will</h2>
+  <p class="section-intro">
+    Legacy Architect is <span class="highlight">not a replacement for a legal will</span> — it's a <strong>companion to it</strong>.
+  </p>
+  <div class="grid" style="grid-template-columns:1fr">
+    <div class="grid-item">
+      <h4>The Legal Strategy</h4>
+      <ul style="color:var(--grey)">
+        <li><strong>Legal Will:</strong> Property, money, assets (handled by attorneys, executed once)</li>
+        <li><strong>Ethical Will:</strong> Values, stories, wisdom (emotional legacy, ongoing)</li>
+        <li><strong>Digital Ethical Will:</strong> What Legacy Architect is — the technology to deliver the ethical will across time</li>
+        <li><strong>Our Position:</strong> "Complement to the legal estate plan, not a replacement. Used alongside, not instead of, traditional estate planning."</li>
+      </ul>
+    </div>
+  </div>
+  <p class="section-intro" style="margin-top:24px">
+    This keeps us out of legal trouble while positioning the product as the premium, high-touch companion to traditional estate planning.
+  </p>
+</section>
+
+<!-- TIMELINE & DEAL -->
+<section>
+  <h2>The Build Plan & Deal Structure</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="label">Month 1 (April)</div>
+      <div class="content"><strong>Core Platform:</strong> Message recording (video/voice/text), trigger system, basic vault, blockchain integration (Arweave)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="label">Month 2 (May)</div>
+      <div class="content"><strong>B2B Integration:</strong> White-label system, advisor dashboard, client management, commission tracking</div>
+    </div>
+    <div class="timeline-item">
+      <div class="label">Month 3–4 (June–July)</div>
+      <div class="content"><strong>Polish & Launch:</strong> AI message coaching, physical delivery, marketing, legal review, live launch</div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="callout-title">The Deal</div>
+    <div class="callout-text">
+      <strong>Larry funds:</strong> $40K total ($10K/month × 4 months)<br>
+      <strong>We build:</strong> Platform + white-label system + go-to-market<br>
+      <strong>Revenue share:</strong> 50% of B2B licensing fees (wealth manager subscriptions)<br>
+      <strong>Plus:</strong> 15% commission on premium upgrades from wealth manager clients
+    </div>
+  </div>
+</section>
+
+<!-- MARKET SIZE -->
+<section>
+  <h2>Market Opportunity</h2>
+  <p class="section-intro">
+    US wealth management market: <strong>$37 trillion AUM</strong>
+    <br>
+    High-net-worth individuals (>$30M): <strong>~180,000</strong>
+    <br>
+    Average wealth manager has <strong>50–200 HNW clients</strong>
+  </p>
+  <div class="callout">
+    <div class="callout-title">Conservative Projection</div>
+    <div class="callout-text">
+      If we license to just <strong>500 wealth advisors</strong> at <strong>$1K/month average</strong>:<br>
+      <strong>$6M annual recurring revenue</strong> in Year 1<br>
+      <br>
+      B2C premium upgrades (10% conversion, $100/user avg):<br>
+      <strong>+$2M–$5M annually</strong>
+    </div>
+  </div>
+</section>
+
+<!-- THE ASK -->
+<section>
+  <h2>What We're Building Together</h2>
+  <p class="section-intro">
+    This is more than an app. It's a category. The first and only platform that lets wealthy families preserve their legacy across generations — emotionally, not just financially.
+  </p>
+  <div class="cta-box">
+    <h3>Legacy Architect</h3>
+    <p>Where legacy becomes generational currency.</p>
+    <p style="margin-top:20px;font-size:.9rem;color:#bcc7dc">
+      Q3 2026 • B2C + B2B Launch • 100-Year Digital Permanence
+    </p>
+  </div>
+</section>
+
+</div>
+
+</body>
+</html>

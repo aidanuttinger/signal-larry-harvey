@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legacy Architecture — The HFG Positioning Document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#07080f;--navy:#0b0f1e;--dark:#141929;--card:#1a2236;
+  --gold:#c9a84c;--gold-dim:rgba(201,168,76,0.08);--gold-border:rgba(201,168,76,0.22);
+  --cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.06);--cyan-border:rgba(0,212,255,0.18);
+  --white:#f2f2f5;--grey:#7a84a0;--muted:#4a5270;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,sans-serif;
+}
+body{font-family:var(--sans);background:var(--navy);color:var(--white);min-height:100vh;line-height:1.7}
+.back-nav{position:sticky;top:0;z-index:9999;background:rgba(7,8,15,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.18);padding:0 32px;height:46px;display:flex;align-items:center;justify-content:space-between}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.back-nav span{font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.hero{background:var(--black);padding:80px 40px 72px;text-align:center;border-bottom:1px solid var(--gold-border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 50% 40%,rgba(201,168,76,.06) 0%,transparent 65%);pointer-events:none}
+.eyebrow{font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before,.eyebrow::after{content:'';width:22px;height:1px;background:rgba(201,168,76,.5)}
+.hero-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.4rem);font-weight:700;line-height:1.08;margin-bottom:14px;max-width:700px;margin-left:auto;margin-right:auto}
+.hero-title span{color:var(--gold);font-style:italic}
+.hero-body{font-size:.88rem;color:var(--grey);line-height:1.85;max-width:500px;margin:0 auto}
+.hero-body strong{color:var(--white)}
+.main{max-width:900px;margin:0 auto;padding:64px 40px 80px}
+.section{margin-bottom:60px}
+.section-eyebrow{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:'';width:14px;height:1px;background:var(--gold)}
+.section-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.section-sub{font-size:.88rem;color:var(--grey);line-height:1.8;max-width:640px;margin-bottom:28px}
+.section-sub strong{color:var(--white)}
+.category-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;margin-bottom:32px}
+.cat-side{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:28px}
+.cat-side.new{background:var(--gold-dim);border-color:var(--gold-border)}
+.cat-label{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.cat-side:not(.new) .cat-label{color:var(--muted)}
+.cat-side.new .cat-label{color:var(--gold)}
+.cat-name{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2}
+.cat-name span{color:var(--gold)}
+.cat-body{font-size:.8rem;color:var(--grey);line-height:1.7}
+.cat-arrow{font-family:var(--serif);font-size:1.8rem;color:var(--gold);text-align:center}
+.message-framework{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
+.message-row{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:22px 26px;display:flex;gap:20px;align-items:flex-start}
+.message-row.primary{background:var(--gold-dim);border-color:var(--gold-border)}
+.message-tag{font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;flex-shrink:0;margin-top:2px;width:80px}
+.message-row.primary .message-tag{color:var(--gold)}
+.message-row:not(.primary) .message-tag{color:var(--muted)}
+.message-content{}
+.message-headline{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:6px;font-style:italic;font-family:var(--serif)}
+.message-proof{font-size:.78rem;color:var(--grey);line-height:1.65}
+.message-proof strong{color:var(--white)}
+.language-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-bottom:24px}
+.lang-col{padding:0}
+.lang-header{padding:14px 20px;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+.lang-col:first-child .lang-header{color:var(--muted);background:rgba(255,255,255,.02)}
+.lang-col:last-child .lang-header{color:var(--gold);background:var(--gold-dim)}
+.lang-item{padding:10px 20px;font-size:.82rem;border-top:1px solid rgba(255,255,255,.04)}
+.lang-col:first-child .lang-item{color:var(--muted)}
+.lang-col:last-child .lang-item{color:var(--white)}
+.copy-block{margin-bottom:32px}
+.copy-label{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.copy-label::before{content:'';width:12px;height:1px;background:var(--gold)}
+.copy-box{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:24px 28px}
+.copy-title{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3}
+.copy-title span{color:var(--gold)}
+.copy-text{font-size:.83rem;color:var(--grey);line-height:1.85}
+.copy-text strong{color:var(--white)}
+.intro-sequence{display:flex;flex-direction:column;gap:12px}
+.intro-item{background:var(--dark);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:18px 22px;display:flex;gap:16px;align-items:flex-start}
+.intro-stage{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold);flex-shrink:0;width:90px;line-height:1.4;margin-top:2px}
+.intro-copy{font-size:.82rem;color:var(--grey);line-height:1.7}
+.intro-copy strong{color:var(--white)}
+.divider{height:1px;background:rgba(255,255,255,.06);margin:48px 0}
+footer{text-align:center;padding:24px;font-size:.62rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.04)}
+@media(max-width:720px){.category-compare{grid-template-columns:1fr;}.cat-arrow{display:none}.language-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="back-nav">
+  <a href="signal-larry.html"><span style="font-size:.9rem">←</span> Back to your journey</a>
+  <span>Legacy Positioning Document · HFG Wealth Management</span>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">The HFG Repositioning</div>
+  <h1 class="hero-title">Introducing <span>Legacy Architecture</span></h1>
+  <p class="hero-body">HFG has always been a Legacy Architecture firm. This document gives that reality a name, a language, and a strategy for introducing it to the world. <strong>You're not changing what you do. You're finally naming it correctly.</strong></p>
+</div>
+
+<div class="main">
+
+  <div class="section">
+    <div class="section-eyebrow">Why Category Matters</div>
+    <h2 class="section-title">The Problem With "Wealth Management"</h2>
+    <p class="section-sub">Category is the frame through which every client decision is made. The wrong category positions you against the wrong competitors — and makes your real differentiator invisible.</p>
+    <div class="category-compare">
+      <div class="cat-side">
+        <div class="cat-label">Current Category</div>
+        <div class="cat-name">Wealth Management</div>
+        <div class="cat-body">One of 14,000+ RIAs in the United States. Competing on fee structures, investment performance, and number of services. Every conversation starts with "how are your returns?"<br><br>Differentiation: nearly impossible. Commoditized by definition.</div>
+      </div>
+      <div class="cat-arrow">→</div>
+      <div class="cat-side new">
+        <div class="cat-label">New Category</div>
+        <div class="cat-name">Legacy <span>Architecture</span></div>
+        <div class="cat-body">A category of one — in Texas, and arguably nationwide. Competing with no one because no one else has claimed it. Every conversation starts with "what do you want your wealth to accomplish?"<br><br>Differentiation: immediate, total, and impossible to replicate without 35 years of Larry Harvey's formation.</div>
+      </div>
+    </div>
+    <div style="background:var(--dark);border-left:3px solid var(--gold);padding:22px 28px;border-radius:0 4px 4px 0">
+      <div style="font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px">Category Design Principle</div>
+      <div style="font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--white);line-height:1.6">"Don't compete within a category. Design a new one — and become its only member."</div>
+      <div style="font-size:.78rem;color:var(--grey);margin-top:8px;line-height:1.7">Legacy Architecture is not a tagline. It's a category descriptor. It should appear in how HFG is introduced, how the website describes what HFG does, and how Larry describes the firm in every conversation. Repetition creates ownership.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">Messaging Framework</div>
+    <h2 class="section-title">What HFG Says — At Every Level</h2>
+    <p class="section-sub">From the one-line positioning to the proof points that support it. Every HFG team member should be able to speak from this framework fluently.</p>
+    <div class="message-framework">
+      <div class="message-row primary">
+        <div class="message-tag">Primary Message</div>
+        <div class="message-content">
+          <div class="message-headline">"The wealth you've built deserves to outlast you. We make sure it does."</div>
+          <div class="message-proof">This is the one line that opens every door. It doesn't speak to features. It speaks to a fear — and a hope — that every wealthy family carries. <strong>Use it everywhere.</strong></div>
+        </div>
+      </div>
+      <div class="message-row">
+        <div class="message-tag">Category</div>
+        <div class="message-content">
+          <div class="message-headline">"HFG is a Legacy Architecture firm — we don't just manage wealth, we build legacies."</div>
+          <div class="message-proof">The category introduction. Should appear in every bio, every website headline, every introduction Larry makes of HFG. Repetition builds ownership.</div>
+        </div>
+      </div>
+      <div class="message-row">
+        <div class="message-tag">Differentiator</div>
+        <div class="message-content">
+          <div class="message-headline">"We begin every engagement with the same question: what is this wealth for?"</div>
+          <div class="message-proof">The process differentiator. Most advisors start with an asset allocation questionnaire. HFG starts with a legacy conversation. That's a different firm for a different client.</div>
+        </div>
+      </div>
+      <div class="message-row">
+        <div class="message-tag">Faith Signal</div>
+        <div class="message-content">
+          <div class="message-headline">"We believe we are stewards of what's been entrusted to us. That shapes every decision we make."</div>
+          <div class="message-proof">The values signal. Not preachy. Not pushy. A simple statement of conviction that will resonate immediately with faith-aligned families — and won't repel those who aren't.</div>
+        </div>
+      </div>
+      <div class="message-row">
+        <div class="message-tag">Charitable</div>
+        <div class="message-content">
+          <div class="message-headline">"Charitable giving isn't a feature we offer. It's a pillar we're built on."</div>
+          <div class="message-proof">The giving signal. Distinguish HFG from firms that treat philanthropy as a tax strategy. For HFG, it's a conviction. <strong>Lead with this to faith-aligned prospects — it's the fastest trust builder you have.</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">Language Guide</div>
+    <h2 class="section-title">Old Language vs. New Language</h2>
+    <p class="section-sub">The words you choose signal the category you occupy. Every team member should make this shift.</p>
+    <div class="language-grid">
+      <div class="lang-col">
+        <div class="lang-header">Stop Saying</div>
+        <div class="lang-item">Wealth management</div>
+        <div class="lang-item">Asset management</div>
+        <div class="lang-item">Financial planning</div>
+        <div class="lang-item">Investment consulting</div>
+        <div class="lang-item">Comprehensive planning</div>
+        <div class="lang-item">Portfolio management</div>
+        <div class="lang-item">Estate planning services</div>
+        <div class="lang-item">Our clients</div>
+        <div class="lang-item">Discovery meeting</div>
+        <div class="lang-item">Onboarding</div>
+      </div>
+      <div class="lang-col">
+        <div class="lang-header">Start Saying</div>
+        <div class="lang-item">Legacy Architecture</div>
+        <div class="lang-item">Stewardship of capital</div>
+        <div class="lang-item">Legacy planning</div>
+        <div class="lang-item">Growth in service of legacy</div>
+        <div class="lang-item">Whole-life wealth design</div>
+        <div class="lang-item">Investment strategy within your legacy plan</div>
+        <div class="lang-item">Generational transfer architecture</div>
+        <div class="lang-item">The families we serve</div>
+        <div class="lang-item">The Legacy Conversation</div>
+        <div class="lang-item">Beginning the Covenant</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">Website Copy Direction</div>
+    <h2 class="section-title">What the HFG Website Should Say</h2>
+    <div class="copy-block">
+      <div class="copy-label">New Hero Headline</div>
+      <div class="copy-box">
+        <div class="copy-title">The wealth you've built deserves to outlast you.<br><span>We make sure it does.</span></div>
+        <div class="copy-text">Subheadline: <em>"HFG Wealth Management — Legacy Architecture for Families of Faith and Purpose"</em><br><br>CTA: "Begin the Legacy Conversation →"</div>
+      </div>
+    </div>
+    <div class="copy-block">
+      <div class="copy-label">New About / What We Do</div>
+      <div class="copy-box">
+        <div class="copy-text"><strong>We don't manage wealth. We architect legacy.</strong><br><br>Most financial advisors measure success in basis points and portfolio returns. We measure it differently. We measure it in families who pass their values — not just their assets — to the next generation. In generous giving that comes from abundance, not obligation. In the quiet certainty that what you've built will mean something long after you're gone.<br><br>HFG Wealth Management was founded in 1998 on a simple conviction: that the highest form of financial stewardship is building wealth that knows what it's for. <strong>Rooted in faith. Focused on you. Guided by what matters most.</strong></div>
+      </div>
+    </div>
+    <div class="copy-block">
+      <div class="copy-label">New Services Introduction</div>
+      <div class="copy-box">
+        <div class="copy-text"><strong>Legacy Architecture encompasses five essential disciplines — each one working in concert to ensure your wealth serves everything you value most.</strong><br><br>Investment Consulting · Wealth Transfer · Wealth Enhancement · Wealth Protection · Charitable Giving<br><br>These aren't separate services. They're one integrated practice — designed to build, protect, and ultimately transfer wealth that carries your values forward through every generation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-eyebrow">Introduction Strategy</div>
+    <h2 class="section-title">How to Introduce Legacy Architecture</h2>
+    <p class="section-sub">This is a shift — but a gentle one. Clients and colleagues already know you're different. This gives that difference a name.</p>
+    <div class="intro-sequence">
+      <div class="intro-item"><div class="intro-stage">Internally — Team First</div><div class="intro-copy">Brief the HFG team on the new category language before anything external changes. <strong>Everyone should be able to say: "HFG is a Legacy Architecture firm — we help families build wealth that outlasts them."</strong> Consistency is credibility.</div></div>
+      <div class="intro-item"><div class="intro-stage">Existing Clients — A Letter</div><div class="intro-copy">A personal letter from Larry: "We've been doing this work for 35 years under one name. We realized we've never fully told you what that name means." Share the manifesto. Invite them to tell you what resonates. <strong>This will generate the most powerful referral conversations you've ever had.</strong></div></div>
+      <div class="intro-item"><div class="intro-stage">New Prospects — Always</div><div class="intro-copy">From the first conversation: "We're a Legacy Architecture firm — which means we begin every conversation by asking what you want your wealth to accomplish." Watch the room shift. <strong>The right prospects will lean forward. The wrong ones will reveal themselves.</strong></div></div>
+      <div class="intro-item"><div class="intro-stage">The Website — Phase 1</div><div class="intro-copy">Update the homepage headline and About copy first. Don't redesign everything at once — introduce the language, watch how it performs, then build from there with confidence.</div></div>
+      <div class="intro-item"><div class="intro-stage">Media & Speaking — Eventually</div><div class="intro-copy">As the category takes hold, Larry becomes the go-to voice on "Legacy Architecture" — in local media, at conferences, on podcasts. <strong>Category creators become category authorities.</strong> This is a 12–24 month arc, built intentionally.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>The Signal &nbsp;·&nbsp; Legacy Architecture Positioning &nbsp;·&nbsp; HFG Wealth Management &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Confidential</footer>
+</body>
+</html>

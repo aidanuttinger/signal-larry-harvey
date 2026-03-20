@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Signal — HFG Wealth Management · Leave Behind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#07080f;--navy:#0b0f1e;--dark:#141929;
+  --gold:#c9a84c;--gold-dim:rgba(201,168,76,0.08);--gold-border:rgba(201,168,76,0.22);
+  --white:#f2f2f5;--grey:#7a84a0;--muted:#4a5270;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,sans-serif;
+}
+body{font-family:var(--sans);background:var(--black);color:var(--white);min-height:100vh;line-height:1.7}
+.back-nav{position:sticky;top:0;z-index:9999;background:rgba(7,8,15,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.18);padding:0 32px;height:46px;display:flex;align-items:center;justify-content:space-between}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.back-nav span{font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.page{max-width:800px;margin:0 auto;padding:72px 40px 80px}
+.header{text-align:center;margin-bottom:64px;padding-bottom:48px;border-bottom:1px solid var(--gold-border)}
+.signal-mark{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:14px}
+.signal-mark::before,.signal-mark::after{content:'';width:28px;height:1px;background:rgba(201,168,76,.4)}
+.header-title{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;line-height:1.06;margin-bottom:16px}
+.header-title span{color:var(--gold);font-style:italic}
+.header-sub{font-size:.9rem;color:var(--grey);line-height:1.9;max-width:500px;margin:0 auto}
+.header-sub strong{color:var(--white)}
+.truth-block{margin-bottom:48px}
+.truth-label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.truth-label::before{content:'';width:14px;height:1px;background:var(--gold)}
+.truth-text{font-family:var(--serif);font-size:1.3rem;line-height:1.65;color:var(--white);font-style:italic}
+.truth-text span{color:var(--gold)}
+.truth-proof{font-size:.83rem;color:var(--grey);line-height:1.85;margin-top:12px}
+.truth-proof strong{color:var(--white)}
+.divider{height:1px;background:rgba(255,255,255,.06);margin:40px 0}
+.three-truths{display:flex;flex-direction:column;gap:32px;margin-bottom:48px}
+.truth-row{display:flex;gap:24px;align-items:flex-start}
+.truth-num{font-family:var(--serif);font-size:2rem;font-weight:700;color:rgba(201,168,76,.2);flex-shrink:0;line-height:1;width:36px;text-align:center;margin-top:4px}
+.truth-content{}
+.truth-headline{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.3}
+.truth-headline span{color:var(--gold);font-style:italic}
+.truth-body-text{font-size:.83rem;color:var(--grey);line-height:1.8}
+.truth-body-text strong{color:var(--white)}
+.signal-box{background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:6px;padding:40px;text-align:center;margin-bottom:48px}
+.signal-box-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:16px}
+.signal-box-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2}
+.signal-box-title span{color:var(--gold);font-style:italic}
+.signal-box-body{font-size:.85rem;color:var(--grey);line-height:1.9;max-width:480px;margin:0 auto}
+.signal-box-body strong{color:var(--white)}
+.what-happens-next{margin-bottom:48px}
+.whn-title{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:20px}
+.steps{display:flex;flex-direction:column;gap:16px}
+.step{display:flex;gap:20px;align-items:flex-start}
+.step-num{width:28px;height:28px;border:1px solid var(--gold-border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--gold);flex-shrink:0;margin-top:2px}
+.step-content{}
+.step-name{font-size:.88rem;font-weight:600;color:var(--white);margin-bottom:4px}
+.step-desc{font-size:.78rem;color:var(--grey);line-height:1.7}
+.step-desc strong{color:var(--white)}
+.about-signal{margin-bottom:40px}
+.as-title{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:12px}
+.as-body{font-size:.83rem;color:var(--grey);line-height:1.85}
+.as-body strong{color:var(--white)}
+.closing{text-align:center;padding-top:40px;border-top:1px solid var(--gold-border)}
+.closing-quote{font-family:var(--serif);font-size:1.3rem;font-style:italic;color:var(--white);line-height:1.65;max-width:520px;margin:0 auto 20px}
+.closing-quote span{color:var(--gold)}
+.closing-sig{font-size:.8rem;color:var(--grey);line-height:1.7}
+.closing-sig strong{color:var(--white)}
+footer{text-align:center;padding:24px;font-size:.62rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="back-nav">
+  <a href="signal-larry.html"><span style="font-size:.9rem">←</span> Back to your journey</a>
+  <span>Leave Behind · HFG Wealth Management</span>
+</div>
+
+<div class="page">
+
+  <div class="header">
+    <div class="signal-mark">The Signal</div>
+    <h1 class="header-title">Larry Harvey<br>is a <span>Legacy Architect.</span></h1>
+    <p class="header-sub">He just hasn't been calling it that yet. <strong>This is the beginning of that conversation.</strong> And this document is what he takes into every room from here forward.</p>
+  </div>
+
+  <div class="truth-block">
+    <div class="truth-label">The Signal Truth</div>
+    <div class="truth-text">"For 35 years, Larry Harvey has been doing something the wealth management industry doesn't have a category for. <span>He's been architecting legacies.</span>"</div>
+    <div class="truth-proof">Not managing assets. Not optimizing portfolios. Building the financial infrastructure for families who want their wealth to carry their values forward — through every generation, to every cause they care about, long after they're gone. The problem isn't the work. The problem is that <strong>the world hasn't had the right words for it yet.</strong> Until now.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="three-truths">
+    <div class="truth-row">
+      <div class="truth-num">1</div>
+      <div class="truth-content">
+        <div class="truth-headline">HFG Is a <span>Category of One.</span></div>
+        <div class="truth-body-text">There are more than 14,000 registered investment advisors in the United States. There is one firm that calls itself a Legacy Architecture firm. That firm is HFG — and that category is now yours to build. <strong>First mover in a category is worth more than first mover in a market.</strong> Larry Harvey has 35 years of proof that the category exists. It just needed its name.</div>
+      </div>
+    </div>
+    <div class="truth-row">
+      <div class="truth-num">2</div>
+      <div class="truth-content">
+        <div class="truth-headline">The $84 Trillion Opportunity Is <span>Values-Driven.</span></div>
+        <div class="truth-body-text">The greatest wealth transfer in human history is happening right now. $84 trillion will move between generations over the next 20 years. Most of those families aren't asking "how do I maximize the transfer?" They're asking "what should this money stand for?" <strong>HFG is the only firm in Texas built to answer that question.</strong> The market is finding its way to Legacy Architecture. HFG needs to be the name it finds.</div>
+      </div>
+    </div>
+    <div class="truth-row">
+      <div class="truth-num">3</div>
+      <div class="truth-content">
+        <div class="truth-headline">The Signal Is Already <span>Strong.</span></div>
+        <div class="truth-body-text">"Rooted in Faith, Focused on You™" is a brilliant tagline. Charitable Giving as a core pillar — not an add-on — is rare and powerful. Thirty-five years of Five Star recognition. A team that looks and feels like a family. <strong>The signal is there. What's been missing is the broadcast infrastructure to amplify it.</strong> That's what The Signal is here to build.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="signal-box">
+    <div class="signal-box-label">The Partnership</div>
+    <div class="signal-box-title">HFG does the work.<br><span>The Signal broadcasts it.</span></div>
+    <div class="signal-box-body">The Signal is a Revenue Architecture Agency built on one conviction: <strong>great work deserves to be heard.</strong> We don't take clients who aren't already doing something worth amplifying. HFG is exactly the kind of partner we exist for. We build the machine. We optimize until it performs. You pay for results — not promises.</div>
+  </div>
+
+  <div class="what-happens-next">
+    <div class="whn-title">What Happens Next</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-name">The Signal Audit — 2 weeks</div>
+          <div class="step-desc">We go deep on HFG's current digital presence, referral sources, content, and community reach. We return with the full picture — where the signal is strong, where it's leaking, and exactly what to do about it.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-name">The Architecture Sprint — 30 days</div>
+          <div class="step-desc">We build the foundation: updated website copy, Legacy Architecture positioning live, referral program architecture, and the first content pieces of the "Where Faith & Finance Intersect" series. <strong>Fast, decisive, built to last.</strong></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-name">The Signal Machine — 90 days</div>
+          <div class="step-desc">The full broadcast infrastructure is live: content engine running, referral machine activated, first workshop delivered, professional network formalized. We're measuring inbound inquiries, referral conversions, and new AUM monthly.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-name">The Compound Effect — 12–24 months</div>
+          <div class="step-desc">Category ownership compounds. Every piece of content, every referral, every workshop builds on the last. <strong>By year two, HFG should be impossible to ignore in the Texas Legacy Architecture market.</strong> That's the goal. That's the commitment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="about-signal">
+    <div class="as-title">About The Signal</div>
+    <div class="as-body">The Signal is a Revenue Architecture Agency. We work with founders and firms whose work is worth amplifying — businesses that are already doing something remarkable, that deserve to reach the clients and markets that need them most. <strong>Our model is simple: we find your signal, build the machine, and perform.</strong> We don't charge a retainer until the results are real. We work with a small number of clients by design — because depth of partnership is how we produce results that last.<br><br>The Signal was founded by Aidan Uttinger, whose life's work is the same as his business philosophy: everything connects. Sustainable business, meaningful work, and values-driven leadership are not competing priorities — they are the same priority. <strong>The businesses that understand this are the ones The Signal was built for.</strong></div>
+  </div>
+
+  <div class="closing">
+    <div class="closing-quote">"Your work deserves to be heard.<br><span>We make sure it is.</span>"</div>
+    <div class="closing-sig">
+      — Aidan Uttinger, Founder · The Signal<br>
+      <strong>aidan@thesignal.agency</strong>
+    </div>
+  </div>
+
+</div>
+
+<footer>The Signal &nbsp;·&nbsp; Leave Behind Document &nbsp;·&nbsp; HFG Wealth Management &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Confidential</footer>
+</body>
+</html>

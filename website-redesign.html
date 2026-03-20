@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>hfgwm.com — Redesign Concept · Legacy Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b0f1e;--navy-mid:#141929;--navy-light:#1e2640;
+  --gold:#c9a84c;--gold-light:#e8c97a;
+  --white:#f5f4f0;--grey:#9ba3b8;--body-bg:#fafaf8;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--body-bg);color:#1a1e2e;line-height:1.6}
+
+/* PREVIEW BANNER */
+.preview-bar{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(201,168,76,.96);backdrop-filter:blur(10px);height:38px;display:flex;align-items:center;justify-content:center;gap:20px}
+.preview-bar span{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#07080f}
+.preview-bar a{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#07080f;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.3)}
+
+/* NAV */
+nav{position:fixed;top:38px;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 60px;background:rgba(11,15,30,.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,76,.15)}
+.nav-logo{font-family:var(--serif);font-size:1.1rem;color:var(--white);letter-spacing:.04em;font-weight:600;display:flex;align-items:center;gap:10px}
+.nav-logo-dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--grey);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold)!important;padding:9px 20px;border-radius:2px;font-size:.72rem!important;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+.nav-cta:hover{background:rgba(201,168,76,.1)}
+
+/* HERO */
+.hero{background:var(--navy);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:140px 60px 80px;position:relative;overflow:hidden}
+.hero-inner{display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;width:100%;max-width:1200px;margin:0 auto}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 35% 50%,rgba(201,168,76,.07) 0%,transparent 65%);pointer-events:none}
+.hero-content{position:relative;z-index:1}
+.hero-eyebrow{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.hero-eyebrow::before{content:'';width:20px;height:1px;background:rgba(201,168,76,.6)}
+.hero-h1{font-family:var(--serif);font-size:clamp(2.2rem,3.8vw,3.6rem);font-weight:700;line-height:1.07;color:var(--white);margin-bottom:20px}
+.hero-h1 em{color:var(--gold);font-style:italic}
+.hero-sub{font-size:.92rem;color:var(--grey);line-height:1.9;max-width:460px;margin-bottom:36px}
+.hero-sub strong{color:var(--white)}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:#07080f;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:16px 32px;border:none;border-radius:2px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:all .2s}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.btn-secondary{background:transparent;color:var(--grey);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:16px 28px;border:1px solid rgba(255,255,255,.12);border-radius:2px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:all .2s}
+.btn-secondary:hover{color:var(--white);border-color:rgba(255,255,255,.3)}
+
+/* HERO RIGHT PANEL */
+.hero-panel{position:relative;z-index:1;display:flex;flex-direction:column;gap:12px}
+.hero-panel-card{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.14);border-radius:6px;padding:28px 30px;transition:border-color .25s,background .25s}
+.hero-panel-card:hover{background:rgba(201,168,76,.05);border-color:rgba(201,168,76,.3)}
+.hero-panel-card.featured{background:rgba(201,168,76,.07);border-color:rgba(201,168,76,.28)}
+.hpc-label{font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:10px}
+.hpc-num{font-family:var(--serif);font-size:2.6rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:4px}
+.hpc-num span{font-size:1.1rem;color:rgba(201,168,76,.6)}
+.hpc-desc{font-size:.78rem;color:var(--grey);line-height:1.6}
+.hpc-desc strong{color:var(--white)}
+.hpc-tagline{font-family:var(--serif);font-size:1rem;font-style:italic;color:var(--white);line-height:1.55;margin-bottom:8px}
+.hpc-tagline em{color:var(--gold)}
+.hpc-sub{font-size:.72rem;color:var(--grey);line-height:1.6}
+.hero-panel-pillars{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:20px 24px}
+.hpp-label{font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:14px}
+.hpp-items{display:flex;flex-direction:column;gap:8px}
+.hpp-item{display:flex;align-items:center;gap:10px;font-size:.76rem;color:var(--grey)}
+.hpp-dot{width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,.5);flex-shrink:0}
+.hpp-item strong{color:var(--white)}
+
+/* TAGLINE STRIP */
+.tagline-strip{background:var(--gold);padding:18px 60px;display:flex;align-items:center;justify-content:center;gap:24px}
+.tagline-strip-text{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:#07080f;font-weight:600}
+.tagline-strip-dots{display:flex;gap:8px}
+.tagline-strip-dot{width:4px;height:4px;border-radius:50%;background:rgba(7,8,15,.3)}
+
+/* SECTION BASE */
+section{padding:96px 60px}
+.section-inner{max-width:1200px;margin:0 auto;width:100%}
+.section-eyebrow{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:'';width:16px;height:1px;background:var(--gold)}
+.section-h2{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;line-height:1.1;color:#1a1e2e;margin-bottom:14px}
+.section-h2 em{color:var(--gold);font-style:italic}
+.section-sub{font-size:.9rem;color:#5a6070;line-height:1.9;max-width:560px;margin-bottom:48px}
+.section-sub strong{color:#1a1e2e}
+
+/* INTRO SECTION */
+.intro{background:var(--body-bg);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.intro-text{}
+.intro-quote{font-family:var(--serif);font-size:1.4rem;font-style:italic;line-height:1.65;color:#1a1e2e;border-left:3px solid var(--gold);padding-left:24px;margin-bottom:28px}
+.intro-quote em{color:var(--gold)}
+.intro-body{font-size:.88rem;color:#5a6070;line-height:1.9}
+.intro-body strong{color:#1a1e2e}
+.intro-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.intro-stat{background:var(--navy);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:24px;text-align:center}
+.intro-stat-num{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px}
+.intro-stat-label{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);line-height:1.5}
+
+/* PILLARS */
+.pillars{background:var(--navy);position:relative;overflow:hidden}
+.pillars::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(201,168,76,.05) 0%,transparent 60%)}
+.pillars .section-h2{color:var(--white)}
+.pillars .section-sub{color:var(--grey)}
+.pillars .section-sub strong{color:var(--white)}
+.pillars-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.pillar{background:rgba(11,15,30,.95);padding:32px 24px;text-align:center;transition:background .25s}
+.pillar:hover{background:rgba(201,168,76,.07)}
+.pillar-icon{font-size:1.6rem;margin-bottom:14px;display:block}
+.pillar-name{font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3}
+.pillar-body{font-size:.73rem;color:var(--grey);line-height:1.65}
+
+/* PHILOSOPHY */
+.philosophy{background:var(--body-bg);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.philosophy-left{}
+.philosophy-principles{display:flex;flex-direction:column;gap:0;border:1px solid rgba(201,168,76,.15);border-radius:4px;overflow:hidden}
+.principle{padding:24px 28px;border-bottom:1px solid rgba(201,168,76,.08);display:flex;gap:18px;align-items:flex-start;transition:background .2s}
+.principle:last-child{border-bottom:none}
+.principle:hover{background:rgba(201,168,76,.03)}
+.principle-num{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:rgba(201,168,76,.3);flex-shrink:0;line-height:1;width:24px}
+.principle-content{}
+.principle-title{font-size:.88rem;font-weight:700;color:#1a1e2e;margin-bottom:4px}
+.principle-body{font-size:.78rem;color:#5a6070;line-height:1.7}
+
+/* FAITH */
+.faith{background:var(--navy-mid);padding:80px 60px;text-align:center;position:relative;overflow:hidden}
+.faith::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 60% at 50% 100%,rgba(201,168,76,.07) 0%,transparent 65%)}
+.faith-verse{font-family:var(--serif);font-size:1.4rem;font-style:italic;color:var(--white);line-height:1.7;max-width:640px;margin:0 auto 12px}
+.faith-verse em{color:var(--gold)}
+.faith-ref{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);margin-bottom:40px}
+.faith-body{font-size:.88rem;color:var(--grey);line-height:1.9;max-width:580px;margin:0 auto}
+.faith-body strong{color:var(--white)}
+
+/* LARRY */
+.larry{background:var(--body-bg);display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center}
+.larry-photo{background:var(--navy);border-radius:4px;aspect-ratio:3/4;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;position:relative;border:1px solid rgba(201,168,76,.15)}
+.larry-photo-bg{position:absolute;inset:0;background:linear-gradient(160deg,rgba(201,168,76,.08) 0%,transparent 50%),radial-gradient(ellipse 80% 60% at 50% 30%,rgba(201,168,76,.05) 0%,transparent 70%)}
+.larry-photo-initials{font-family:var(--serif);font-size:5rem;font-weight:700;color:rgba(201,168,76,.15);position:absolute;top:50%;left:50%;transform:translate(-50%,-55%)}
+.larry-photo-caption{position:relative;z-index:1;padding:20px;text-align:center;border-top:1px solid rgba(201,168,76,.1);width:100%}
+.larry-photo-name{font-family:var(--serif);font-size:.9rem;color:var(--white);font-weight:700}
+.larry-photo-title{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);margin-top:3px}
+.larry-content{}
+.larry-quote{font-family:var(--serif);font-size:1.2rem;font-style:italic;line-height:1.7;color:#1a1e2e;margin-bottom:20px}
+.larry-quote em{color:var(--gold)}
+.larry-body{font-size:.86rem;color:#5a6070;line-height:1.9;margin-bottom:24px}
+.larry-body strong{color:#1a1e2e}
+.larry-awards{display:flex;gap:10px;flex-wrap:wrap}
+.larry-award{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:20px;padding:5px 12px}
+
+/* LOCATIONS */
+.locations{background:var(--navy);display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.06)}
+.location{background:var(--navy);padding:48px 40px;text-align:center}
+.location-city{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:6px}
+.location-state{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.location-body{font-size:.78rem;color:var(--grey);line-height:1.7}
+
+/* CTA */
+.cta-section{background:var(--gold);padding:88px 60px;text-align:center}
+.cta-eyebrow{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(7,8,15,.6);font-weight:700;margin-bottom:16px}
+.cta-h2{font-family:var(--serif);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.1;color:#07080f;margin-bottom:16px}
+.cta-h2 em{font-style:italic}
+.cta-sub{font-size:.9rem;color:rgba(7,8,15,.65);line-height:1.85;max-width:480px;margin:0 auto 36px}
+.cta-sub strong{color:#07080f}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-dark{background:#07080f;color:var(--gold);font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:16px 32px;border:none;border-radius:2px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:all .2s}
+.btn-dark:hover{background:#1a1e2e;transform:translateY(-1px)}
+.btn-outline-dark{background:transparent;color:#07080f;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:16px 28px;border:1.5px solid rgba(7,8,15,.3);border-radius:2px;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:all .2s}
+.btn-outline-dark:hover{background:rgba(7,8,15,.07)}
+
+/* FOOTER */
+footer{background:var(--navy);padding:48px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(201,168,76,.1)}
+.footer-brand{font-family:var(--serif);font-size:1rem;color:var(--white);font-weight:600}
+.footer-brand span{color:var(--gold)}
+.footer-tagline{font-size:.72rem;font-style:italic;color:var(--grey);font-family:var(--serif);margin-top:4px}
+.footer-links{display:flex;gap:28px}
+.footer-links a{color:var(--grey);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-right{text-align:right}
+.footer-disc{font-size:.65rem;color:rgba(122,132,160,.5);line-height:1.6;max-width:300px}
+
+/* BACK NAV */
+.back-bar{position:fixed;bottom:0;left:0;right:0;z-index:999;background:rgba(7,8,15,.97);border-top:1px solid rgba(201,168,76,.18);padding:0 32px;height:44px;display:flex;align-items:center;justify-content:space-between}
+.back-bar a{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.back-bar-note{font-size:.6rem;color:rgba(122,132,160,.5);letter-spacing:.06em}
+
+@media(max-width:900px){nav{padding:14px 24px}.nav-links{display:none}.hero{padding:120px 24px 60px}.hero-badge{display:none}.intro,.philosophy,.larry{grid-template-columns:1fr}.pillars-grid{grid-template-columns:1fr 1fr}.locations{grid-template-columns:1fr}section{padding:64px 24px}.cta-section{padding:64px 24px}footer{flex-direction:column;gap:24px;text-align:center}.footer-right{text-align:center}}
+</style>
+</head>
+<body>
+
+<!-- PREVIEW BAR -->
+<div class="preview-bar">
+  <span>✦ Design Concept — hfgwm.com Redesign · The Signal Session · March 2026</span>
+  <a href="signal-larry.html">← Back to your journey</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><div class="nav-logo-dot"></div>HFG <span>Wealth Management</span></div>
+  <ul class="nav-links">
+    <li><a href="#philosophy">Our Philosophy</a></li>
+    <li><a href="#pillars">Services</a></li>
+    <li><a href="#larry">Our Founder</a></li>
+    <li><a href="#locations">Locations</a></li>
+    <li><a href="#cta" class="nav-cta">Begin the Conversation</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+<div class="hero-inner">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Legacy Architecture · The Woodlands, Texas</div>
+    <h1 class="hero-h1">The wealth you've built<br>deserves to <em>outlast you.</em><br>We make sure it does.</h1>
+    <p class="hero-sub">HFG Wealth Management is a Legacy Architecture firm. <strong>We don't just manage wealth — we build legacies.</strong> For families of faith and purpose who want their wealth to carry their values forward through every generation.</p>
+    <div class="hero-btns">
+      <a href="#cta" class="btn-primary">Begin the Legacy Conversation →</a>
+      <a href="#philosophy" class="btn-secondary">Our Philosophy</a>
+    </div>
+  </div>
+
+  <div class="hero-panel">
+    <div class="hero-panel-card featured">
+      <div class="hpc-label">Founded in Faith</div>
+      <div class="hpc-tagline">"Rooted in Faith,<br>Focused on <em>You™</em>"</div>
+      <div class="hpc-sub">Every plan we build begins with values — not just assets. Because wealth without purpose is just numbers on a page.</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="hero-panel-card">
+        <div class="hpc-label">Experience</div>
+        <div class="hpc-num">35<span>+ yrs</span></div>
+        <div class="hpc-desc">Serving Texas families since 1998</div>
+      </div>
+      <div class="hero-panel-card">
+        <div class="hpc-label">Recognition</div>
+        <div class="hpc-num" style="font-size:1.4rem;margin-top:4px">★★★★★</div>
+        <div class="hpc-desc">Five Star Wealth Manager — multi-year</div>
+      </div>
+    </div>
+
+    <div class="hero-panel-pillars">
+      <div class="hpp-label">The 5 Legacy Architecture Disciplines</div>
+      <div class="hpp-items">
+        <div class="hpp-item"><div class="hpp-dot"></div><strong>Investment Consulting</strong> — growth in service of legacy</div>
+        <div class="hpp-item"><div class="hpp-dot"></div><strong>Wealth Transfer</strong> — values, not just assets</div>
+        <div class="hpp-item"><div class="hpp-dot"></div><strong>Wealth Enhancement</strong> — tax efficiency + optimization</div>
+        <div class="hpp-item"><div class="hpp-dot"></div><strong>Wealth Protection</strong> — risk strategy + insurance</div>
+        <div class="hpp-item"><div class="hpp-dot"></div><strong>Charitable Giving</strong> — generosity as a pillar</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TAGLINE STRIP -->
+<div class="tagline-strip">
+  <div class="tagline-strip-dots"><div class="tagline-strip-dot"></div><div class="tagline-strip-dot"></div><div class="tagline-strip-dot"></div></div>
+  <div class="tagline-strip-text">"We begin every engagement with the same question: what is this wealth for?"</div>
+  <div class="tagline-strip-dots"><div class="tagline-strip-dot"></div><div class="tagline-strip-dot"></div><div class="tagline-strip-dot"></div></div>
+</div>
+
+<!-- INTRO -->
+<section class="intro" id="intro">
+  <div class="intro-text">
+    <div class="section-eyebrow">What We Do</div>
+    <h2 class="section-h2">We don't manage wealth.<br>We <em>architect legacy.</em></h2>
+    <div class="intro-quote">"Most financial advisors measure success in basis points. <em>We measure it in generations.</em>"</div>
+    <p class="intro-body">When you sit down with HFG for the first time, we won't ask about your portfolio allocation. We'll ask about your family. Your values. What you want your wealth to stand for after you're gone.<br><br>That's not a warmup exercise. <strong>That's the whole practice.</strong> Investment strategy, wealth transfer, tax efficiency, charitable giving — all of it flows from the answer to that first question.</p>
+  </div>
+  <div class="intro-stat-grid">
+    <div class="intro-stat">
+      <div class="intro-stat-num">35+</div>
+      <div class="intro-stat-label">Years Serving<br>Texas Families</div>
+    </div>
+    <div class="intro-stat">
+      <div class="intro-stat-num">3</div>
+      <div class="intro-stat-label">Texas Markets:<br>Woodlands · Houston · Midland</div>
+    </div>
+    <div class="intro-stat">
+      <div class="intro-stat-num">★★★★★</div>
+      <div class="intro-stat-label">Five Star Wealth<br>Manager — Multi-Year</div>
+    </div>
+    <div class="intro-stat">
+      <div class="intro-stat-num">5</div>
+      <div class="intro-stat-label">Legacy Architecture<br>Disciplines</div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars" id="pillars">
+  <div style="position:relative;z-index:1">
+    <div class="section-eyebrow" style="color:var(--gold)">Legacy Architecture · Five Disciplines</div>
+    <h2 class="section-h2" style="color:var(--white)">Five disciplines.<br><em>One integrated practice.</em></h2>
+    <p class="section-sub" style="color:var(--grey)">These aren't separate services you select from a menu. They're five interconnected disciplines that work in concert — each one ensuring your wealth serves everything you value most. <strong style="color:var(--white)">This is what Legacy Architecture looks like in practice.</strong></p>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <span class="pillar-icon">📈</span>
+        <div class="pillar-name">Investment Consulting</div>
+        <div class="pillar-body">Growth that serves your legacy — not the other way around. Every investment decision is filtered through one question: does this move you closer to what your wealth is for?</div>
+      </div>
+      <div class="pillar">
+        <span class="pillar-icon">🏛</span>
+        <div class="pillar-name">Wealth Transfer</div>
+        <div class="pillar-body">The architecture of passing it on — structuring the transfer of your wealth to carry your values, your faith, and your intentions into the next generation and beyond.</div>
+      </div>
+      <div class="pillar">
+        <span class="pillar-icon">⚡</span>
+        <div class="pillar-name">Wealth Enhancement</div>
+        <div class="pillar-body">Tax efficiency, asset optimization, and income strategies that preserve and grow your legacy capital — so there's more to steward and more to give.</div>
+      </div>
+      <div class="pillar">
+        <span class="pillar-icon">🛡</span>
+        <div class="pillar-name">Wealth Protection</div>
+        <div class="pillar-body">Risk management and insurance strategies designed to protect what you've built from the unexpected — because a legacy interrupted is a legacy lost.</div>
+      </div>
+      <div class="pillar">
+        <span class="pillar-icon">🙏</span>
+        <div class="pillar-name">Charitable Giving</div>
+        <div class="pillar-body">Not an add-on. A pillar. We help you give with intention, efficiency, and impact — because generosity is part of the legacy, not an afterthought to it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-left">
+    <div class="section-eyebrow">Our Convictions</div>
+    <h2 class="section-h2">The principles behind<br>every <em>legacy we build.</em></h2>
+    <p class="section-sub">HFG was founded on a set of convictions that haven't changed in 35 years. These are not marketing statements. They're the beliefs that shape every meeting, every plan, every recommendation we make.</p>
+  </div>
+  <div class="philosophy-principles">
+    <div class="principle">
+      <div class="principle-num">1</div>
+      <div class="principle-content">
+        <div class="principle-title">Wealth is a covenant, not a commodity.</div>
+        <div class="principle-body">What you've accumulated is the product of decades of work, risk, and sacrifice. It deserves to be treated with the same seriousness with which it was built — as a sacred stewardship, not a balance to optimize.</div>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">2</div>
+      <div class="principle-content">
+        <div class="principle-title">The best financial plan starts with faith.</div>
+        <div class="principle-body">We are stewards of what's been entrusted to us. That conviction shapes every decision we make — from investment strategy to charitable giving to how we think about the transfer of wealth to the next generation.</div>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">3</div>
+      <div class="principle-content">
+        <div class="principle-title">Generosity is a pillar, not a feature.</div>
+        <div class="principle-body">Charitable giving is not a tax strategy we offer as a service. It's a conviction we're built on. The families we serve understand that wealth used well includes giving — and we help them do it with intention and impact.</div>
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">4</div>
+      <div class="principle-content">
+        <div class="principle-title">True wealth management is whole-family stewardship.</div>
+        <div class="principle-body">We work with families, not just portfolios. That means understanding relationships, values, dynamics, and the conversations that are hard to have — because a plan that only addresses the assets will fail the family that holds them.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAITH -->
+<section class="faith" id="faith">
+  <div style="position:relative;z-index:1">
+    <div class="section-eyebrow" style="justify-content:center;margin-bottom:24px">Faith & Finance</div>
+    <div class="faith-verse">"The earth is the Lord's, and everything in it.<br>We are <em>stewards</em> — not owners."</div>
+    <div class="faith-ref">Psalm 24:1 · The Foundation of Our Practice</div>
+    <p class="faith-body">HFG was founded on the belief that faith and financial wisdom are not in tension — they belong together. <strong>Our clients are not looking for a firm that treats their wealth as a number to manage. They're looking for a firm that understands wealth is a responsibility to steward.</strong> For 35 years, that's exactly what we've been built to do.</p>
+  </div>
+</section>
+
+<!-- LARRY -->
+<section class="larry" id="larry">
+  <div class="larry-photo">
+    <div class="larry-photo-bg"></div>
+    <div class="larry-photo-initials">LH</div>
+    <div class="larry-photo-caption">
+      <div class="larry-photo-name">Larry Harvey</div>
+      <div class="larry-photo-title">Founder & CEO · Legacy Architect</div>
+    </div>
+  </div>
+  <div class="larry-content">
+    <div class="section-eyebrow">Our Founder</div>
+    <h2 class="section-h2">35 years of<br>building <em>legacies.</em></h2>
+    <div class="larry-quote">"I started HFG because I believed there was a better way to serve families — one that started with values, not just assets. <em>That conviction has never wavered.</em>"</div>
+    <p class="larry-body">Larry Harvey founded HFG Wealth Management with a simple conviction: that the highest form of financial stewardship is building wealth that knows what it's for. Over 35 years, that conviction has shaped every client relationship, every financial plan, and every team member HFG has ever hired.<br><br><strong>Larry is a multi-year Five Star Wealth Manager, a community leader, and a person of deep faith.</strong> He serves on local boards, is active in his church community, and has spent his career building a firm that measures success not in portfolio returns, but in the legacies of the families it serves.</p>
+    <div class="larry-awards">
+      <span class="larry-award">Five Star Wealth Manager</span>
+      <span class="larry-award">35+ Years Experience</span>
+      <span class="larry-award">Legacy Architect</span>
+      <span class="larry-award">Faith-Based Practice</span>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<div class="locations" id="locations">
+  <div class="location">
+    <div class="location-city">The Woodlands</div>
+    <div class="location-state">Texas · Headquarters</div>
+    <div class="location-body">Our founding home and primary office — where HFG has served families across Houston's northern corridor for over three decades.</div>
+  </div>
+  <div class="location">
+    <div class="location-city">Houston</div>
+    <div class="location-state">Texas</div>
+    <div class="location-body">Serving Houston's business and professional community with the same legacy-first approach that has defined HFG since 1998.</div>
+  </div>
+  <div class="location">
+    <div class="location-city">Midland</div>
+    <div class="location-state">Texas</div>
+    <div class="location-body">Serving West Texas families — many of whom have built significant wealth through the energy industry and are now turning their attention to what comes next.</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-eyebrow">The Legacy Conversation</div>
+  <h2 class="cta-h2">Your wealth deserves<br>a different <em>conversation.</em></h2>
+  <p class="cta-sub">Most financial advisors start with a risk questionnaire. We start by asking what your wealth is for. <strong>That question changes everything.</strong> Schedule the conversation — it costs nothing and clarifies everything.</p>
+  <div class="cta-btns">
+    <a href="mailto:info@hfgwm.com?subject=Legacy Architecture Conversation" class="btn-dark">Begin the Legacy Conversation →</a>
+    <a href="legacy-impact-calculator.html" target="_blank" class="btn-outline-dark">See My Legacy Potential →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">HFG <span>Wealth Management</span></div>
+    <div class="footer-tagline">"Rooted in Faith, Focused on You™"</div>
+  </div>
+  <div class="footer-links">
+    <a href="#philosophy">Philosophy</a>
+    <a href="#pillars">Services</a>
+    <a href="#larry">Our Founder</a>
+    <a href="#locations">Locations</a>
+    <a href="#cta">Contact</a>
+  </div>
+  <div class="footer-right">
+    <div class="footer-disc">HFG Wealth Management · The Woodlands, TX · Houston · Midland<br>Securities offered through registered representatives.<br>© 2026 HFG Wealth Management. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- BACK BAR -->
+<div class="back-bar">
+  <a href="signal-larry.html"><span style="font-size:.9rem">←</span> Back to your Signal journey</a>
+  <span class="back-bar-note">Design Concept · The Signal Session · March 2026 · Confidential</span>
+</div>
+
+</body>
+</html>

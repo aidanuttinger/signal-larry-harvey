@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Larry Harvey — Meeting Prep | The Signal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black: #07080f;
+    --navy: #0b0f1e;
+    --gold: #c9a84c;
+    --white: #f2f2f5;
+    --muted: #8892a4;
+    --card: #111827;
+    --border: #1f2937;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 32px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .signal-mark {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+  }
+  .meta { text-align: right; color: var(--muted); font-size: 11px; line-height: 1.6; }
+  .meta strong { color: var(--white); }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .subtitle { color: var(--gold); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .card.gold-border { border-left: 3px solid var(--gold); }
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .card h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+  ul { list-style: none; padding: 0; }
+  ul li { padding: 2px 0; color: var(--white); font-size: 12px; }
+  ul li::before { content: "→ "; color: var(--gold); }
+  .stat { text-align: center; }
+  .stat .number { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--gold); font-weight: 700; display: block; }
+  .stat .label { color: var(--muted); font-size: 11px; }
+  .callout {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: var(--white);
+    font-style: italic;
+  }
+  .deal-box {
+    background: var(--card);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .deal-box h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .deal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .deal-row:last-child { border-bottom: none; }
+  .deal-row .label { color: var(--muted); }
+  .deal-row .value { color: var(--white); font-weight: 600; }
+  .deal-row .value.gold { color: var(--gold); }
+  .steps { display: flex; gap: 12px; margin-bottom: 16px; }
+  .step {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .step .num {
+    width: 24px; height: 24px;
+    background: var(--gold);
+    color: var(--black);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 8px;
+  }
+  .step p { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .step strong { font-size: 12px; color: var(--white); }
+  .tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .footer {
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 10px;
+  }
+  .section-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media print {
+    body { background: #fff; color: #000; padding: 20px; }
+    .card, .deal-box, .step { background: #f9f9f9; border-color: #ddd; }
+    .signal-mark, .card h3, .stat .number, .deal-row .value.gold,
+    .gold-border, .callout, .step .num { color: #b8932a !important; }
+    .subtitle, .section-title { color: #b8932a; }
+    .card h4, .stat .label, .step p, .deal-row .label,
+    .meta, .footer { color: #666; }
+    .callout { background: #fdf9ef; border-color: #b8932a; }
+    .step .num { background: #b8932a; color: #fff; }
+    body { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="signal-mark">THE SIGNAL</div>
+    <div style="color:var(--muted);font-size:11px;margin-top:2px;">Revenue Architecture Agency</div>
+  </div>
+  <div class="meta">
+    <strong>Meeting Prep — Larry Harvey</strong><br>
+    HFG Wealth Management<br>
+    March 17, 2026 · Confidential
+  </div>
+</div>
+
+<h1>Larry Harvey — Meeting Brief</h1>
+<div class="subtitle">Legacy Architect App · Founding Partner Pitch</div>
+
+<!-- CONTEXT -->
+<div class="section-title">Context — Where We Left Off</div>
+<div class="callout">
+  "Your Signal Session gave HFG a new identity: <strong>Legacy Architect</strong>. The positioning is powerful. Now the question is — do you want to make it real?"
+</div>
+
+<!-- THE PROBLEM -->
+<div class="section-title">The Problem You're Solving for Your Clients</div>
+<div class="grid-3" style="margin-bottom:16px;">
+  <div class="card stat">
+    <span class="number">70%</span>
+    <span class="label">of heirs change advisors after inheriting</span>
+  </div>
+  <div class="card stat">
+    <span class="number">$84T</span>
+    <span class="label">in wealth transfers to next gen by 2045</span>
+  </div>
+  <div class="card stat">
+    <span class="number">18mo</span>
+    <span class="label">before inherited assets typically leave</span>
+  </div>
+</div>
+
+<!-- THE APP -->
+<div class="section-title">What We're Building — Legacy Architect App</div>
+<div class="grid">
+  <div class="card gold-border">
+    <h3>What it does</h3>
+    <ul>
+      <li>Clients record video, voice &amp; letter messages for heirs</li>
+      <li>Messages locked until: inheritance, 18th birthday, wedding, graduation</li>
+      <li>HFG context woven into every legacy narrative</li>
+      <li>Family Vault — multi-generational archive</li>
+      <li>Legacy Gifts — physical gift + message delivered together</li>
+    </ul>
+  </div>
+  <div class="card gold-border">
+    <h3>Why this wins for HFG</h3>
+    <ul>
+      <li>No other advisor in your market has this</li>
+      <li>Heirs meet HFG before they ever need to decide</li>
+      <li>Deepens existing client relationships every session</li>
+      <li>Becomes your #1 new client acquisition talking point</li>
+      <li>3–5 year head start on any competitor who tries to copy</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ROI -->
+<div class="section-title">The ROI Case</div>
+<div class="grid">
+  <div class="card">
+    <h3>Conservative — HFG use only</h3>
+    <ul>
+      <li>Retain 3 heirs/yr avg $1.5M AUM = <strong style="color:var(--gold)">$45K/yr</strong></li>
+      <li>2 new clients from differentiation = <strong style="color:var(--gold)">$20K/yr</strong></li>
+      <li>5-year return on $40K investment: <strong style="color:var(--gold)">$465,000</strong></li>
+      <li>One retained $2M AUM heir = 50% ROI year one</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Upside — Licensing revenue share</h3>
+    <ul>
+      <li>5 firms licensed (Yr 1) → <strong style="color:var(--gold)">$22,500/yr</strong> passive</li>
+      <li>25 firms (Yr 3) → <strong style="color:var(--gold)">$112,500/yr</strong> passive</li>
+      <li>50 firms → <strong style="color:var(--gold)">$225,000/yr</strong> passive</li>
+      <li>3-yr cumulative licensing income: <strong style="color:var(--gold)">$180,000</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- THE DEAL -->
+<div class="section-title">The Commercial Structure</div>
+<div class="deal-box">
+  <h3>The Founding Partner Engagement</h3>
+  <div class="deal-row"><span class="label">Build phase</span><span class="value gold">$10,000/month × 4 months = $40,000 total</span></div>
+  <div class="deal-row"><span class="label">Includes</span><span class="value">Rebrand · Website · Social · App build · Strategy</span></div>
+  <div class="deal-row"><span class="label">Ongoing (month 5+)</span><span class="value gold">$5,000/month</span></div>
+  <div class="deal-row"><span class="label">Ongoing includes</span><span class="value">Social, website, marketing + 100 active client vaults</span></div>
+  <div class="deal-row"><span class="label">Additional clients beyond 100</span><span class="value">$20/client/month</span></div>
+  <div class="deal-row"><span class="label">Revenue share (licensing)</span><span class="value gold">25% of all licensing fees, in perpetuity</span></div>
+  <div class="deal-row"><span class="label">Market exclusivity</span><span class="value">3 years — no other advisor in your market</span></div>
+  <div class="deal-row"><span class="label">Branding</span><span class="value">HFG Legacy Architect — your name in the product</span></div>
+</div>
+
+<!-- FOUNDING PARTNER BENEFITS -->
+<div class="section-title">Founding Partner Status Includes</div>
+<div style="margin-bottom:16px;">
+  <span class="tag">25% Revenue Share</span>
+  <span class="tag">HFG Co-Branding</span>
+  <span class="tag">3yr Exclusivity</span>
+  <span class="tag">Advisory Board Seat</span>
+  <span class="tag">Rate Locked Forever</span>
+  <span class="tag">Founding Partner Credit</span>
+</div>
+
+<!-- NEXT STEPS -->
+<div class="section-title">If He Says Yes — What Happens Next</div>
+<div class="steps">
+  <div class="step">
+    <div class="num">1</div>
+    <strong>Brief sign-off</strong>
+    <p>Brand brief + scope confirmed. Week 1.</p>
+  </div>
+  <div class="step">
+    <div class="num">2</div>
+    <strong>Rebrand begins</strong>
+    <p>New identity, website, LinkedIn. Weeks 1–4.</p>
+  </div>
+  <div class="step">
+    <div class="num">3</div>
+    <strong>App design</strong>
+    <p>Every screen designed, clickable prototype. Weeks 3–6.</p>
+  </div>
+  <div class="step">
+    <div class="num">4</div>
+    <strong>App build</strong>
+    <p>Live, working app on staging. Weeks 6–12.</p>
+  </div>
+  <div class="step">
+    <div class="num">5</div>
+    <strong>Client rollout</strong>
+    <p>HFG clients onboarded. Month 4.</p>
+  </div>
+</div>
+
+<!-- KEY TALKING POINTS -->
+<div class="section-title">Key Talking Points to Land</div>
+<div class="grid">
+  <div class="card">
+    <h4>Open with</h4>
+    <ul>
+      <li>"Your session gave you the positioning. This makes it real."</li>
+      <li>"There is no other advisor in the world with this."</li>
+      <li>"You don't just use this platform — you helped build it."</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>If he hesitates on cost</h4>
+    <ul>
+      <li>"One retained heir at $2M AUM = 50% ROI in year one."</li>
+      <li>"This is client retention infrastructure, not marketing."</li>
+      <li>"The founding rate disappears once we move to the next stage."</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>If he asks about the app</h4>
+    <ul>
+      <li>"Clients record messages for their children's wedding day."</li>
+      <li>"Heirs receive their parents' wishes — and trust in HFG."</li>
+      <li>"Your name is in the product. No competitor can copy that."</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Close with</h4>
+    <ul>
+      <li>"Say yes to the vision today — scope call this week."</li>
+      <li>"35 years of HFG deserves a platform that proves it."</li>
+      <li>"This is your legacy, built into the product."</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Prepared by The Signal for Aidan Uttinger · March 2026</span>
+  <span>Full pitch: larry-legacy-pitch.netlify.app</span>
+  <span>Confidential</span>
+</div>
+
+</body>
+</html>
