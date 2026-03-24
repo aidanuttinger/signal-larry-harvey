@@ -1,7 +1,7 @@
 # Larry Harvey (HFG Wealth Management) — Signal Client Index
 
 **Signal Code:** HFG  
-**Status:** Proposal Phase / Awaiting Decision 📋  
+**Status:** ✅ CLOSED / Active Application Development 🔨  
 **Last Updated:** 2026-03-20
 
 ## Client Overview
@@ -44,7 +44,8 @@
 - **Revenue Share:** 25% licensing revenue (founding partner)
 - **Proposal Deployed:** March 20, 2026
 - **Proposal URL:** https://magical-praline-c2cf19.netlify.app
-- **Status:** Awaiting Larry's decision on engagement
+- **Status:** ✅ CLOSED — Larry agreed to move forward with legacy application development
+- **Close Date:** March 20, 2026 (evening)
 
 ---
 
