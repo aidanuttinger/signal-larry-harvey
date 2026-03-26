@@ -1,0 +1,2908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HFG Wealth Management — Legacy Architecture for Families of Faith and Purpose</title>
+<meta name="description" content="HFG Wealth Management is a Legacy Architecture firm serving high-net-worth families in Texas. We begin every engagement with one question: what is this wealth for? 35 years. The Woodlands, Texas.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="HFG Wealth Management — The Legacy Architect">
+<meta property="og:description" content="The wealth you've built deserves to outlast you. We make sure it does.">
+<!-- TODO: Replace with actual OG image — generate a 1200x630 dark navy card with
+     "HFG Wealth Management" in Cormorant Garamond and the gold tagline -->
+<meta property="og:image" content="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hfgwm.com">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='4' fill='%230b0f1e'/><text y='72' x='50%' text-anchor='middle' font-size='58' fill='%23c9a84c' font-family='Georgia' font-style='italic'>H</text></svg>">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!--
+  ================================================================
+  HFG WEALTH MANAGEMENT — V2 REBUILD (10/10 UPGRADE APPLIED)
+  The Signal Master Build Prompt applied.
+  ================================================================
+
+  DESIGN REFERENCES:
+  - estherperel.com — conversational gravitas, unhurried scroll pacing
+  - sohohouse.com — exclusive editorial warmth, controlled restraint
+  - Schindler Private Banking sites — deep trust, earned simplicity
+  - pentagram.com — typography-driven, asymmetric, not flashy
+
+  TECHNOLOGY DECISIONS:
+  - Motion: CSS IntersectionObserver + CSS @keyframes (Use — precise enough)
+  - Custom cursor: CSS + JS lerp (Use — part of brand message: how you move here matters)
+  - Typography: Cormorant Garamond (Use — monastic, covenant weight; unlike any other wealth site)
+  - Body: DM Sans (Use — warm, modern contrast to the heavy display type)
+  - Grain texture: SVG noise filter (Use — premium layer, adds aged-paper legitimacy)
+  - Parallax: CSS background-attachment: fixed (Use — hero only; restraint is the point)
+  - 3D/WebGL: Reject — stillness serves Larry better than spectacle
+  - Video: Reject — no footage exists, atmospheric still imagery earns more trust
+  - Word-by-word animation: JS split + CSS stagger (Use — "What is this wealth for?" deserves to arrive)
+  - Animated counters: JS requestAnimationFrame (Use — 35 years, 72% heir stat need weight)
+  - Sound: Reject — this firm is about quiet authority
+
+  IMAGES TO REPLACE WITH REAL CLIENT PHOTOS:
+  - hero-bg: Texas horizon or family estate at dusk (currently SVG atmosphere)
+  - origin-img: Larry Harvey professional portrait (currently placeholder monogram)
+  - section-03-bg: Study interior, warm lighting (currently Unsplash interior)
+  - All Unsplash URLs marked with <!-- REPLACE: description -->
+  ================================================================
+-->
+
+<style>
+/* ================================================================
+   CSS CUSTOM PROPERTIES
+   ================================================================ */
+:root {
+  --navy:          #0b0f1e;
+  --navy-mid:      #141929;
+  --navy-light:    #1a2236;
+  --navy-card:     #1e2a40;
+  --gold:          #c9a84c;
+  --gold-light:    #e8c97a;
+  --gold-dim:      rgba(201, 168, 76, 0.07);
+  --gold-border:   rgba(201, 168, 76, 0.20);
+  --gold-strong:   rgba(201, 168, 76, 0.45);
+  --parchment:     #f7f4ee;
+  --parchment-mid: #ede9e1;
+  --text-dark:     #1a1e2c;
+  --text-mid:      #3a3f55;
+  --text-muted:    #686d84;
+  --white:         #f0eee8;
+  --white-dim:     rgba(240, 238, 232, 0.78);
+  --white-muted:   rgba(240, 238, 232, 0.42);
+  --grey:          #8a94aa;
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', -apple-system, sans-serif;
+
+  --max: 1200px;
+  --section-pad: 140px 80px;
+  --section-pad-sm: 88px 40px;
+  --section-pad-xs: 72px 24px;
+}
+
+/* ================================================================
+   RESET & BASE
+   ================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--sans);
+  background: var(--navy);
+  color: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none; /* custom cursor active */
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+::selection { background: rgba(201, 168, 76, 0.22); color: var(--white); }
+
+/* ================================================================
+   SKIP LINK (accessibility)
+   ================================================================ */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 24px;
+  background: var(--gold);
+  color: #07080f;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-radius: 0 0 3px 3px;
+  z-index: 99999;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+
+/* ================================================================
+   ACCESSIBLE FOCUS STYLES
+   ================================================================ */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.nav-cta:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* Restore cursor for keyboard-only users */
+@media (hover: none) {
+  body { cursor: auto !important; }
+  #cursor, #cursor-ring { display: none !important; }
+}
+
+/* ================================================================
+   GRAIN TEXTURE OVERLAY (premium layer)
+   ================================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ================================================================
+   CUSTOM CURSOR
+   ================================================================ */
+#cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+  mix-blend-mode: normal;
+  will-change: left, top;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  pointer-events: none;
+  z-index: 9997;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease, border-color 0.3s ease;
+  will-change: left, top;
+}
+body:has(a:hover) #cursor,
+body:has(button:hover) #cursor { width: 6px; height: 6px; background: var(--gold-light); }
+body:has(a:hover) #cursor-ring,
+body:has(button:hover) #cursor-ring { width: 56px; height: 56px; border-color: rgba(201, 168, 76, 0.8); }
+
+/* ================================================================
+   SCROLL ANIMATIONS
+   ================================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+.reveal.in { opacity: 1; transform: translateY(0); will-change: auto; }
+.reveal.d1 { transition-delay: 0.10s; }
+.reveal.d2 { transition-delay: 0.22s; }
+.reveal.d3 { transition-delay: 0.36s; }
+.reveal.d4 { transition-delay: 0.50s; }
+.reveal.d5 { transition-delay: 0.65s; }
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-36px);
+  transition: opacity 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+.reveal-left.in { opacity: 1; transform: translateX(0); will-change: auto; }
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(36px);
+  transition: opacity 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+.reveal-right.in { opacity: 1; transform: translateX(0); will-change: auto; }
+
+/* Line draw animation */
+.line-draw {
+  width: 0;
+  height: 1px;
+  background: var(--gold-border);
+  transition: width 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.line-draw.in { width: 100%; }
+
+/* Section line separators */
+.section-line-separator {
+  background: var(--navy); /* match the section below it */
+  padding: 0 80px;
+  overflow: hidden;
+}
+/* Adjust background per context */
+.section-line-separator.on-parchment { background: var(--parchment); }
+.section-line-separator.on-mid { background: var(--navy-mid); }
+
+/* ================================================================
+   PAGE LOAD CEREMONY — prevent hero animations before veil lifts
+   ================================================================ */
+.hero-label,
+.hero-h1,
+.hero-sub-row {
+  animation-play-state: paused;
+}
+body.loaded .hero-label,
+body.loaded .hero-h1,
+body.loaded .hero-sub-row {
+  animation-play-state: running;
+}
+
+/* ================================================================
+   PREFERS-REDUCED-MOTION
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal,
+  .reveal-left,
+  .reveal-right {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .line-draw { width: 100% !important; }
+  .question-text .word-inner { transform: none !important; }
+  #cursor, #cursor-ring { display: none !important; }
+  body { cursor: auto !important; }
+}
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  padding: 0 80px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background 0.4s ease,
+              border-color 0.4s ease;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(11, 15, 30, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom-color: var(--gold-border);
+}
+nav.hidden { transform: translateY(-100%); }
+
+.nav-logo {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-logo-mark {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  font-style: italic;
+}
+.nav-logo-sep {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.15);
+}
+.nav-logo-sub {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+/* Nav section links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey);
+  transition: color 0.2s;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-link:hover { color: var(--white); }
+.nav-link:hover::after { width: 100%; }
+.nav-link.active { color: var(--white); }
+.nav-link.active::after { width: 100%; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+}
+
+.nav-cta {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  padding: 11px 24px;
+  border-radius: 2px;
+  transition: all 0.25s;
+  cursor: none;
+}
+.nav-cta:hover {
+  background: var(--gold-dim);
+  border-color: var(--gold-strong);
+}
+
+/* ================================================================
+   01 — HERO
+   ================================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 80px 100px;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+/* Hero background — Option B: SVG atmosphere (no real photo yet) */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: none;
+  background-color: transparent;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(11,15,30,0.7) 0%,
+      rgba(11,15,30,0.1) 40%,
+      rgba(11,15,30,0.85) 100%),
+    radial-gradient(ellipse 80% 70% at 30% 60%, rgba(201,168,76,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Hero atmosphere — SVG generative texture */
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-wave {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.hero-label {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  animation: fadeInUp 1s 0.4s forwards;
+}
+.hero-label::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.hero-h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.6rem, 7.5vw, 9rem);
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: fadeInUp 1.1s 0.65s forwards;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px rgba(11,15,30,0.8);
+}
+.hero-h1 em {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.hero-sub-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  opacity: 0;
+  animation: fadeInUp 1s 1s forwards;
+}
+
+.hero-provenance {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--grey);
+  line-height: 2.2;
+}
+.hero-provenance span {
+  display: block;
+}
+
+.hero-scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--grey);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.hero-scroll-hint::after {
+  content: '';
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold-border), transparent);
+  transform-origin: top center;
+  animation: scrollPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.9); }
+  50%       { opacity: 0.9; transform: scaleY(1.0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================================================================
+   02 — THE QUESTION (gravitational center)
+   ================================================================ */
+.question {
+  background: var(--navy-mid);
+  padding: 160px 80px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.question::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(201,168,76,0.05) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.question-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.question-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.question-eyebrow::before,
+.question-eyebrow::after {
+  content: '';
+  flex: 1;
+  max-width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-border));
+}
+.question-eyebrow::after {
+  background: linear-gradient(270deg, transparent, var(--gold-border));
+}
+
+/* The question — word-by-word animation */
+.question-text {
+  font-family: var(--serif);
+  font-size: clamp(3.4rem, 8vw, 8.5rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.05;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+  margin-bottom: 64px;
+}
+
+.question-text .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.question-text .word-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.question-text.in .word-inner {
+  transform: translateY(0);
+  /* delays injected by JS */
+}
+
+.question-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold-border);
+  margin: 0 auto 48px;
+}
+
+.question-body {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--white-dim);
+  max-width: 680px;
+  margin: 0 auto 32px;
+}
+.question-body strong {
+  color: var(--white);
+  font-weight: 500;
+}
+
+.question-counter-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border: 1px solid var(--gold-border);
+  border-radius: 3px;
+  overflow: hidden;
+  max-width: 600px;
+  margin: 56px auto 0;
+  background: rgba(255,255,255,0.02);
+}
+
+.q-counter {
+  flex: 1;
+  padding: 28px 20px;
+  text-align: center;
+  border-right: 1px solid var(--gold-border);
+  position: relative;
+}
+.q-counter:last-child { border-right: none; }
+
+.q-counter-num {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.q-counter-label {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey);
+  line-height: 1.6;
+  max-width: 120px;
+  margin: 0 auto;
+}
+
+/* ================================================================
+   03 — THE PROBLEM (as revelation)
+   ================================================================ */
+.problem {
+  background: var(--navy);
+  padding: var(--section-pad);
+  position: relative;
+  overflow: hidden;
+}
+
+.problem-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.problem-stat-display {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.problem-number {
+  font-family: var(--serif);
+  font-size: clamp(6rem, 16vw, 18rem);
+  font-weight: 300;
+  line-height: 0.85;
+  color: var(--gold);
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.problem-number-unit {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 4rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white-dim);
+  letter-spacing: -0.01em;
+}
+
+.problem-stat-label-large {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-top: 20px;
+}
+
+.problem-line {
+  width: 0;
+  height: 1px;
+  background: var(--gold-border);
+  margin: 40px auto;
+  transition: width 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.problem-line.in { width: 100%; max-width: 60px; }
+
+.problem-revelation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-top: 60px;
+}
+
+.problem-col-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.problem-col-eyebrow::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.problem-col-h3 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+.problem-col-h3 em { color: var(--gold); font-style: italic; }
+
+.problem-col-body {
+  font-size: 0.95rem;
+  color: var(--white-dim);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.problem-col-body strong { color: var(--white); }
+
+.problem-divider-vert {
+  display: none;
+}
+
+/* 84 trillion context card */
+.context-card {
+  margin-top: 40px;
+  background: rgba(201,168,76,0.05);
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  padding: 28px 32px;
+}
+.context-card-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.context-card-text {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--white);
+}
+
+/* ================================================================
+   04 — THE COVENANT
+   ================================================================ */
+.covenant {
+  background: var(--parchment);
+  padding: 120px 80px;
+  position: relative;
+}
+
+.covenant-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.covenant-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+
+.covenant-left {}
+
+.covenant-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #9a7a32;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.covenant-eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: #c9a84c;
+  flex-shrink: 0;
+}
+
+.covenant-h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 4.5vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--text-dark);
+  letter-spacing: -0.025em;
+  margin-bottom: 32px;
+}
+.covenant-h2 em {
+  color: #9a7a32;
+  font-style: italic;
+}
+
+.covenant-pull {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--text-mid);
+  border-left: 2px solid #c9a84c;
+  padding-left: 24px;
+  margin-bottom: 32px;
+}
+
+.covenant-body {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.92;
+  margin-bottom: 20px;
+}
+.covenant-body strong { color: var(--text-dark); }
+
+.covenant-right {}
+
+/* The distinction visual */
+.distinction-block {
+  background: var(--navy);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--gold-border);
+}
+
+.distinction-header {
+  padding: 28px 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: var(--navy-mid);
+}
+.distinction-header-label {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.distinction-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.distinction-col {
+  padding: 32px 36px;
+}
+
+.distinction-col.left-col {
+  border-right: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.01);
+}
+
+.distinction-col.right-col {
+  background: rgba(201,168,76,0.04);
+}
+
+.distinction-col-label {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.left-col .distinction-col-label { color: var(--grey); }
+.right-col .distinction-col-label { color: var(--gold); }
+
+.distinction-col-q {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--white-dim);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.right-col .distinction-col-q { color: var(--white); font-size: 1.1rem; }
+
+.distinction-col-body {
+  font-size: 0.8rem;
+  color: var(--grey);
+  line-height: 1.75;
+}
+.right-col .distinction-col-body { color: var(--white-dim); }
+
+.distinction-footer {
+  padding: 24px 36px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.01);
+}
+
+.distinction-quote {
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--white-dim);
+  line-height: 1.6;
+}
+.distinction-quote em { color: var(--gold); font-style: normal; }
+
+/* The Legacy Conversation callout */
+.legacy-conversation {
+  margin-top: 32px;
+  padding: 24px 32px;
+  border: 1px solid var(--gold-border);
+  border-radius: 3px;
+  background: rgba(255,255,255,0.03);
+}
+.lc-label {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.lc-text {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--white-dim);
+  line-height: 1.7;
+}
+.lc-text strong { color: var(--white); }
+
+/* ================================================================
+   05 — THE FIVE PILLARS
+   ================================================================ */
+.pillars {
+  background: var(--navy-mid);
+  padding: var(--section-pad);
+  position: relative;
+  overflow: hidden;
+}
+
+.pillars::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-border) 40%, var(--gold-border) 60%, transparent 100%);
+}
+
+.pillars-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.pillars-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+  margin-bottom: 80px;
+}
+
+.pillars-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pillars-eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.pillars-h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 4vw, 4.8rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--white);
+  letter-spacing: -0.025em;
+}
+.pillars-h2 em { color: var(--gold); font-style: italic; }
+
+.pillars-intro {
+  font-size: 0.95rem;
+  color: var(--white-dim);
+  line-height: 1.88;
+  padding-top: 8px;
+}
+.pillars-intro strong { color: var(--white); }
+
+/* The pillar list — architectural display */
+.pillars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pillar-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.3s ease;
+  position: relative;
+}
+.pillar-item:last-child { border-bottom: none; }
+.pillar-item:hover { background: rgba(201,168,76,0.03); }
+
+/* Soul pillar — THE DIFFERENTIATOR */
+.pillar-item.soul-pillar {
+  background: linear-gradient(
+    135deg,
+    rgba(201,168,76,0.06) 0%,
+    rgba(201,168,76,0.03) 50%,
+    rgba(201,168,76,0.07) 100%
+  );
+  border-left: 3px solid var(--gold);
+  border-bottom-color: var(--gold-border);
+  position: relative;
+}
+
+.pillar-item.soul-pillar::before {
+  content: 'THE DIFFERENTIATOR';
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  font-family: var(--sans);
+  font-size: 0.48rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.5);
+}
+
+.pillar-item.soul-pillar:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(201,168,76,0.09) 0%,
+    rgba(201,168,76,0.05) 50%,
+    rgba(201,168,76,0.10) 100%
+  );
+}
+
+.pillar-item.soul-pillar .pillar-numeral {
+  color: var(--gold);
+  border-right-color: var(--gold-border);
+}
+
+.pillar-numeral {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(201,168,76,0.4);
+  letter-spacing: 0.05em;
+}
+
+.pillar-body {
+  padding: 36px 40px;
+}
+
+.pillar-title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.pillar-item.soul-pillar .pillar-title {
+  color: var(--gold-light);
+}
+
+.pillar-desc {
+  font-size: 0.88rem;
+  color: var(--grey);
+  line-height: 1.78;
+}
+.pillar-desc strong { color: var(--white-dim); }
+
+.pillar-soul-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid var(--gold-border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-family: var(--sans);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  width: fit-content;
+}
+
+/* ================================================================
+   06 — THE STORY (Larry's origin — cinematic)
+   ================================================================ */
+.story {
+  background: var(--navy);
+  padding: var(--section-pad);
+  position: relative;
+  overflow: hidden;
+}
+
+/* REPLACE: Professional portrait of Larry Harvey */
+.story-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45%;
+  height: 100%;
+  background-image: url('https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=900&q=80');
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.12;
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 30%, black 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 30%, black 100%);
+}
+
+.story-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 80px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+.story-content {}
+
+.story-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.story-eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.story-h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 3.5vw, 4.2rem);
+  font-weight: 300;
+  line-height: 1.08;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 36px;
+}
+.story-h2 em { color: var(--gold); font-style: italic; }
+
+.story-body {
+  font-size: 0.96rem;
+  color: var(--white-dim);
+  line-height: 1.95;
+  margin-bottom: 22px;
+}
+.story-body strong { color: var(--white); }
+
+.story-pull {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--white);
+  border-left: 2px solid var(--gold-border);
+  padding: 12px 0 12px 28px;
+  margin: 36px 0;
+}
+.story-pull em { color: var(--gold); font-style: normal; }
+
+/* The credential block */
+.story-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+
+.credential-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.2s;
+}
+.credential-row:last-child { border-bottom: none; }
+.credential-row:hover { background: rgba(255,255,255,0.02); }
+
+.credential-year {
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gold);
+  flex-shrink: 0;
+  width: 72px;
+  padding: 18px 20px;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+
+.credential-text {
+  padding: 18px 24px;
+  font-size: 0.84rem;
+  color: var(--grey);
+  line-height: 1.55;
+}
+.credential-text strong { color: var(--white); }
+
+/* Story sidebar: photo card */
+.story-photo-col {
+  position: sticky;
+  top: 100px;
+}
+
+.story-photo-card {
+  background: var(--navy-light);
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Story photo placeholder (until real photo is available) */
+.story-photo-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--navy-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--gold-border);
+}
+.placeholder-monogram {
+  font-family: var(--serif);
+  font-size: 4rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--gold);
+  opacity: 0.4;
+}
+.placeholder-label {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+.story-photo-meta {
+  padding: 20px 24px;
+  border-top: 1px solid var(--gold-border);
+  background: rgba(11,15,30,0.7);
+}
+
+.story-photo-name {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+.story-photo-title {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.story-statement {
+  margin-top: 20px;
+  padding: 20px 24px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 3px;
+}
+.story-statement-text {
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--white-dim);
+  line-height: 1.65;
+}
+.story-statement-text em { color: var(--gold); font-style: normal; }
+
+/* ================================================================
+   07 — WHO THIS IS FOR (ideal client mirror)
+   ================================================================ */
+.forwhom {
+  background: var(--parchment);
+  padding: 120px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.forwhom-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.forwhom-layout {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 100px;
+  align-items: start;
+}
+
+.forwhom-left {}
+
+.forwhom-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #9a7a32;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.forwhom-eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: #c9a84c;
+  flex-shrink: 0;
+}
+
+.forwhom-h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 4vw, 4.8rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--text-dark);
+  letter-spacing: -0.025em;
+  margin-bottom: 28px;
+}
+.forwhom-h2 em { color: #9a7a32; font-style: italic; }
+
+.forwhom-intro {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.9;
+  margin-bottom: 40px;
+}
+
+/* The interior monologue block */
+.monologue-block {
+  background: var(--navy);
+  border-radius: 4px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gold-border);
+}
+
+.monologue-block::before {
+  content: '\201C';
+  font-family: var(--serif);
+  font-size: clamp(6rem, 10vw, 12rem);
+  font-weight: 700;
+  color: rgba(201,168,76,0.05);
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.monologue-label {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.monologue-text {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--white-dim);
+  position: relative;
+}
+.monologue-text em { color: var(--white); font-style: normal; }
+
+.forwhom-right {}
+
+.forwhom-list-title {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+
+.forwhom-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--parchment-mid);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.forwhom-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--parchment-mid);
+  transition: background 0.2s;
+}
+.forwhom-item:last-child { border-bottom: none; }
+.forwhom-item:hover { background: rgba(201,168,76,0.04); }
+
+.forwhom-item-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 0; /* hide any text fallback */
+}
+
+.forwhom-item-text {
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* Not for block */
+.notfor-block {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid var(--parchment-mid);
+  border-radius: 4px;
+  padding: 28px 32px;
+}
+.notfor-label {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.notfor-text {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+.notfor-text strong { color: var(--text-dark); }
+
+/* ================================================================
+   08 — FINAL CTA
+   ================================================================ */
+.cta {
+  background: var(--navy);
+  padding: 180px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* CSS-only atmosphere — replaces .cta-bg */
+.cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 50%, rgba(201,168,76,0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 50% at 50% 100%, rgba(201,168,76,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(11,15,30,0.8) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Decorative border lines — architectural frame */
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 80px;
+  left: 80px;
+  right: 80px;
+  bottom: 80px;
+  border: 1px solid rgba(201,168,76,0.08);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+.cta-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.cta-eyebrow::before,
+.cta-eyebrow::after {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold-border);
+}
+
+.cta-h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 5vw, 6rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--white);
+  letter-spacing: -0.025em;
+  margin-bottom: 28px;
+}
+.cta-h2 em { color: var(--gold); font-style: italic; }
+
+.cta-body {
+  font-size: 1.05rem;
+  color: var(--white-dim);
+  line-height: 1.85;
+  margin-bottom: 64px;
+  font-weight: 300;
+}
+.cta-body strong { color: var(--white); font-weight: 500; }
+
+.cta-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold-border);
+  margin: 0 auto 48px;
+}
+
+/* Contact methods */
+.cta-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.cta-primary-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: #07080f;
+  background: var(--gold);
+  padding: 20px 48px;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  cursor: none;
+  will-change: transform;
+}
+.cta-primary-action:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(201,168,76,0.25);
+}
+.cta-primary-action svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.cta-primary-action:hover svg { transform: translateX(4px); }
+
+/* Arrow breath animation at rest */
+@keyframes arrowBreath {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+.cta-primary-action:not(:hover) svg {
+  animation: arrowBreath 3s ease-in-out infinite;
+}
+
+.cta-or {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 200px;
+}
+.cta-or::before, .cta-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+.cta-secondary-row {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cta-contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.cta-contact-label {
+  font-family: var(--sans);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+.cta-contact-value {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--white);
+  transition: color 0.2s;
+  cursor: none;
+}
+.cta-contact-value:hover { color: var(--gold); }
+
+.cta-sep {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.08);
+}
+
+.cta-process-note {
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.82rem;
+  color: var(--grey);
+  line-height: 1.7;
+}
+.cta-process-note strong { color: var(--white-dim); }
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+footer {
+  background: var(--navy-mid);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding: 60px 80px 40px;
+}
+
+.footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-brand-name {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 4px;
+  font-style: italic;
+}
+.footer-brand-sub {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.footer-brand-tagline {
+  font-size: 0.85rem;
+  color: var(--grey);
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+.footer-col-title {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.footer-location {
+  margin-bottom: 20px;
+}
+.footer-location:last-child { margin-bottom: 0; }
+.footer-location-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+.footer-location-addr {
+  font-size: 0.76rem;
+  color: var(--grey);
+  line-height: 1.5;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-legal-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 620px;
+}
+.footer-legal-item {
+  font-size: 0.67rem;
+  color: var(--grey);
+  line-height: 1.7;
+}
+
+.footer-signal {
+  font-size: 0.6rem;
+  color: rgba(138, 148, 170, 0.5);
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-end;
+  letter-spacing: 0.1em;
+}
+.footer-signal span {
+  color: rgba(201, 168, 76, 0.6);
+  font-weight: 500;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 1100px) {
+  :root {
+    --section-pad: 100px 60px;
+  }
+  nav { padding: 0 60px; }
+  .hero { padding: 0 60px 80px; }
+  .cta { padding: 120px 60px; }
+  footer { padding: 48px 60px 32px; }
+
+  .problem-revelation { gap: 56px; }
+  .covenant-grid { gap: 60px; }
+  .story-inner { grid-template-columns: 1fr 320px; gap: 56px; }
+  .forwhom-layout { grid-template-columns: 380px 1fr; gap: 60px; }
+  .pillars-header { gap: 48px; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .section-line-separator { padding: 0 60px; }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-pad: var(--section-pad-sm);
+  }
+  nav { padding: 0 24px; }
+  .hero { padding: 0 24px 72px; }
+  .hero-h1 { font-size: clamp(3rem, 10vw, 5.5rem); }
+  .hero-sub-row { flex-direction: column; align-items: flex-start; gap: 28px; }
+
+  .question { padding: 100px 24px; }
+  .q-counter { padding: 20px 12px; }
+
+  .problem { padding: var(--section-pad-xs); }
+  .problem-revelation { grid-template-columns: 1fr; gap: 48px; }
+
+  .covenant { padding: 80px 24px; }
+  .covenant-grid { grid-template-columns: 1fr; gap: 56px; }
+
+  .pillars { padding: var(--section-pad-xs); }
+  .pillars-header { grid-template-columns: 1fr; gap: 32px; }
+  .pillar-item { grid-template-columns: 70px 1fr; }
+  .pillar-numeral { font-size: 1.2rem; padding: 28px 12px; }
+  .pillar-body { padding: 24px 20px; }
+
+  .story { padding: var(--section-pad-xs); }
+  .story-inner { grid-template-columns: 1fr; gap: 48px; }
+  .story-bg { display: none; }
+  .story-photo-col { position: static; }
+
+  .forwhom { padding: 80px 24px; }
+  .forwhom-layout { grid-template-columns: 1fr; gap: 56px; }
+
+  .cta { padding: 100px 24px; }
+  .cta-secondary-row { flex-direction: column; gap: 28px; }
+  .cta-sep { display: none; }
+
+  footer { padding: 40px 24px 28px; }
+  .footer-top { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 16px; }
+
+  .section-line-separator { padding: 0 24px; }
+
+  #cursor, #cursor-ring { display: none; }
+  body { cursor: auto; }
+}
+
+/* Mobile counter grid 2x2 */
+@media (max-width: 640px) {
+  .question-counter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .q-counter:nth-child(2) { border-right: none; }
+  .q-counter:nth-child(3) { border-top: 1px solid var(--gold-border); }
+  .q-counter:nth-child(4) { border-top: 1px solid var(--gold-border); border-right: none; }
+}
+
+/* Distinction block mobile */
+@media (max-width: 540px) {
+  .distinction-row {
+    grid-template-columns: 1fr;
+  }
+  .distinction-col.left-col {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-h1 { font-size: clamp(2.6rem, 11vw, 4rem); }
+  .question-text { font-size: clamp(2.4rem, 10vw, 4rem); }
+  .problem-number { font-size: clamp(5rem, 20vw, 9rem); }
+  .covenant-h2, .pillars-h2, .forwhom-h2 { font-size: clamp(2rem, 8vw, 3rem); }
+  .question-counter-row { grid-template-columns: 1fr 1fr; flex-wrap: wrap; }
+
+  /* Pillar number column mobile */
+  .pillar-item {
+    grid-template-columns: 52px 1fr;
+  }
+  .pillar-numeral {
+    font-size: 1rem;
+    padding: 20px 8px;
+  }
+  .pillar-body {
+    padding: 20px 16px;
+  }
+
+  /* Credentials timeline mobile */
+  .credential-year {
+    width: 56px;
+    padding: 14px 8px;
+    font-size: 0.78rem;
+  }
+  .credential-text {
+    padding: 14px 16px;
+    font-size: 0.8rem;
+  }
+
+  /* CTA button full width mobile */
+  .cta-primary-action {
+    width: 100%;
+    justify-content: center;
+    padding: 18px 24px;
+    font-size: 0.65rem;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Skip to main content link (accessibility) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ================================================================
+     NAV
+     ================================================================ -->
+<nav id="nav">
+  <div class="nav-logo">
+    <span class="nav-logo-mark">HFG</span>
+    <div class="nav-logo-sep"></div>
+    <span class="nav-logo-sub">Wealth Management</span>
+  </div>
+  <div class="nav-links" aria-label="Section navigation">
+    <a href="#question" class="nav-link" data-section="question">The Question</a>
+    <a href="#covenant" class="nav-link" data-section="covenant">The Covenant</a>
+    <a href="#pillars" class="nav-link" data-section="pillars">The Architecture</a>
+    <a href="#story" class="nav-link" data-section="story">Our Story</a>
+  </div>
+  <a href="#contact" class="nav-cta">Begin the Conversation</a>
+</nav>
+
+<!-- ================================================================
+     MAIN CONTENT
+     ================================================================ -->
+<main id="main-content">
+
+<!-- ================================================================
+     01 — HERO
+     ================================================================ -->
+<section class="hero" id="home" aria-label="Hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+
+  <!-- SVG atmosphere (Option B — no real photo yet) -->
+  <div class="hero-atmosphere" aria-hidden="true">
+    <svg class="hero-wave" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow1" cx="25%" cy="70%" r="50%">
+          <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.07"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="glow2" cx="75%" cy="40%" r="40%">
+          <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1440" height="900" fill="url(#glow1)"/>
+      <rect width="1440" height="900" fill="url(#glow2)"/>
+      <!-- Horizon line -->
+      <line x1="0" y1="580" x2="1440" y2="580" stroke="rgba(201,168,76,0.06)" stroke-width="1"/>
+      <!-- Subtle grid lines suggesting architectural depth -->
+      <line x1="0" y1="400" x2="1440" y2="400" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+      <line x1="240" y1="0" x2="240" y2="900" stroke="rgba(255,255,255,0.015)" stroke-width="1"/>
+      <line x1="720" y1="0" x2="720" y2="900" stroke="rgba(255,255,255,0.015)" stroke-width="1"/>
+      <line x1="1200" y1="0" x2="1200" y2="900" stroke="rgba(255,255,255,0.015)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-label">
+      HFG Wealth Management &nbsp;&middot;&nbsp; The Woodlands, Texas &nbsp;&middot;&nbsp; Since 1991
+    </div>
+
+    <h1 class="hero-h1">
+      The wealth you've built<br>
+      deserves to <em>outlast you.</em><br>
+      We make sure it does.
+    </h1>
+
+    <div class="hero-sub-row">
+      <div class="hero-provenance">
+        <span>35 Years of Legacy Architecture</span>
+        <span>Faith-Aligned &nbsp;&middot;&nbsp; Purpose-Driven</span>
+        <span>Texas families of meaning and wealth</span>
+      </div>
+      <div class="hero-scroll-hint">
+        The question that changed everything
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section separator: Hero → Question -->
+<div class="section-line-separator on-mid" aria-hidden="true">
+  <div class="line-draw"></div>
+</div>
+
+<!-- ================================================================
+     02 — THE QUESTION
+     ================================================================ -->
+<section class="question" id="question" aria-label="The Question">
+  <div class="question-inner">
+
+    <div class="question-eyebrow reveal">
+      The Question We Ask Every Family, Every Time
+    </div>
+
+    <div class="question-text reveal" id="questionText" aria-label="What is this wealth for?">
+      <span class="word"><span class="word-inner">"What&nbsp;</span></span><span class="word"><span class="word-inner">is&nbsp;</span></span><span class="word"><span class="word-inner">this&nbsp;</span></span><span class="word"><span class="word-inner">wealth&nbsp;</span></span><span class="word"><span class="word-inner">for?"</span></span>
+    </div>
+
+    <div class="question-divider reveal d1"></div>
+
+    <p class="question-body reveal d2">
+      We've asked this question for 35 years. Every family. Every meeting. <strong>Every plan begins and ends here.</strong> In an industry of thousands of advisors optimizing returns, we are one of the only firms that begins — and stays — with purpose.
+    </p>
+
+    <p class="question-body reveal d3">
+      Most wealth managers will tell you what your money can do. We ask what it's <em>meant</em> to do — in your lifetime, in your children's lives, and in the world.
+    </p>
+
+    <div class="question-counter-row reveal d4" aria-label="HFG by the numbers">
+      <div class="q-counter">
+        <div class="q-counter-num" data-target="35">0</div>
+        <div class="q-counter-label">Years of the<br>same question</div>
+      </div>
+      <div class="q-counter">
+        <div class="q-counter-num" data-target="72" data-suffix="%">0%</div>
+        <div class="q-counter-label">Of heirs who fire<br>their parents' advisor</div>
+      </div>
+      <div class="q-counter">
+        <div class="q-counter-num" data-target="84" data-prefix="$" data-suffix="T">$0T</div>
+        <div class="q-counter-label">Generational wealth<br>transferring now</div>
+      </div>
+      <div class="q-counter">
+        <div class="q-counter-num" data-target="1">0</div>
+        <div class="q-counter-label">Covenant.<br>Unbroken.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Section separator: Question → Problem -->
+<div class="section-line-separator" aria-hidden="true">
+  <div class="line-draw"></div>
+</div>
+
+<!-- ================================================================
+     03 — THE PROBLEM (as revelation)
+     ================================================================ -->
+<section class="problem" id="problem" aria-label="The Problem">
+  <div class="problem-inner">
+
+    <div class="problem-stat-display">
+      <div class="reveal">
+        <span class="problem-number" data-target="72" data-suffix="%">0%</span>
+        <div class="problem-number-unit">of heirs fire their parents' advisor</div>
+        <div class="problem-stat-label-large">within one year of inheritance</div>
+      </div>
+
+      <div class="problem-line line-draw"></div>
+
+      <p class="question-body reveal d2" style="text-align:center; max-width:660px; margin:0 auto; color: rgba(240,238,232,0.6);">
+        Not because the returns were bad.<br>
+        <strong style="color: var(--white)">Because the relationship wasn't deep enough to survive the person it was built around.</strong>
+      </p>
+    </div>
+
+    <div class="problem-revelation">
+      <div class="reveal-left">
+        <div class="problem-col-eyebrow">The Industry's Problem</div>
+        <h2 class="problem-col-h3">
+          An estate plan transfers <em>assets.</em><br>
+          A legacy plan transfers values.
+        </h2>
+        <p class="problem-col-body">
+          Most families have the first. Almost none have the second. The financial services industry has spent decades perfecting the machinery of wealth transfer — the trusts, the tax strategies, the account structures — while treating the question of <em>what it's all for</em> as something soft. Optional. Outside the scope.
+        </p>
+        <p class="problem-col-body">
+          <strong>It isn't optional. It's the entire point.</strong> When wealth changes hands without values, it dissolves into conflict, aimlessness, or the quiet tragedy of money that meant something to one generation and nothing to the next.
+        </p>
+
+        <div class="context-card">
+          <div class="context-card-eyebrow">The Moment We're In</div>
+          <p class="context-card-text">
+            "Baby boomers are transferring $84 trillion over the next 20 years. Most will work with advisors who treat this as an investment transition. The families who want it to mean something will be looking for a Legacy Architecture firm."
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal-right">
+        <div class="problem-col-eyebrow">What HFG Does Differently</div>
+        <h2 class="problem-col-h3">
+          We start where<br>everyone else <em>stops.</em>
+        </h2>
+        <p class="problem-col-body">
+          Every great advisor can build a plan. They can optimize returns, reduce tax exposure, and structure an estate that transfers cleanly. These are the fundamentals. HFG does them with the same precision and care as any top-tier firm.
+        </p>
+        <p class="problem-col-body">
+          But before the plan — before the portfolios, before the structures, before the first recommendation — we ask the question that changes everything. The answer to that question becomes the lens through which every financial decision is made. <strong>Your wealth becomes coherent. It becomes a legacy, not just an account balance.</strong>
+        </p>
+        <p class="problem-col-body">
+          The 72% of heirs who fire their parents' advisor do so because no one ever connected them to the meaning behind the money. HFG builds that connection — between generations, between wealth and values, between a plan and a purpose.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Section separator: Problem → Covenant -->
+<div class="section-line-separator on-parchment" aria-hidden="true">
+  <div class="line-draw"></div>
+</div>
+
+<!-- ================================================================
+     04 — THE COVENANT
+     ================================================================ -->
+<section class="covenant" id="covenant" aria-label="The Covenant">
+  <div class="covenant-inner">
+    <div class="covenant-grid">
+
+      <div class="covenant-left reveal-left">
+        <div class="covenant-eyebrow">Not a Client Relationship</div>
+        <h2 class="covenant-h2">
+          A <em>covenant.</em>
+        </h2>
+        <p class="covenant-pull">
+          "HFG isn't a wealth management firm that happens to be faith-based. It's a legacy firm that happens to manage wealth."
+        </p>
+        <p class="covenant-body">
+          A wealth manager answers: "How do I grow this?" A Legacy Architecture firm answers something harder: <strong>"What is this wealth meant to accomplish — in my lifetime, in my children's lives, and in the world?"</strong>
+        </p>
+        <p class="covenant-body">
+          The distinction sounds philosophical. It is actually structural. Because when you start from purpose, every financial decision changes. The portfolio is allocated differently. The estate is structured differently. The conversations with your children are different. The charitable giving is different. The entire architecture of your wealth is built around what it's actually for.
+        </p>
+        <p class="covenant-body">
+          This is why HFG calls it a covenant, not a contract. A contract governs transactions. A covenant governs a relationship. <strong>HFG's commitment to every family it serves is generational — not annual.</strong>
+        </p>
+      </div>
+
+      <div class="covenant-right reveal-right">
+        <div class="distinction-block">
+          <div class="distinction-header">
+            <div class="distinction-header-label">The Distinction</div>
+          </div>
+          <div class="distinction-row">
+            <div class="distinction-col left-col">
+              <div class="distinction-col-label">Wealth Management</div>
+              <div class="distinction-col-q">"How do I grow this?"</div>
+              <div class="distinction-col-body">Optimizes returns. Manages risk. Structures accounts. Measures success in basis points and benchmark comparisons. The relationship ends when the assets do.</div>
+            </div>
+            <div class="distinction-col right-col">
+              <div class="distinction-col-label">Legacy Architecture</div>
+              <div class="distinction-col-q">"What is this wealth for — and how do we build it to outlast us?"</div>
+              <div class="distinction-col-body">Anchors every financial decision in purpose. Connects investments to values. Designs inheritance to transmit meaning, not just assets. The relationship extends to the next generation.</div>
+            </div>
+          </div>
+          <div class="distinction-footer">
+            <p class="distinction-quote">
+              "The families we serve aren't looking for better returns. They're looking for someone who treats their wealth as <em>sacred</em> — because to them, it is."
+            </p>
+          </div>
+        </div>
+
+        <div class="legacy-conversation">
+          <div class="lc-label">The Legacy Conversation</div>
+          <p class="lc-text">
+            Every HFG engagement begins with The Legacy Conversation — a structured dialogue that goes far deeper than financial planning. <strong>We ask about your grandchildren. Your faith. What you want the next generation to carry forward. What you want them to remember.</strong> The financial plan that follows is the translation of those answers into architecture.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Section separator: Covenant → Pillars -->
+<div class="section-line-separator on-mid" aria-hidden="true">
+  <div class="line-draw"></div>
+</div>
+
+<!-- ================================================================
+     05 — THE FIVE PILLARS
+     ================================================================ -->
+<section class="pillars" id="pillars" aria-label="The Five Pillars of Legacy Architecture">
+  <div class="pillars-inner">
+
+    <div class="pillars-header">
+      <div class="reveal-left">
+        <div class="pillars-eyebrow">The Architecture</div>
+        <h2 class="pillars-h2">
+          Five Pillars.<br>
+          One <em>purpose.</em>
+        </h2>
+      </div>
+      <div class="reveal-right">
+        <p class="pillars-intro">
+          The services aren't new. The framing is everything. These are the same disciplines every firm claims to offer — <strong>seen through the lens of what they're actually for.</strong> Each pillar is designed to serve the legacy, not just the balance sheet.
+        </p>
+      </div>
+    </div>
+
+    <div class="pillars-list reveal">
+
+      <div class="pillar-item">
+        <div class="pillar-numeral">I</div>
+        <div class="pillar-body">
+          <div class="pillar-title">Investment Consulting — Growth That Serves Your Vision</div>
+          <p class="pillar-desc">Not "preserving and growing liquid net worth." <strong>Growing capital that funds the life — and legacy — your values demand.</strong> Every investment decision is made inside the context of what you're building this wealth for. The portfolio serves the purpose, not the other way around.</p>
+        </div>
+      </div>
+
+      <div class="pillar-item">
+        <div class="pillar-numeral">II</div>
+        <div class="pillar-body">
+          <div class="pillar-title">Wealth Transfer — The Architecture of Generational Legacy</div>
+          <p class="pillar-desc">Not "efficient transfer." <strong>The thoughtful, intentional design of how your values and wealth move through generations</strong> — so what you built doesn't dissolve into tax liability or family conflict, but into something lasting. What your grandchildren inherit should include your beliefs, not just your balance.</p>
+        </div>
+      </div>
+
+      <div class="pillar-item">
+        <div class="pillar-numeral">III</div>
+        <div class="pillar-body">
+          <div class="pillar-title">Wealth Enhancement — Tax Strategy as an Act of Stewardship</div>
+          <p class="pillar-desc">Every dollar saved is a dollar you can direct toward purpose. <strong>Creative tax strategy isn't financial engineering — it's stewarding the resources entrusted to you.</strong> Keeping more so you can give more, build more, mean more. Stewardship as a discipline, not just a philosophy.</p>
+        </div>
+      </div>
+
+      <div class="pillar-item">
+        <div class="pillar-numeral">IV</div>
+        <div class="pillar-body">
+          <div class="pillar-title">Wealth Protection — Protecting What Took a Lifetime to Build</div>
+          <p class="pillar-desc">Catastrophic loss doesn't just erase money — it erases possibility. <strong>The legacy you're building deserves to be protected with the same care and intention you used to build it.</strong> We insulate the architecture so the work isn't undone by the unexpected.</p>
+        </div>
+      </div>
+
+      <div class="pillar-item soul-pillar">
+        <div class="pillar-numeral">V</div>
+        <div class="pillar-body">
+          <div class="pillar-soul-tag">The Soul Pillar</div>
+          <div class="pillar-title">Charitable Giving — The Pillar Most Firms Don't Have</div>
+          <p class="pillar-desc">Charitable giving is not a service. <strong>It is a signal.</strong> The fact that Charitable Giving is a foundational pillar — not an add-on, not an afterthought — tells every faith-aligned, values-driven family exactly who HFG is. We are one of the only wealth management firms in the country where giving is structural, not optional. Giving is a pillar, not a footnote. It always has been.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Section separator: Pillars → Story -->
+<div class="section-line-separator" aria-hidden="true">
+  <div class="line-draw"></div>
+</div>
+
+<!-- ================================================================
+     06 — THE STORY
+     ================================================================ -->
+<section class="story" id="story" aria-label="Larry Harvey's Story">
+  <div class="story-bg" aria-hidden="true"></div>
+
+  <div class="story-inner">
+
+    <div class="story-content">
+      <div class="story-eyebrow reveal">The Formation</div>
+      <h2 class="story-h2 reveal d1">
+        In 1985, a young man from Tampa<br>
+        walked into financial services —<br>
+        not chasing <em>money.</em>
+      </h2>
+
+      <p class="story-body reveal d2">
+        What Larry Harvey was chasing was harder to name. He was 23 years old, and he already knew, somehow, that wealth — managed well — could do something extraordinary. Not just grow. Not just protect. He'd seen what happened when it didn't: families fractured over estates, money that meant everything to a founder and nothing to a son, charitable intentions that died with the person who held them.
+      </p>
+
+      <div class="story-pull reveal d3">
+        "I wanted to build a firm where I could impact as many lives as possible — not just manage their money, but <em>honor what it represents.</em>"
+      </div>
+
+      <p class="story-body reveal d3">
+        His formation began at Lutheran Brotherhood — a faith-based financial institution where the question of money's meaning wasn't metaphysical. It was structural. It was how the firm operated. Larry rose to management, becoming Estate and Charitable Planning Specialist for the entire southeast region. He wasn't learning to manage wealth. He was learning to honor it.
+      </p>
+
+      <p class="story-body reveal d3">
+        By 1998, when he founded Harvey Financial Group, he had thirteen years of evidence that wealth managed without values is wealth that eventually costs you everything that matters. When HFG Wealth Management launched in 2008, it was with 23 years of formation behind it — and one question at the center: <strong>What is this wealth for?</strong>
+      </p>
+
+      <p class="story-body reveal d4">
+        That question has never changed. It has been asked in good markets and bad ones. In times of abundance and times of loss. In conversations with patriarchs who built their wealth from nothing, and with second-generation families who inherited more than they expected. The question is the same because the answer is always different — and always the most important thing in the room.
+      </p>
+
+      <p class="story-body reveal d4">
+        <strong>35 years later, HFG Wealth Management serves families across three Texas locations — The Woodlands, Houston, and beyond — as a Legacy Architecture firm.</strong> Not a wealth management firm that happens to be faith-based. A legacy firm that happens to manage wealth. That distinction — held quietly for 35 years — is the single most powerful market differentiator in the industry today.
+      </p>
+
+      <div class="story-credentials reveal d5">
+        <div class="credential-row">
+          <div class="credential-year">1985</div>
+          <div class="credential-text"><strong>Lutheran Brotherhood</strong> — Estate and Charitable Planning Specialist, Southeast Region. Formation begins.</div>
+        </div>
+        <div class="credential-row">
+          <div class="credential-year">1998</div>
+          <div class="credential-text"><strong>Harvey Financial Group founded</strong> — 13 years of evidence that wealth without values costs everything that matters.</div>
+        </div>
+        <div class="credential-row">
+          <div class="credential-year">2008</div>
+          <div class="credential-text"><strong>HFG Wealth Management launched</strong> — Legacy Architecture firm. Faith-aligned. Covenant-based. The Woodlands, Texas.</div>
+        </div>
+        <div class="credential-row">
+          <div class="credential-year">2026</div>
+          <div class="credential-text"><strong>35 years of the same question.</strong> Three Texas locations. One covenant, unbroken.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-photo-col">
+      <div class="story-photo-card reveal-right">
+        <!-- Placeholder until real portrait of Larry Harvey is available -->
+        <div class="story-photo-placeholder" aria-hidden="true">
+          <div class="placeholder-monogram">LH</div>
+          <div class="placeholder-label">Portrait pending</div>
+        </div>
+        <div class="story-photo-meta">
+          <div class="story-photo-name">Larry Harvey</div>
+          <div class="story-photo-title">Founder &middot; Legacy Architect &middot; The Woodlands, TX</div>
+        </div>
+      </div>
+
+      <div class="story-statement reveal d2">
+        <p class="story-statement-text">
+          "HFG isn't a wealth management firm that happens to be faith-based. It's a legacy firm that happens to manage wealth. That distinction — held quietly for 35 years — is the single most powerful differentiator in the industry today."
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Section separator: Story → For Whom -->
+<div class="section-line-separator on-parchment" aria-hidden="true">
+  <div class="line-draw"></div>
+</div>
+
+<!-- ================================================================
+     07 — WHO THIS IS FOR
+     ================================================================ -->
+<section class="forwhom" id="for-whom" aria-label="Who HFG Serves">
+  <div class="forwhom-inner">
+    <div class="forwhom-layout">
+
+      <div class="forwhom-left reveal-left">
+        <div class="forwhom-eyebrow">The Ideal Family</div>
+        <h2 class="forwhom-h2">
+          You've done everything<br>
+          <em>right</em> with your wealth.
+        </h2>
+        <p class="forwhom-intro">
+          You've worked with competent advisors. Your accounts are structured. Your estate plan exists. The numbers, by most measures, look exactly as they should. And yet — there's something unresolved. A question nobody has asked. A conversation that hasn't happened.
+        </p>
+
+        <div class="monologue-block">
+          <div class="monologue-label">What We Hear in the First Conversation</div>
+          <p class="monologue-text">
+            "I've built significant wealth. Multiple advisors have managed it competently. But I've never had someone who understood that this money represents something beyond returns. I want an advisor who asks about my grandchildren, my values, my giving — not just my risk tolerance. <em>I'm not looking for better performance. I'm looking for someone who treats this as sacred.</em>"
+          </p>
+        </div>
+      </div>
+
+      <div class="forwhom-right reveal-right">
+        <div class="forwhom-list-title">HFG is for families who —</div>
+
+        <ul class="forwhom-list">
+          <li class="forwhom-item">
+            <span class="forwhom-item-mark" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4L3.5 6.5L9 1" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="forwhom-item-text">Have built significant wealth — typically $2M+ in investable assets — and understand they need an advisor who matches the gravity of what they've built</span>
+          </li>
+          <li class="forwhom-item">
+            <span class="forwhom-item-mark" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4L3.5 6.5L9 1" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="forwhom-item-text">Are faith-aligned and want their financial decisions to reflect their values — not just their risk tolerance</span>
+          </li>
+          <li class="forwhom-item">
+            <span class="forwhom-item-mark" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4L3.5 6.5L9 1" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="forwhom-item-text">Are thinking about the next generation — what they want to leave behind beyond the account balance, and how to make sure it lands that way</span>
+          </li>
+          <li class="forwhom-item">
+            <span class="forwhom-item-mark" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4L3.5 6.5L9 1" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="forwhom-item-text">Believe that giving is not a tax strategy but a calling — and want a firm where charitable giving is structural, not an afterthought</span>
+          </li>
+          <li class="forwhom-item">
+            <span class="forwhom-item-mark" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4L3.5 6.5L9 1" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="forwhom-item-text">Want a relationship that extends beyond their own lifetime — an advisor who will know their children, their grandchildren, and the values they want carried forward</span>
+          </li>
+          <li class="forwhom-item">
+            <span class="forwhom-item-mark" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4L3.5 6.5L9 1" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="forwhom-item-text">Are in The Woodlands, Houston, or greater Texas — and want to work with a firm that knows this community deeply</span>
+          </li>
+        </ul>
+
+        <div class="notfor-block">
+          <div class="notfor-label">This Is Not For Everyone</div>
+          <p class="notfor-text">
+            HFG works with a limited number of families. If you are looking for the highest possible returns, the most aggressive portfolio, or a transactional relationship with your advisor, <strong>there are excellent firms who serve that need.</strong> HFG's covenant is with families who have already decided that their wealth means something — and who are looking for a firm that begins there.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Section separator: For Whom → CTA -->
+<div class="section-line-separator" aria-hidden="true">
+  <div class="line-draw"></div>
+</div>
+
+<!-- ================================================================
+     08 — FINAL CTA
+     ================================================================ -->
+<section class="cta" id="contact" aria-label="Begin the Conversation">
+
+  <div class="cta-inner">
+    <div class="cta-eyebrow reveal">Begin the Legacy Conversation</div>
+
+    <h2 class="cta-h2 reveal d1">
+      The Legacy Conversation<br>
+      begins with one question.<br>
+      <em>Yours.</em>
+    </h2>
+
+    <p class="cta-body reveal d2">
+      Every relationship at HFG begins the same way — with a conversation. Not a pitch. Not a portfolio review. <strong>A conversation about what your wealth is actually for.</strong> That conversation takes about 60 minutes. It costs nothing. And it will be unlike anything you've had with a financial advisor before.
+    </p>
+
+    <div class="cta-divider reveal d3"></div>
+
+    <div class="cta-contact reveal d3">
+      <a href="tel:+12817671234" class="cta-primary-action">
+        Schedule a Legacy Conversation
+        <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <div class="cta-or">or</div>
+
+      <div class="cta-secondary-row">
+        <div class="cta-contact-item">
+          <span class="cta-contact-label">Phone</span>
+          <a href="tel:+12817671234" class="cta-contact-value">(281) 767-1234</a>
+        </div>
+        <div class="cta-sep"></div>
+        <div class="cta-contact-item">
+          <span class="cta-contact-label">Email</span>
+          <a href="mailto:larry@hfgwm.com" class="cta-contact-value">larry@hfgwm.com</a>
+        </div>
+        <div class="cta-sep"></div>
+        <div class="cta-contact-item">
+          <span class="cta-contact-label">Location</span>
+          <span class="cta-contact-value" style="font-size:0.9rem; cursor:default;">The Woodlands, Texas</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="cta-process-note reveal d4">
+      After you reach out, a member of the HFG team will be in touch within one business day to schedule your Legacy Conversation with Larry. <strong>There is no obligation. No pitch. No proposal until you ask for one.</strong> The first conversation is just a conversation.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer aria-label="Site footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <div>
+        <div class="footer-brand-name">HFG Wealth Management</div>
+        <div class="footer-brand-sub">Legacy Architecture &middot; Since 1991</div>
+        <p class="footer-brand-tagline">
+          The wealth you've built deserves to outlast you. We make sure it does.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Locations</div>
+        <div class="footer-location">
+          <div class="footer-location-name">The Woodlands, TX</div>
+          <div class="footer-location-addr">Primary Office<br>The Woodlands, Texas 77380</div>
+        </div>
+        <div class="footer-location">
+          <div class="footer-location-name">Houston, TX</div>
+          <div class="footer-location-addr">Greater Houston Area</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">The Five Pillars</div>
+        <div style="font-size:0.82rem; color:var(--grey); line-height:2.2;">
+          <div>I. Investment Consulting</div>
+          <div>II. Wealth Transfer</div>
+          <div>III. Wealth Enhancement</div>
+          <div>IV. Wealth Protection</div>
+          <div style="color:var(--gold)">V. Charitable Giving</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-legal-block">
+        <p class="footer-legal-item">
+          HFG Wealth Management is a registered investment adviser. Investment advisory services are offered through HFG Wealth Management.
+        </p>
+        <p class="footer-legal-item">
+          The information on this website is for informational purposes only and does not constitute investment, legal, or tax advice. Past performance is not indicative of future results. All investments involve risk.
+        </p>
+        <p class="footer-legal-item">
+          HFG Wealth Management operates as a fiduciary in all client relationships. &copy; 2026 HFG Wealth Management. All rights reserved.
+        </p>
+      </div>
+      <div class="footer-signal">
+        Positioned by <span>The Signal</span>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+/* ----------------------------------------------------------------
+   PAGE LOAD CEREMONY
+   ---------------------------------------------------------------- */
+(function() {
+  // Create the veil
+  const veil = document.createElement('div');
+  veil.id = 'page-veil';
+  veil.style.cssText = `
+    position: fixed;
+    inset: 0;
+    background: #0b0f1e;
+    z-index: 10000;
+    pointer-events: none;
+    transition: opacity 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  `;
+  document.body.appendChild(veil);
+
+  window.addEventListener('load', () => {
+    // 400ms intentional darkness — then reveal
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+      veil.style.opacity = '0';
+      setTimeout(() => veil.remove(), 1500);
+    }, 400);
+  });
+})();
+
+/* ----------------------------------------------------------------
+   Custom cursor with lerp (linear interpolation) lag
+   ---------------------------------------------------------------- */
+(function() {
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursor-ring');
+  if (!cursor || !ring) return;
+
+  let mx = 0, my = 0;
+  let rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+})();
+
+/* ----------------------------------------------------------------
+   Nav: hide on scroll down, show on scroll up
+   ---------------------------------------------------------------- */
+(function() {
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (y > 80) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+        if (y > lastY && y > 200) {
+          nav.classList.add('hidden');
+        } else {
+          nav.classList.remove('hidden');
+        }
+        lastY = y;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+
+/* ----------------------------------------------------------------
+   Scroll reveal: IntersectionObserver
+   ---------------------------------------------------------------- */
+(function() {
+  const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .line-draw');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        // Release GPU hint after transition completes
+        setTimeout(() => {
+          entry.target.style.willChange = 'auto';
+        }, 1200);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  els.forEach(el => io.observe(el));
+})();
+
+/* ----------------------------------------------------------------
+   ROBUST word-by-word animation — dynamic delays
+   ---------------------------------------------------------------- */
+(function() {
+  const questionEl = document.getElementById('questionText');
+  if (!questionEl) return;
+
+  // Split text into word spans dynamically
+  // (The HTML already has word spans — but let's make the stagger dynamic)
+  const words = questionEl.querySelectorAll('.word-inner');
+  words.forEach((word, i) => {
+    word.style.transitionDelay = `${i * 0.09}s`;
+  });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => questionEl.classList.add('in'), 200);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  io.observe(questionEl);
+})();
+
+/* ----------------------------------------------------------------
+   UNIFIED COUNTER SYSTEM — handles both data-target and data-count
+   ---------------------------------------------------------------- */
+(function() {
+  function animateCount(el, target, duration, prefix, suffix) {
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (prefix || '') + Math.round(eased * target) + (suffix || '');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Handle both data-target and data-count patterns
+  const all = document.querySelectorAll('[data-target], [data-count]');
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.dataset.target || el.dataset.count);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      animateCount(el, target, 2200, prefix, suffix);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+
+  all.forEach(el => io.observe(el));
+})();
+
+/* ----------------------------------------------------------------
+   SCROLL SPY for nav links
+   ---------------------------------------------------------------- */
+(function() {
+  const sections = ['question', 'covenant', 'pillars', 'story'];
+  const links = document.querySelectorAll('.nav-link[data-section]');
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        links.forEach(link => {
+          link.classList.toggle('active', link.dataset.section === id);
+        });
+      }
+    });
+  }, { threshold: 0.4, rootMargin: '-10% 0px -50% 0px' });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+})();
+
+/* ----------------------------------------------------------------
+   Smooth scroll polyfill for Safari
+   ---------------------------------------------------------------- */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+</script>
+</body>
+</html>
